@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A3026238-6DA6-472A-ADB2-8B9388734107}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AMA.DataLayer</RootNamespace>
+    <AssemblyName>AMA.DataLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\AllOffer.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\FlipkartDL.cs" />
+    <Compile Include="Data\C__EFMigrationsHistory.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\DatabaseConnection.cs" />
+    <Compile Include="Data\DealsOfTheDayOffer.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\fn_split_string_to_column_Result.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\GetAllOfferProducts_Result.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\GetTop100OfferProducts_Result.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\LootLoOnlineContext.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LootLoOnlineContext.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\LootLoOnlineContext.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\LootLoOnlineContext.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LootLoOnlineContext.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Data\OfferBrand.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\OfferProduct.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\SplitString_Result.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Split_Result.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\SP_GET_AllOffers_Search_Paging_Sorting_Result.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\SP_GET_OfferProducts_Search_Paging_Sorting_Result.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\sp_helpdiagrams_Result.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\sysdiagram.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\VisitedUser.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Data\LootLoOnlineContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>LootLoOnlineContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="Data\LootLoOnlineContext.edmx.diagram">
+      <DependentUpon>LootLoOnlineContext.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\LootLoOnlineContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LootLoOnlineContext.Context.cs</LastGenOutput>
+      <DependentUpon>LootLoOnlineContext.edmx</DependentUpon>
+    </Content>
+    <Content Include="Data\LootLoOnlineContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>LootLoOnlineContext.edmx</DependentUpon>
+      <LastGenOutput>LootLoOnlineContext.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
