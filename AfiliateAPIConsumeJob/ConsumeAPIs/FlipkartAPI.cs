@@ -1,6 +1,4 @@
-﻿using AfiliateAPIConsumeJob.BusinessLayer;
-using AfiliateAPIConsumeJob.Data;
-using AfiliateAPIConsumeJob.Model;
+﻿using AMA.BusinessLayer.Implementation;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,37 +8,29 @@ using System.Threading.Tasks;
 
 namespace AfiliateAPIConsumeJob.ConsumeAPIs
 {
-    public class FlipkartAPI :  IFipkartAPI
+    public class FlipkartAPI : IFipkartAPI
     {
-        
-        public void ProcessOffer(Setting setting)
+        public FlipkartBL flipkartBL { get; set; }
+        public FlipkartAPI()
+        {
+            flipkartBL = new FlipkartBL();
+        }
+
+        public void ProcessOffer()
         {
             try
             {
                 Task.Run(() =>
                 {
-                    List<ProductCatagory> productCatagories = FlipkartBL.GetFlipkartProductCategorys(setting);
 
-                    List<Product> products = new List<Product>();
+                    flipkartBL.ProcessOfferProducts();
 
-                    foreach (var item in productCatagories)
-                    {
-                        var result = FlipkartBL.GetFlipkartCategoryProducts(setting, item.getApi).products.ToList();
-                        foreach (var product in result.Where(x => x.productBaseInfoV1.inStock = true))
-                        {
-                            
-                            products.Add(product);
-                        }
-                    }
-
-                    //TODO : bulk insertion 
-                    //FlipkartDataLayer.InsertOrUpdateIntoOfferProducts(product);
 
                 }).Wait();
 
                 Task.Run(() =>
                 {
-                    ProcessAllOffers(setting);
+                    flipkartBL.ProcessAllOffers();
 
                 }).Wait();
             }
@@ -50,21 +40,13 @@ namespace AfiliateAPIConsumeJob.ConsumeAPIs
             }
         }
 
-        public void ProcessAllOffers(Setting setting)
+        public void ProcessAllOffers()
         {
             try
             {
                 Task.Run(() =>
                 {
-                    string strAllOffers = APIResult.GetAllFlipkartOffers(setting).Result;
-
-                    FlipkartAllOffers allOffers = JsonConvert.DeserializeObject<FlipkartAllOffers>(strAllOffers);
-
-                    foreach (var item in allOffers.allOffersList)
-                    {
-
-                        FlipkartDataLayer.InsertOrUpdateIntoAllOffers(item);
-                    }
+                    flipkartBL.ProcessAllOffers();
                 }).Wait();
 
             }
@@ -73,16 +55,11 @@ namespace AfiliateAPIConsumeJob.ConsumeAPIs
                 throw ex;
             }
         }
-        public void RemoveOldOffers(Setting setting)
+        public void RemoveOldOffers()
         {
             try
             {
-                Task.Run(() =>
-                {
 
-                    FlipkartDataLayer.RemoveOldOfferProducts();
-
-                }).Wait();
 
             }
             catch (Exception ex)
@@ -90,9 +67,6 @@ namespace AfiliateAPIConsumeJob.ConsumeAPIs
                 throw ex;
             }
         }
-        public void ProcessDealsOfTheDayOffers(Setting setting)
-        {
 
-        }
     }
 }

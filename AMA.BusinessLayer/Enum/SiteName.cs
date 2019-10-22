@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AfiliateAPIConsumeJob.ConsumeAPIs
+namespace AMA.BusinessLayer.Enum
 {
-  public interface IFipkartAPI : IAffiliateAPI
+    public enum SiteName
     {
-        void ProcessAllOffers();
+
+        Flipkart = 1,
+        Amazon = 2
 
     }
 }

@@ -1,6 +1,4 @@
-﻿using AfiliateAPIConsumeJob.Data;
-using AfiliateAPIConsumeJob.Model;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -12,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace AfiliateAPIConsumeJob.ConsumeAPIs
 {
-    public  class Utility
+    public class Utility
     {
-       
+
     }
 }

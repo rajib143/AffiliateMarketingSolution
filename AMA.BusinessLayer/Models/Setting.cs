@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AfiliateAPIConsumeJob.ConsumeAPIs
+namespace AMA.BusinessLayer.Models
 {
-   public class Setting
+    public class Setting
     {
 
         public string FlipkartAllOffersApiUrl { get; set; }
@@ -17,9 +17,9 @@ namespace AfiliateAPIConsumeJob.ConsumeAPIs
         public string FkAffiliateToken { get; set; }
         public Setting()
         {
-            FlipkartAllOffersApiUrl = ConfigurationManager.AppSettings["FlipkartAllOffersApiUrl"]; 
-            FlipkartProductCatagoryApiUrl = ConfigurationManager.AppSettings["FlipkartProductCatagoryApiUrl"]; 
-            FkAffiliateId = ConfigurationManager.AppSettings["FkAffiliateId"]; 
+            FlipkartAllOffersApiUrl = ConfigurationManager.AppSettings["FlipkartAllOffersApiUrl"];
+            FlipkartProductCatagoryApiUrl = ConfigurationManager.AppSettings["FlipkartProductCatagoryApiUrl"];
+            FkAffiliateId = ConfigurationManager.AppSettings["FkAffiliateId"];
             FkAffiliateToken = ConfigurationManager.AppSettings["FkAffiliateToken"];
         }
 
@@ -37,20 +37,6 @@ namespace AfiliateAPIConsumeJob.ConsumeAPIs
                 throw ex;
             }
         }
-        //public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
-        //{
-        //    try
-        //    {
-        //        // Unix timestamp is seconds past epoch
-        //        System.DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc);
-        //        dtDateTime = dtDateTime.AddSeconds(unixTimeStamp);
-        //        return dtDateTime;
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw ex;
-        //    }
-        //}
+       
     }
 }

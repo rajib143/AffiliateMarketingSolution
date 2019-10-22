@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,6 +52,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsumeAPIs\FlipkartAPI.cs" />
+    <Compile Include="ConsumeAPIs\FlipkartAPIResult.cs" />
+    <Compile Include="Enum\SiteName.cs" />
+    <Compile Include="Implementation\FlipkartBL.cs" />
+    <Compile Include="Models\FlipkartProducts.cs" />
+    <Compile Include="Models\FlipkartModel.cs" />
+    <Compile Include="Models\Setting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +67,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AMA.DataLayer\AMA.DataLayer.csproj">
+      <Project>{a3026238-6da6-472a-adb2-8b9388734107}</Project>
+      <Name>AMA.DataLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

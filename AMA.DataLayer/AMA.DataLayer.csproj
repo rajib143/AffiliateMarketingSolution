@@ -57,7 +57,7 @@
     <Compile Include="Data\AllOffer.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\FlipkartDL.cs" />
+    <Compile Include="Data\Entity.cs" />
     <Compile Include="Data\C__EFMigrationsHistory.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
     </Compile>
@@ -74,6 +74,7 @@
     <Compile Include="Data\GetTop100OfferProducts_Result.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\IEntity.cs" />
     <Compile Include="Data\LootLoOnlineContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

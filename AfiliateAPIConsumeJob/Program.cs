@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AfiliateAPIConsumeJob.ConsumeAPIs;
+using AfiliateAPIConsumeJob.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +10,7 @@ namespace AfiliateAPIConsumeJob
 {
     class Program
     {
-
+        public static Dictionary<string, IAffiliateAPI> affiliateProducts;
         public static IAffiliateAPI GetAffiliateAPI(string productName)
         {
             return affiliateProducts[productName];
@@ -27,10 +29,8 @@ namespace AfiliateAPIConsumeJob
                     logWriter.LogWrite(string.Format("Application Started for {0} API.", args[0]));
                     IAffiliateAPI affiliateAPI = GetAffiliateAPI(args[0]);
 
-                    Setting setting = new Setting();
 
-                    affiliateAPI.ProcessAllOffers(setting);
-                    affiliateAPI.ProcessOfferProducts(setting);
+                    affiliateAPI.ProcessOffer();
 
                     logWriter.LogWrite(string.Format("Application ended for {0} API.", args[0]));
                 }
