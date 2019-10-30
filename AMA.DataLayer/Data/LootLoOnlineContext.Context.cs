@@ -27,13 +27,14 @@ namespace AMA.DataLayer.Data
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<OfferBrand> OfferBrands { get; set; }
         public virtual DbSet<C__EFMigrationsHistory> C__EFMigrationsHistory { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<VisitedUser> VisitedUsers { get; set; }
         public virtual DbSet<AllOffer> AllOffers { get; set; }
         public virtual DbSet<DealsOfTheDayOffer> DealsOfTheDayOffers { get; set; }
         public virtual DbSet<OfferProduct> OfferProducts { get; set; }
+        public virtual DbSet<VisitedUser> VisitedUsers { get; set; }
     
         [DbFunction("LootLoOnlineDatabaseEntities", "fn_split_string_to_column")]
         public virtual IQueryable<fn_split_string_to_column_Result> fn_split_string_to_column(string @string, string delimiter)
@@ -338,7 +339,7 @@ namespace AMA.DataLayer.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertOrUpdateIntoAllOffers", startTimeParameter, endTimeParameter, titleParameter, nameParameter, descriptionParameter, urlParameter, categoryParameter, imageUrls_defaultParameter, imageUrls_midParameter, imageUrls_lowParameter, availabilityParameter);
         }
     
-        public virtual int InsertOrUpdateIntoOfferProducts(string productId, string title, string productDescription, string imageUrls_200, string imageUrls_400, string imageUrls_800, string productFamily, Nullable<decimal> maximumRetailPrice, Nullable<decimal> flipkartSellingPrice, Nullable<decimal> flipkartSpecialPrice, string currency, string productUrl, string productBrand, Nullable<decimal> discountPercentage, Nullable<int> inStock, string offers, string categoryPath, string attributes)
+        public virtual int InsertOrUpdateIntoOfferProducts(string productId, string title, string productDescription, string imageUrls_200, string imageUrls_400, string imageUrls_800, string productFamily, Nullable<decimal> maximumRetailPrice, Nullable<decimal> flipkartSellingPrice, Nullable<decimal> flipkartSpecialPrice, string currency, string productUrl, string productBrand, Nullable<bool> inStock, Nullable<bool> codAvailable, Nullable<decimal> discountPercentage, string offers, string categoryPath, string attributes, Nullable<decimal> shippingCharges, string estimatedDeliveryTime, string sellerName, Nullable<decimal> sellerAverageRating, Nullable<decimal> sellerNoOfRatings, Nullable<decimal> sellerNoOfReviews, string keySpecs, string detailedSpecs, string specificationList, string booksInfo, string lifeStyleInfo, Nullable<bool> isUpdated, Nullable<int> categoryId, Nullable<System.DateTime> createdDate)
         {
             var productIdParameter = productId != null ?
                 new ObjectParameter("productId", productId) :
@@ -392,13 +393,17 @@ namespace AMA.DataLayer.Data
                 new ObjectParameter("productBrand", productBrand) :
                 new ObjectParameter("productBrand", typeof(string));
     
+            var inStockParameter = inStock.HasValue ?
+                new ObjectParameter("inStock", inStock) :
+                new ObjectParameter("inStock", typeof(bool));
+    
+            var codAvailableParameter = codAvailable.HasValue ?
+                new ObjectParameter("codAvailable", codAvailable) :
+                new ObjectParameter("codAvailable", typeof(bool));
+    
             var discountPercentageParameter = discountPercentage.HasValue ?
                 new ObjectParameter("discountPercentage", discountPercentage) :
                 new ObjectParameter("discountPercentage", typeof(decimal));
-    
-            var inStockParameter = inStock.HasValue ?
-                new ObjectParameter("inStock", inStock) :
-                new ObjectParameter("inStock", typeof(int));
     
             var offersParameter = offers != null ?
                 new ObjectParameter("offers", offers) :
@@ -412,7 +417,63 @@ namespace AMA.DataLayer.Data
                 new ObjectParameter("attributes", attributes) :
                 new ObjectParameter("attributes", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertOrUpdateIntoOfferProducts", productIdParameter, titleParameter, productDescriptionParameter, imageUrls_200Parameter, imageUrls_400Parameter, imageUrls_800Parameter, productFamilyParameter, maximumRetailPriceParameter, flipkartSellingPriceParameter, flipkartSpecialPriceParameter, currencyParameter, productUrlParameter, productBrandParameter, discountPercentageParameter, inStockParameter, offersParameter, categoryPathParameter, attributesParameter);
+            var shippingChargesParameter = shippingCharges.HasValue ?
+                new ObjectParameter("shippingCharges", shippingCharges) :
+                new ObjectParameter("shippingCharges", typeof(decimal));
+    
+            var estimatedDeliveryTimeParameter = estimatedDeliveryTime != null ?
+                new ObjectParameter("estimatedDeliveryTime", estimatedDeliveryTime) :
+                new ObjectParameter("estimatedDeliveryTime", typeof(string));
+    
+            var sellerNameParameter = sellerName != null ?
+                new ObjectParameter("sellerName", sellerName) :
+                new ObjectParameter("sellerName", typeof(string));
+    
+            var sellerAverageRatingParameter = sellerAverageRating.HasValue ?
+                new ObjectParameter("sellerAverageRating", sellerAverageRating) :
+                new ObjectParameter("sellerAverageRating", typeof(decimal));
+    
+            var sellerNoOfRatingsParameter = sellerNoOfRatings.HasValue ?
+                new ObjectParameter("sellerNoOfRatings", sellerNoOfRatings) :
+                new ObjectParameter("sellerNoOfRatings", typeof(decimal));
+    
+            var sellerNoOfReviewsParameter = sellerNoOfReviews.HasValue ?
+                new ObjectParameter("sellerNoOfReviews", sellerNoOfReviews) :
+                new ObjectParameter("sellerNoOfReviews", typeof(decimal));
+    
+            var keySpecsParameter = keySpecs != null ?
+                new ObjectParameter("keySpecs", keySpecs) :
+                new ObjectParameter("keySpecs", typeof(string));
+    
+            var detailedSpecsParameter = detailedSpecs != null ?
+                new ObjectParameter("detailedSpecs", detailedSpecs) :
+                new ObjectParameter("detailedSpecs", typeof(string));
+    
+            var specificationListParameter = specificationList != null ?
+                new ObjectParameter("specificationList", specificationList) :
+                new ObjectParameter("specificationList", typeof(string));
+    
+            var booksInfoParameter = booksInfo != null ?
+                new ObjectParameter("booksInfo", booksInfo) :
+                new ObjectParameter("booksInfo", typeof(string));
+    
+            var lifeStyleInfoParameter = lifeStyleInfo != null ?
+                new ObjectParameter("lifeStyleInfo", lifeStyleInfo) :
+                new ObjectParameter("lifeStyleInfo", typeof(string));
+    
+            var isUpdatedParameter = isUpdated.HasValue ?
+                new ObjectParameter("IsUpdated", isUpdated) :
+                new ObjectParameter("IsUpdated", typeof(bool));
+    
+            var categoryIdParameter = categoryId.HasValue ?
+                new ObjectParameter("CategoryId", categoryId) :
+                new ObjectParameter("CategoryId", typeof(int));
+    
+            var createdDateParameter = createdDate.HasValue ?
+                new ObjectParameter("CreatedDate", createdDate) :
+                new ObjectParameter("CreatedDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertOrUpdateIntoOfferProducts", productIdParameter, titleParameter, productDescriptionParameter, imageUrls_200Parameter, imageUrls_400Parameter, imageUrls_800Parameter, productFamilyParameter, maximumRetailPriceParameter, flipkartSellingPriceParameter, flipkartSpecialPriceParameter, currencyParameter, productUrlParameter, productBrandParameter, inStockParameter, codAvailableParameter, discountPercentageParameter, offersParameter, categoryPathParameter, attributesParameter, shippingChargesParameter, estimatedDeliveryTimeParameter, sellerNameParameter, sellerAverageRatingParameter, sellerNoOfRatingsParameter, sellerNoOfReviewsParameter, keySpecsParameter, detailedSpecsParameter, specificationListParameter, booksInfoParameter, lifeStyleInfoParameter, isUpdatedParameter, categoryIdParameter, createdDateParameter);
         }
     
         public virtual int RemoveOldOfferProducts()

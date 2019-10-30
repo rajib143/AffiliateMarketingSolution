@@ -59,7 +59,21 @@ namespace AfiliateAPIConsumeJob.ConsumeAPIs
         {
             try
             {
+                //Task.Run(() =>
+                //{
+                    var lstRemoveProducts = flipkartBL.GetOfferProducts().Result.Where(x => x.CreatedDate < DateTime.Now.AddHours(-2));
 
+                   flipkartBL.RemoveBulkOfferProducts(lstRemoveProducts.ToList());
+
+               // }).Wait();
+
+                Task.Run(() =>
+                {
+                    var lstRemoveOffers = flipkartBL.GetAllOffers().Result.Where(x => x.endTime > DateTime.Now);
+
+                    flipkartBL.RemoveBulkAllOffers(lstRemoveOffers.ToList());
+
+                }).Wait();
 
             }
             catch (Exception ex)

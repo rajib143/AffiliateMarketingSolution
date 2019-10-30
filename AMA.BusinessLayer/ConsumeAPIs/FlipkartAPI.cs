@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AMA.BusinessLayer.ConsumeAPIs
 {
-   public class FlipkartAPI
+    public class FlipkartAPI
     {
         public static List<ProductCatagory> GetFlipkartProductCategorys(Setting setting)
         {
@@ -21,7 +21,9 @@ namespace AMA.BusinessLayer.ConsumeAPIs
                 var affiliate = JsonConvert.DeserializeObject<Dictionary<string, object>>(apiGroups["affiliate"].ToString());
                 var apiListings = JsonConvert.DeserializeObject<Dictionary<string, object>>(affiliate["apiListings"].ToString());
 
-                foreach (string key in apiListings.Keys)
+                //foreach (string key in apiListings.Keys)
+                //{
+                Parallel.ForEach(apiListings.Keys, (key) =>
                 {
                     try
                     {
@@ -43,7 +45,8 @@ namespace AMA.BusinessLayer.ConsumeAPIs
                     catch (Exception ex)
                     {
                     }
-                }
+                });
+                //  }
                 return productCatagory;
             }
             catch (Exception ex)

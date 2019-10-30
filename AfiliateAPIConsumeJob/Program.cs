@@ -28,7 +28,8 @@ namespace AfiliateAPIConsumeJob
                 {
                     logWriter.LogWrite(string.Format("Application Started for {0} API.", args[0]));
                     IAffiliateAPI affiliateAPI = GetAffiliateAPI(args[0]);
-
+                   
+                    affiliateAPI.RemoveOldOffers();
 
                     affiliateAPI.ProcessOffer();
 

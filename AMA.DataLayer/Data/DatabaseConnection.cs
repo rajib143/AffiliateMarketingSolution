@@ -12,7 +12,7 @@ namespace AMA.DataLayer.Data
   public sealed class DatabaseConnection
     {
         private static volatile SqlConnection instance;
-        private static volatile LootLoOnlineDatabaseEntities intityinstance;
+        private static volatile LootLoOnlineDatabaseEntities entityinstance;
         private static object syncRoot = new object();
         private static string connectionString = ConfigurationManager.AppSettings["connectionString"];
 
@@ -42,19 +42,19 @@ namespace AMA.DataLayer.Data
         {
             get
             {
-                if (intityinstance == null)
+                if (entityinstance == null)
                 {
                     lock (syncRoot)
                     {
-                        if (intityinstance == null)
+                        if (entityinstance == null)
                         {
-                            intityinstance = new LootLoOnlineDatabaseEntities();
+                            entityinstance = new LootLoOnlineDatabaseEntities();
 
                         }
                     }
                 }
 
-                return intityinstance;
+                return entityinstance;
             }
         }
     }

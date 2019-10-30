@@ -55,15 +55,18 @@
     <Compile Include="ConsumeAPIs\FlipkartAPI.cs" />
     <Compile Include="ConsumeAPIs\FlipkartAPIResult.cs" />
     <Compile Include="Enum\SiteName.cs" />
+    <Compile Include="Implementation\AdminBL.cs" />
     <Compile Include="Implementation\FlipkartBL.cs" />
+    <Compile Include="Implementation\VisitedUserBL.cs" />
+    <Compile Include="Interface\IAdminBL.cs" />
+    <Compile Include="Interface\IFlipkartBL.cs" />
+    <Compile Include="Interface\IVisitedUserBL.cs" />
     <Compile Include="Models\FlipkartProducts.cs" />
     <Compile Include="Models\FlipkartModel.cs" />
     <Compile Include="Models\Setting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interface\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

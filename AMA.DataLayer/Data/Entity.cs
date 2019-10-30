@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -10,27 +13,41 @@ namespace AMA.DataLayer.Data
 {
     public class Entity<T> : IEntity<T> where T : class
     {
-        private LootLoOnlineDatabaseEntities LootLoOnlineDatabaseEntities { get; set; }
-        internal DbSet<T> dbSet;
+        private LootLoOnlineDatabaseEntities _lootLoOnlineDatabaseEntities;
+
         public Entity()
         {
-            LootLoOnlineDatabaseEntities = DatabaseConnection.Entityinstance;
-            this.dbSet = LootLoOnlineDatabaseEntities.Set<T>();
+            _lootLoOnlineDatabaseEntities = DatabaseConnection.Entityinstance;
+
         }
-        public virtual async Task<List<T>> List()
+        public virtual async Task<List<T>> GetAll()
         {
             try
             {
-                return dbSet.ToList();
+                return _lootLoOnlineDatabaseEntities.Set<T>().ToList();
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-        public virtual async Task<IList<T>> List(int? page, int? pageSize, System.Linq.Expressions.Expression<Func<T, bool>> predicate, System.Linq.Expressions.Expression<Func<T, object>> sort)
+
+        public virtual async Task<List<T>> Find(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IOrderedQueryable<T>> orderExpression = null)
         {
-            var result = dbSet.AsQueryable();
+            var result = _lootLoOnlineDatabaseEntities.Set<T>().AsQueryable();
+
+            if (predicate != null)
+                result = result.Where(predicate);
+
+            if (orderExpression != null)
+                result = orderExpression(result);
+
+
+            return result.ToList();
+        }
+        public virtual async Task<List<T>> GetAllByFilter(int? page, int? pageSize, System.Linq.Expressions.Expression<Func<T, bool>> predicate, System.Linq.Expressions.Expression<Func<T, object>> sort)
+        {
+            var result = _lootLoOnlineDatabaseEntities.Set<T>().AsQueryable();
 
             if (predicate != null)
                 result = result.Where(predicate);
@@ -43,44 +60,13 @@ namespace AMA.DataLayer.Data
 
             return result.ToList();
         }
-        public virtual async Task<int> Add(T item)
-        {
-            try
-            {
-                using (var context = LootLoOnlineDatabaseEntities)
-                {
-                    dbSet.Add(item);
-                    return context.SaveChanges();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public virtual async Task<bool> BulkAdd(List<T> items)
-        {
-            try
-            {
-                using (var context = LootLoOnlineDatabaseEntities)
-                {
-                    dbSet.AddRange(items);
-                    context.SaveChanges();
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public virtual T GetSingle(Func<T, bool> where,
-            params Expression<Func<T, object>>[] navigationProperties)
+        public virtual T Get(Func<T, bool> where,
+         params Expression<Func<T, object>>[] navigationProperties)
         {
             try
             {
                 T item = null;
-                using (var context = LootLoOnlineDatabaseEntities)
+                using (var context = new LootLoOnlineDatabaseEntities())
                 {
                     IQueryable<T> dbQuery = context.Set<T>();
 
@@ -101,13 +87,91 @@ namespace AMA.DataLayer.Data
             }
 
         }
+
+        public virtual async Task<int> Add(T item)
+        {
+            try
+            {
+                using (var context = new LootLoOnlineDatabaseEntities())
+                {
+
+                    context.Set<T>().Add(item);
+                    return context.SaveChanges();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public virtual async Task<bool> BulkAdd(List<T> items)
+        {
+            try
+            {
+                using (var context = new LootLoOnlineDatabaseEntities())
+                {
+                    context.Set<T>().AddRange(items);
+                    context.SaveChanges();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("Value cannot be null"))
+                {
+                    using (var context = new LootLoOnlineDatabaseEntities())
+                    {
+                        foreach (var T in items)
+                        {
+                            try
+                            {
+                                context.Set<T>().Add(T);
+                            }
+                            catch (Exception)
+                            {
+                                context.SaveChanges();
+                            }
+                        }
+                        context.SaveChanges();
+                    }
+                }
+                else if (ex.InnerException != null && ex.InnerException.InnerException != null)
+                {
+
+                    var se = ex.InnerException.InnerException as SqlException;
+                    var code = se.Number;
+                    if (se.Number == 2627)
+                    {
+                        foreach (var T in items)
+                        {
+                            try
+                            {
+                                this.Update(T);
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        }
+                    }
+                }
+
+            }
+            finally
+            {
+
+            }
+
+            return true;
+        }
+
         public virtual async Task<int> Update(T item)
         {
             try
             {
-                using (var context = LootLoOnlineDatabaseEntities)
+                using (var context = new LootLoOnlineDatabaseEntities())
                 {
-                    dbSet.Attach(item);
+                    context.Set<T>().Attach(item);
                     return context.SaveChanges();
                 }
             }
@@ -120,9 +184,9 @@ namespace AMA.DataLayer.Data
         {
             try
             {
-                using (var context = LootLoOnlineDatabaseEntities)
+                using (var context = new LootLoOnlineDatabaseEntities())
                 {
-                    dbSet.Remove(item);
+                    context.Set<T>().Remove(item);
                     context.SaveChanges();
                 }
                 return true;
@@ -136,10 +200,11 @@ namespace AMA.DataLayer.Data
         {
             try
             {
-                using (var context = LootLoOnlineDatabaseEntities)
+                using (var context = new LootLoOnlineDatabaseEntities())
                 {
-                    dbSet.RemoveRange(items);
-                    context.SaveChanges();
+                    // context.Set<T>().SqlQuery("exec [Flipkart].[RemoveOldOfferProducts]");
+                    context.RemoveOldOfferProducts();
+                    //context.SaveChanges();
                 }
                 return true;
             }

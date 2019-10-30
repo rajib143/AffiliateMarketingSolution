@@ -57,6 +57,9 @@
     <Compile Include="Data\AllOffer.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\Category.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Entity.cs" />
     <Compile Include="Data\C__EFMigrationsHistory.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
@@ -120,6 +123,7 @@
     <Compile Include="Data\VisitedUser.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="EntityRepositories.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

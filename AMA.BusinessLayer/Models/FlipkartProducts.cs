@@ -23,14 +23,14 @@ namespace AMA.BusinessLayer.Models
         public shippingCharge shippingCharges { get; set; }
         public string estimatedDeliveryTime { get; set; }
         public string sellerName { get; set; }
-        public string sellerAverageRating { get; set; }
-        public string sellerNoOfRatings { get; set; }
-        public string sellerNoOfReviews { get; set; }
+        public decimal? sellerAverageRating { get; set; }
+        public decimal? sellerNoOfRatings { get; set; }
+        public decimal? sellerNoOfReviews { get; set; }
     }
 
     public class shippingCharge
     {
-        public string amount { get; set; }
+        public decimal? amount { get; set; }
         public string currency { get; set; }
     }
     public class categorySpecificInfoV1
@@ -56,7 +56,7 @@ namespace AMA.BusinessLayer.Models
         public string productBrand { get; set; }
         public bool inStock { get; set; }
         public bool codAvailable { get; set; }
-        public double discountPercentage { get; set; }
+        public decimal discountPercentage { get; set; }
         public object offers { get; set; }
         public string categoryPath { get; set; }
         public object attributes { get; set; }
@@ -65,7 +65,7 @@ namespace AMA.BusinessLayer.Models
 
     public class Price
     {
-        public double amount { get; set; }
+        public decimal amount { get; set; }
         public string currency { get; set; }
     }
 
