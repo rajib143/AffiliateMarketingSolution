@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbstractFactory\AMAClient.cs" />
+    <Compile Include="AbstractFactory\IAllOffer.cs" />
+    <Compile Include="AbstractFactory\IOffer.cs" />
     <Compile Include="ConsumeAPIs\FlipkartAPI.cs" />
     <Compile Include="ConsumeAPIs\FlipkartAPIResult.cs" />
     <Compile Include="Enum\SiteName.cs" />

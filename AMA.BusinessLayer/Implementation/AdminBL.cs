@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using AMA.DataLayer.Data;
 using AMA.DataLayer;
 using System.Linq.Expressions;
+using AMA.BusinessLayer.Interface;
 
 namespace AMA.BusinessLayer.Implementation
 {
-   public class AdminBL
+    public class AdminBL : IAdminBL
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IOfferBrandRepository _offerBrandRepository;
@@ -20,7 +21,7 @@ namespace AMA.BusinessLayer.Implementation
             _offerBrandRepository = new OfferBrandRepository();
         }
 
-        public async Task<List<Category>> GetCategorys()
+        public async Task<List<Category>> GetCategories()
         {
             try
             {
@@ -32,7 +33,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<List<Category>> GetCategorys(int? page, int? pageSize, Expression<Func<Category, bool>> predicate, Expression<Func<Category, object>> sort)
+        public async Task<List<Category>> GetCategories(int? page, int? pageSize, Expression<Func<Category, bool>> predicate, Expression<Func<Category, object>> sort)
         {
             try
             {
@@ -44,11 +45,11 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<Category> GetCategoryByName(string name)
+        public async Task<Category> GetCategoryByTitle(string title)
         {
             try
             {
-                return _categoryRepository.Get(d => d.Name.Equals(name));
+                return _categoryRepository.Get(d => d.Name.Equals(title));
             }
             catch (Exception ex)
             {
@@ -143,11 +144,11 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<OfferBrand> GetOfferBrandByName(string name)
+        public async Task<OfferBrand> GetOfferBrandByTitle(string title)
         {
             try
             {
-                return _offerBrandRepository.Get(d => d.BrandName.Equals(name));
+                return _offerBrandRepository.Get(d => d.BrandName.Equals(title));
             }
             catch (Exception ex)
             {
@@ -213,7 +214,7 @@ namespace AMA.BusinessLayer.Implementation
             {
                 throw ex;
             }
-        } 
+        }
         #endregion
     }
 }

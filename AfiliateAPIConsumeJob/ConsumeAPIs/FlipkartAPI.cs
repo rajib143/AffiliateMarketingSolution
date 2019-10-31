@@ -1,4 +1,5 @@
-﻿using AMA.BusinessLayer.Implementation;
+﻿using AMA.BusinessLayer.AbstractFactory;
+using AMA.BusinessLayer.Implementation;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,20 +12,23 @@ namespace AfiliateAPIConsumeJob.ConsumeAPIs
     public class FlipkartAPI : IFipkartAPI
     {
         public FlipkartBL flipkartBL { get; set; }
+        public AMAClient _AMAClient { get; set; }
         public FlipkartAPI()
         {
             flipkartBL = new FlipkartBL();
+            _AMAClient = new AMAClient(new FlipkartBL());
         }
-
+        
         public void ProcessOffer()
         {
             try
             {
+                
                 Task.Run(() =>
                 {
-
+                    
                     flipkartBL.ProcessOfferProducts();
-
+                    
 
                 }).Wait();
 

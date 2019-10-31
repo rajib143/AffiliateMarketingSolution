@@ -60,7 +60,6 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-
         private async Task InserIntoOfferproducts(List<Product> products)
         {
             List<OfferProduct> offerProducts = new List<OfferProduct>();
@@ -130,7 +129,6 @@ namespace AMA.BusinessLayer.Implementation
             // bulk insertion 
             await AddBulkOfferProducts(offerProducts);
         }
-
         public async Task ProcessAllOffers()
         {
             try
@@ -177,8 +175,24 @@ namespace AMA.BusinessLayer.Implementation
             }
         }
 
+        public async Task RemoveOldOffers()
+        {
+            try
+            {
+                var lstRemoveProducts = this.GetOfferProducts().Result.Where(x => x.CreatedDate < DateTime.Now.AddHours(-2));
+                this.RemoveBulkOfferProducts(lstRemoveProducts.ToList());
 
 
+                var lstRemoveOffers = this.GetAllOffers().Result.Where(x => x.endTime > DateTime.Now);
+                this.RemoveBulkAllOffers(lstRemoveOffers.ToList());
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         #region OfferProduct
         public async Task<List<OfferProduct>> GetOfferProducts()
         {
