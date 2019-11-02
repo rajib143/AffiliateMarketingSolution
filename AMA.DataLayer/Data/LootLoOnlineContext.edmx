@@ -30,6 +30,18 @@
           <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
         </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Thread" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Level" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Logger" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Message" Type="varchar" MaxLength="4000" Nullable="false" />
+          <Property Name="Exception" Type="varchar" MaxLength="2000" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -80,8 +92,8 @@
           <Property Name="imageUrls_800" Type="nvarchar" MaxLength="2000" />
           <Property Name="productFamily" Type="nvarchar(max)" />
           <Property Name="maximumRetailPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="flipkartSellingPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="flipkartSpecialPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SellingPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SpecialPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="currency" Type="nvarchar" MaxLength="50" />
           <Property Name="productUrl" Type="nvarchar" MaxLength="500" />
           <Property Name="productBrand" Type="nvarchar" MaxLength="250" />
@@ -105,6 +117,19 @@
           <Property Name="IsUpdated" Type="bit" />
           <Property Name="CategoryId" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="SiteName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="MacID" Type="nvarchar" MaxLength="250" />
+          <Property Name="IPAddress" Type="nvarchar" MaxLength="250" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Email" Type="nvarchar" MaxLength="250" />
+          <Property Name="ContractNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="VisitedUsers">
           <Key>
@@ -112,10 +137,14 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MacId" Type="nvarchar" MaxLength="250" />
-          <Property Name="Catagory" Type="nvarchar" MaxLength="250" />
           <Property Name="IPAddress" Type="nvarchar" MaxLength="200" />
           <Property Name="Count" Type="int" />
+          <Property Name="Catagory" Type="nvarchar" MaxLength="250" />
           <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ProductTitle" Type="nvarchar" MaxLength="250" />
+          <Property Name="ProductId" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastVisitedDate" Type="datetime" />
+          <Property Name="ClickedOnBuyNow" Type="bit" />
         </EntityType>
         <Function Name="fn_ConvertToDateTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime">
           <Parameter Name="Datetime" Type="bigint" Mode="In" />
@@ -270,10 +299,12 @@
           <EntitySet Name="Category" EntityType="Self.Category" Schema="Admin" store:Type="Tables" />
           <EntitySet Name="OfferBrands" EntityType="Self.OfferBrands" Schema="Admin" store:Type="Tables" />
           <EntitySet Name="__EFMigrationsHistory" EntityType="Self.__EFMigrationsHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AllOffers" EntityType="Self.AllOffers" Schema="Flipkart" store:Type="Tables" />
           <EntitySet Name="DealsOfTheDayOffer" EntityType="Self.DealsOfTheDayOffer" Schema="Flipkart" store:Type="Tables" />
-          <EntitySet Name="OfferProducts" EntityType="Self.OfferProducts" Schema="Flipkart" store:Type="Tables" />
+          <EntitySet Name="OfferProducts" EntityType="Self.OfferProducts" Schema="Offer" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="User" store:Type="Tables" />
           <EntitySet Name="VisitedUsers" EntityType="Self.VisitedUsers" Schema="User" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -417,10 +448,12 @@
           <EntitySet Name="Categories" EntityType="LootLoOnlineDatabaseModel.Category" />
           <EntitySet Name="OfferBrands" EntityType="LootLoOnlineDatabaseModel.OfferBrand" />
           <EntitySet Name="C__EFMigrationsHistory" EntityType="LootLoOnlineDatabaseModel.C__EFMigrationsHistory" />
+          <EntitySet Name="Logs" EntityType="LootLoOnlineDatabaseModel.Log" />
           <EntitySet Name="sysdiagrams" EntityType="LootLoOnlineDatabaseModel.sysdiagram" />
           <EntitySet Name="AllOffers" EntityType="LootLoOnlineDatabaseModel.AllOffer" />
           <EntitySet Name="DealsOfTheDayOffers" EntityType="LootLoOnlineDatabaseModel.DealsOfTheDayOffer" />
           <EntitySet Name="OfferProducts" EntityType="LootLoOnlineDatabaseModel.OfferProduct" />
+          <EntitySet Name="Users" EntityType="LootLoOnlineDatabaseModel.User" />
           <EntitySet Name="VisitedUsers" EntityType="LootLoOnlineDatabaseModel.VisitedUser" />
           </EntityContainer>
         <ComplexType Name="GetAllOfferProducts_Result">
@@ -530,6 +563,18 @@
           <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Thread" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Level" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Logger" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="Exception" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -580,8 +625,8 @@
           <Property Name="imageUrls_800" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="productFamily" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="maximumRetailPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="flipkartSellingPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="flipkartSpecialPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SellingPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SpecialPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="currency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="productUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="productBrand" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
@@ -605,6 +650,19 @@
           <Property Name="IsUpdated" Type="Boolean" />
           <Property Name="CategoryId" Type="Int32" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="SiteName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="MacID" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IPAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ContractNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="VisitedUser">
           <Key>
@@ -612,10 +670,14 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MacId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Catagory" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="IPAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Count" Type="Int32" />
+          <Property Name="Catagory" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ProductTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ProductId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastVisitedDate" Type="DateTime" Precision="3" />
+          <Property Name="ClickedOnBuyNow" Type="Boolean" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -789,6 +851,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="LootLoOnlineDatabaseModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Logger" ColumnName="Logger" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Thread" ColumnName="Thread" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="LootLoOnlineDatabaseModel.sysdiagram">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -833,6 +908,7 @@
           <EntitySetMapping Name="OfferProducts">
             <EntityTypeMapping TypeName="LootLoOnlineDatabaseModel.OfferProduct">
               <MappingFragment StoreEntitySet="OfferProducts">
+                <ScalarProperty Name="SiteName" ColumnName="SiteName" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="IsUpdated" ColumnName="IsUpdated" />
@@ -856,8 +932,8 @@
                 <ScalarProperty Name="productBrand" ColumnName="productBrand" />
                 <ScalarProperty Name="productUrl" ColumnName="productUrl" />
                 <ScalarProperty Name="currency" ColumnName="currency" />
-                <ScalarProperty Name="flipkartSpecialPrice" ColumnName="flipkartSpecialPrice" />
-                <ScalarProperty Name="flipkartSellingPrice" ColumnName="flipkartSellingPrice" />
+                <ScalarProperty Name="SpecialPrice" ColumnName="SpecialPrice" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
                 <ScalarProperty Name="maximumRetailPrice" ColumnName="maximumRetailPrice" />
                 <ScalarProperty Name="productFamily" ColumnName="productFamily" />
                 <ScalarProperty Name="imageUrls_800" ColumnName="imageUrls_800" />
@@ -869,13 +945,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="LootLoOnlineDatabaseModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ContractNumber" ColumnName="ContractNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="MacID" ColumnName="MacID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="VisitedUsers">
             <EntityTypeMapping TypeName="LootLoOnlineDatabaseModel.VisitedUser">
               <MappingFragment StoreEntitySet="VisitedUsers">
+                <ScalarProperty Name="ClickedOnBuyNow" ColumnName="ClickedOnBuyNow" />
+                <ScalarProperty Name="LastVisitedDate" ColumnName="LastVisitedDate" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductTitle" ColumnName="ProductTitle" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Catagory" ColumnName="Catagory" />
                 <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
-                <ScalarProperty Name="Catagory" ColumnName="Catagory" />
                 <ScalarProperty Name="MacId" ColumnName="MacId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

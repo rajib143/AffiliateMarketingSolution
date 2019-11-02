@@ -12,17 +12,14 @@ namespace AMA.DataLayer.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class VisitedUser
+    public partial class User
     {
-        public int ID { get; set; }
-        public string MacId { get; set; }
+        public long ID { get; set; }
+        public string MacID { get; set; }
         public string IPAddress { get; set; }
-        public Nullable<int> Count { get; set; }
-        public string Catagory { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string ContractNumber { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
-        public string ProductTitle { get; set; }
-        public string ProductId { get; set; }
-        public Nullable<System.DateTime> LastVisitedDate { get; set; }
-        public Nullable<bool> ClickedOnBuyNow { get; set; }
     }
 }

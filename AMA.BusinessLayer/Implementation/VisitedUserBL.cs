@@ -1,6 +1,7 @@
 ﻿using AMA.BusinessLayer.Interface;
 using AMA.DataLayer;
 using AMA.DataLayer.Data;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace AMA.BusinessLayer.Implementation
         }
 
         #region VisitedUser
-        public async Task<List<VisitedUser>> GetVisitedUsers()
+        public async Task<List<VisitedUser>> GetVisitedUsers(ILog log)
         {
             try
             {
@@ -32,7 +33,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<List<VisitedUser>> GetVisitedUsers(int? page, int? pageSize, Expression<Func<VisitedUser, bool>> predicate, Expression<Func<VisitedUser, object>> sort)
+        public async Task<List<VisitedUser>> GetVisitedUsers(int? page, int? pageSize, Expression<Func<VisitedUser, bool>> predicate, Expression<Func<VisitedUser, object>> sort, ILog log)
         {
             try
             {
@@ -44,7 +45,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<VisitedUser> GetVisitedUserByMacID(string MacId)
+        public async Task<VisitedUser> GetVisitedUserByMacID(string MacId, ILog log)
         {
             try
             {
@@ -56,7 +57,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<int> AddVisitedUser(VisitedUser visitedUser)
+        public async Task<int> AddVisitedUser(VisitedUser visitedUser, ILog logr)
         {
             try
             {
@@ -68,7 +69,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<bool> AddBulkVisitedUser(List<VisitedUser> visitedUsers)
+        public async Task<bool> AddBulkVisitedUser(List<VisitedUser> visitedUsers, ILog log)
         {
             try
             {
@@ -80,7 +81,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw;
             }
         }
-        public async Task<int> UpdateVisitedUser(VisitedUser visitedUser)
+        public async Task<int> UpdateVisitedUser(VisitedUser visitedUser, ILog log)
         {
             try
             {
@@ -92,7 +93,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<bool> RemoveVisitedUser(VisitedUser visitedUser)
+        public async Task<bool> RemoveVisitedUser(VisitedUser visitedUser, ILog log)
         {
             try
             {
@@ -104,7 +105,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<bool> BulkRemoveVisitedUser(List<VisitedUser> visitedUsers)
+        public async Task<bool> BulkRemoveVisitedUser(List<VisitedUser> visitedUsers, ILog log)
         {
             try
             {

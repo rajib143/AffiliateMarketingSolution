@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace AfiliateAPIConsumeJob.ConsumeAPIs
 {
   public interface IFipkartAPI : IAffiliateAPI
     {
-        void ProcessAllOffers();
+        void ProcessingFlipkartDOTOffers(ILog log);
 
     }
 }

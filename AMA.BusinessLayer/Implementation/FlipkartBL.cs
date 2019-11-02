@@ -10,6 +10,8 @@ using Newtonsoft.Json;
 using AMA.DataLayer;
 using AMA.BusinessLayer.Interface;
 using System.Linq.Expressions;
+using log4net;
+using AMA.BusinessLayer.Enum;
 
 namespace AMA.BusinessLayer.Implementation
 {
@@ -29,7 +31,7 @@ namespace AMA.BusinessLayer.Implementation
         }
 
 
-        public async Task ProcessOfferProducts()
+        public async Task ProcessOfferProducts(ILog log)
         {
             try
             {
@@ -45,31 +47,32 @@ namespace AMA.BusinessLayer.Implementation
                         products.AddRange(result.Where(x => x.productBaseInfoV1.inStock = true && x.productShippingInfoV1.sellerAverageRating.HasValue
                                                         && x.productShippingInfoV1.sellerAverageRating > 0));
 
+                        log.Info("Get " + products.Count() + " offer products from " + SiteName.Flipkart.ToString() + " for catagory " + item.resourceName);
+
                         if (products.Count() > 0)
-                            await InserIntoOfferproducts(products);
+                            await InserIntoOfferproducts(products, log);
                     }
                     catch (Exception ex)
                     {
-
+                        log.Error("Error in " + SiteName.Flipkart.ToString() + " offer products processing for catagory " + item.resourceName, ex);
                     }
                 }
 
             }
             catch (Exception ex)
             {
+                log.Error("Error in " + SiteName.Flipkart.ToString() + " offer products processing ", ex);
                 throw ex;
             }
         }
-        private async Task InserIntoOfferproducts(List<Product> products)
+        private async Task InserIntoOfferproducts(List<Product> products, ILog log)
         {
             List<OfferProduct> offerProducts = new List<OfferProduct>();
 
             Parallel.ForEach(products.OrderByDescending(x => x.productShippingInfoV1.sellerNoOfReviews).ToList(), (item) =>
-            //foreach (var item in products.OrderByDescending(x => x.productShippingInfoV1.sellerNoOfReviews).ToList())
             {
                 try
                 {
-                    //    var item = products.OrderByDescending(x => x.productShippingInfoV1.sellerNoOfReviews).First();
                     var resultDic = JsonConvert.DeserializeObject<Dictionary<string, string>>(item.productBaseInfoV1.imageUrls.ToString());
                     if (!offerProducts.Any(x => x.productId.Equals(item.productBaseInfoV1.productId))
                      && !string.IsNullOrEmpty(item.productBaseInfoV1.title)
@@ -90,8 +93,8 @@ namespace AMA.BusinessLayer.Implementation
                             productFamily = item.productBaseInfoV1.productFamily.ToString(), //
 
                             maximumRetailPrice = item.productBaseInfoV1.maximumRetailPrice.amount,
-                            flipkartSellingPrice = item.productBaseInfoV1.flipkartSellingPrice.amount,
-                            flipkartSpecialPrice = item.productBaseInfoV1.flipkartSpecialPrice.amount,
+                            SellingPrice = item.productBaseInfoV1.flipkartSellingPrice.amount,
+                            SpecialPrice = item.productBaseInfoV1.flipkartSpecialPrice.amount,
                             currency = item.productBaseInfoV1.maximumRetailPrice.currency,
                             productUrl = item.productBaseInfoV1.productUrl,
                             productBrand = item.productBaseInfoV1.productBrand,
@@ -113,8 +116,8 @@ namespace AMA.BusinessLayer.Implementation
                             booksInfo = item.categorySpecificInfoV1.booksInfo.ToString(),
                             lifeStyleInfo = item.categorySpecificInfoV1.lifeStyleInfo.ToString(),
                             IsUpdated = false,
-                            CreatedDate = DateTime.Now
-
+                            CreatedDate = DateTime.Now,
+                            SiteName= SiteName.Flipkart.ToString()
                         });
 
                     }
@@ -127,9 +130,9 @@ namespace AMA.BusinessLayer.Implementation
             });
 
             // bulk insertion 
-            await AddBulkOfferProducts(offerProducts);
+            await AddBulkOfferProducts(offerProducts,log);
         }
-        public async Task ProcessAllOffers()
+        public async Task ProcessAllOffers(ILog log)
         {
             try
             {
@@ -167,7 +170,7 @@ namespace AMA.BusinessLayer.Implementation
                     });
                 });
 
-                this.AddBulkAllOffers(allOffers);
+                this.AddBulkAllOffers(allOffers,log);
             }
             catch (Exception ex)
             {
@@ -175,18 +178,19 @@ namespace AMA.BusinessLayer.Implementation
             }
         }
 
-        public async Task RemoveOldOffers()
+        public async Task RemoveOldOffers(ILog log)
         {
             try
             {
-                var lstRemoveProducts = this.GetOfferProducts().Result.Where(x => x.CreatedDate < DateTime.Now.AddHours(-2));
-                this.RemoveBulkOfferProducts(lstRemoveProducts.ToList());
+                log.Info("RemoveOldOffers started");
+                var lstRemoveProducts = this.GetOfferProducts(log).Result.Where(x => x.CreatedDate < DateTime.Now.AddHours(-2));
+                this.RemoveBulkOfferProducts(lstRemoveProducts.ToList(),log);
 
 
-                var lstRemoveOffers = this.GetAllOffers().Result.Where(x => x.endTime > DateTime.Now);
-                this.RemoveBulkAllOffers(lstRemoveOffers.ToList());
+                var lstRemoveOffers = this.GetAllOffers(log).Result.Where(x => x.endTime > DateTime.Now);
+                this.RemoveBulkAllOffers(lstRemoveOffers.ToList(),log);
 
-
+                log.Info("RemoveOldOffers completed");
             }
             catch (Exception ex)
             {
@@ -194,7 +198,7 @@ namespace AMA.BusinessLayer.Implementation
             }
         }
         #region OfferProduct
-        public async Task<List<OfferProduct>> GetOfferProducts()
+        public async Task<List<OfferProduct>> GetOfferProducts(ILog log)
         {
             try
             {
@@ -206,7 +210,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<List<OfferProduct>> GetOfferProducts(int? page, int? pageSize, Expression<Func<OfferProduct, bool>> predicate, Expression<Func<OfferProduct, object>> sort)
+        public async Task<List<OfferProduct>> GetOfferProducts(int? page, int? pageSize, Expression<Func<OfferProduct, bool>> predicate, Expression<Func<OfferProduct, object>> sort, ILog log)
         {
             try
             {
@@ -218,7 +222,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<OfferProduct> GetOfferProductByTitle(string title)
+        public async Task<OfferProduct> GetOfferProductByTitle(string title, ILog log)
         {
             try
             {
@@ -230,7 +234,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<int> AddOfferProduct(OfferProduct offerProduct)
+        public async Task<int> AddOfferProduct(OfferProduct offerProduct, ILog log)
         {
             try
             {
@@ -249,7 +253,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<bool> AddBulkOfferProducts(List<OfferProduct> offerProducts)
+        public async Task<bool> AddBulkOfferProducts(List<OfferProduct> offerProducts, ILog log)
         {
             try
             {
@@ -275,7 +279,7 @@ namespace AMA.BusinessLayer.Implementation
 
             return true;
         }
-        public async Task<int> UpdateOfferProduct(OfferProduct offerProduct)
+        public async Task<int> UpdateOfferProduct(OfferProduct offerProduct, ILog log)
         {
             try
             {
@@ -287,7 +291,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<bool> RemoveOfferProduct(OfferProduct offerProduct)
+        public async Task<bool> RemoveOfferProduct(OfferProduct offerProduct, ILog log)
         {
             try
             {
@@ -299,7 +303,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<bool> RemoveBulkOfferProducts(List<OfferProduct> offerProducts)
+        public async Task<bool> RemoveBulkOfferProducts(List<OfferProduct> offerProducts, ILog log)
         {
             try
             {
@@ -313,7 +317,7 @@ namespace AMA.BusinessLayer.Implementation
 
         #endregion
         #region AllOffers
-        public async Task<List<AllOffer>> GetAllOffers()
+        public async Task<List<AllOffer>> GetAllOffers(ILog log)
         {
             try
             {
@@ -325,7 +329,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<List<AllOffer>> GetAllOffers(int? page, int? pageSize, Expression<Func<AllOffer, bool>> predicate, Expression<Func<AllOffer, object>> sort)
+        public async Task<List<AllOffer>> GetAllOffers(int? page, int? pageSize, Expression<Func<AllOffer, bool>> predicate, Expression<Func<AllOffer, object>> sort, ILog log)
         {
             try
             {
@@ -337,7 +341,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<AllOffer> GetAllOfferByTitle(string title)
+        public async Task<AllOffer> GetAllOfferByTitle(string title, ILog log)
         {
             try
             {
@@ -349,7 +353,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<int> AddAllOffer(AllOffer allOffer)
+        public async Task<int> AddAllOffer(AllOffer allOffer, ILog log)
         {
             try
             {
@@ -361,7 +365,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<bool> AddBulkAllOffers(List<AllOffer> allOffers)
+        public async Task<bool> AddBulkAllOffers(List<AllOffer> allOffers, ILog log)
         {
             try
             {
@@ -373,7 +377,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw;
             }
         }
-        public async Task<int> UpdateAllOffer(AllOffer allOffer)
+        public async Task<int> UpdateAllOffer(AllOffer allOffer, ILog log)
         {
             try
             {
@@ -385,7 +389,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<bool> RemoveAllOffer(AllOffer allOffer)
+        public async Task<bool> RemoveAllOffer(AllOffer allOffer, ILog log)
         {
             try
             {
@@ -397,7 +401,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<bool> RemoveBulkAllOffers(List<AllOffer> allOffers)
+        public async Task<bool> RemoveBulkAllOffers(List<AllOffer> allOffers, ILog log)
         {
             try
             {

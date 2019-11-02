@@ -1,5 +1,6 @@
 ﻿using AMA.BusinessLayer.AbstractFactory;
 using AMA.BusinessLayer.Implementation;
+using log4net;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,7 @@ namespace AfiliateAPIConsumeJob.ConsumeAPIs
             flipkartBL = new FlipkartBL();
             _AMAClient = new AMAClient(new FlipkartBL());
         }
-        
-        public void ProcessOffer()
+        public void OffersProcessing(ILog log)
         {
             try
             {
@@ -27,30 +27,30 @@ namespace AfiliateAPIConsumeJob.ConsumeAPIs
                 Task.Run(() =>
                 {
                     
-                    flipkartBL.ProcessOfferProducts();
+                    flipkartBL.ProcessOfferProducts(log);
                     
 
                 }).Wait();
 
                 Task.Run(() =>
                 {
-                    flipkartBL.ProcessAllOffers();
+                    flipkartBL.ProcessAllOffers(log);
 
                 }).Wait();
             }
             catch (Exception ex)
             {
+                log.Error("Error in ProcessingOffers", ex);
                 throw ex;
             }
         }
-
-        public void ProcessAllOffers()
+        public void ProcessingFlipkartDOTOffers(ILog log)
         {
             try
             {
                 Task.Run(() =>
                 {
-                    flipkartBL.ProcessAllOffers();
+                    flipkartBL.ProcessAllOffers(log);
                 }).Wait();
 
             }
@@ -59,23 +59,23 @@ namespace AfiliateAPIConsumeJob.ConsumeAPIs
                 throw ex;
             }
         }
-        public void RemoveOldOffers()
+        public void RemoveOldOffers(ILog log)
         {
             try
             {
                 //Task.Run(() =>
                 //{
-                    var lstRemoveProducts = flipkartBL.GetOfferProducts().Result.Where(x => x.CreatedDate < DateTime.Now.AddHours(-2));
+                    var lstRemoveProducts = flipkartBL.GetOfferProducts(log).Result.Where(x => x.CreatedDate < DateTime.Now.AddHours(-2));
 
-                   flipkartBL.RemoveBulkOfferProducts(lstRemoveProducts.ToList());
+                   flipkartBL.RemoveBulkOfferProducts(lstRemoveProducts.ToList(),log);
 
                // }).Wait();
 
                 Task.Run(() =>
                 {
-                    var lstRemoveOffers = flipkartBL.GetAllOffers().Result.Where(x => x.endTime > DateTime.Now);
+                    var lstRemoveOffers = flipkartBL.GetAllOffers(log).Result.Where(x => x.endTime > DateTime.Now);
 
-                    flipkartBL.RemoveBulkAllOffers(lstRemoveOffers.ToList());
+                    flipkartBL.RemoveBulkAllOffers(lstRemoveOffers.ToList(),log);
 
                 }).Wait();
 
@@ -85,6 +85,5 @@ namespace AfiliateAPIConsumeJob.ConsumeAPIs
                 throw ex;
             }
         }
-
     }
 }

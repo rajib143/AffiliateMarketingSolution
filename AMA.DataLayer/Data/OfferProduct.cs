@@ -22,8 +22,8 @@ namespace AMA.DataLayer.Data
         public string imageUrls_800 { get; set; }
         public string productFamily { get; set; }
         public decimal maximumRetailPrice { get; set; }
-        public decimal flipkartSellingPrice { get; set; }
-        public decimal flipkartSpecialPrice { get; set; }
+        public decimal SellingPrice { get; set; }
+        public decimal SpecialPrice { get; set; }
         public string currency { get; set; }
         public string productUrl { get; set; }
         public string productBrand { get; set; }
@@ -47,5 +47,6 @@ namespace AMA.DataLayer.Data
         public Nullable<bool> IsUpdated { get; set; }
         public Nullable<int> CategoryId { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string SiteName { get; set; }
     }
 }

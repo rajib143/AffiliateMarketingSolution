@@ -30,10 +30,12 @@ namespace AMA.DataLayer.Data
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<OfferBrand> OfferBrands { get; set; }
         public virtual DbSet<C__EFMigrationsHistory> C__EFMigrationsHistory { get; set; }
+        public virtual DbSet<Log> Logs { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<AllOffer> AllOffers { get; set; }
         public virtual DbSet<DealsOfTheDayOffer> DealsOfTheDayOffers { get; set; }
         public virtual DbSet<OfferProduct> OfferProducts { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<VisitedUser> VisitedUsers { get; set; }
     
         [DbFunction("LootLoOnlineDatabaseEntities", "fn_split_string_to_column")]

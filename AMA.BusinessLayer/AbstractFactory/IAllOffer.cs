@@ -1,4 +1,5 @@
 ﻿using AMA.DataLayer.Data;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +11,16 @@ namespace AMA.BusinessLayer.AbstractFactory
 {
    public interface IAllOffer
     {
-        Task<List<AllOffer>> GetAllOffers();
-        Task<List<AllOffer>> GetAllOffers(int? page, int? pageSize, Expression<Func<AllOffer, bool>> predicate, Expression<Func<AllOffer, object>> sort);
+        Task<List<AllOffer>> GetAllOffers(ILog log );
+        Task<List<AllOffer>> GetAllOffers(int? page, int? pageSize, Expression<Func<AllOffer, bool>> predicate, Expression<Func<AllOffer, object>> sort, ILog log);
 
-        Task<AllOffer> GetAllOfferByTitle(string title);
-        Task<int> AddAllOffer(AllOffer allOffer);
-        Task<bool> AddBulkAllOffers(List<AllOffer> allOffers);
-        Task<int> UpdateAllOffer(AllOffer allOffer);
-        Task<bool> RemoveAllOffer(AllOffer allOffer);
-        Task<bool> RemoveBulkAllOffers(List<AllOffer> allOffer);
+        Task<AllOffer> GetAllOfferByTitle(string title, ILog log);
+        Task<int> AddAllOffer(AllOffer allOffer, ILog log);
+        Task<bool> AddBulkAllOffers(List<AllOffer> allOffers, ILog log);
+        Task<int> UpdateAllOffer(AllOffer allOffer, ILog log);
+        Task<bool> RemoveAllOffer(AllOffer allOffer, ILog log);
+        Task<bool> RemoveBulkAllOffers(List<AllOffer> allOffer,ILog log );
 
-        Task ProcessAllOffers();
+        Task ProcessAllOffers(ILog log);
     }
 }

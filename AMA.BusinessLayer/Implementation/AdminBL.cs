@@ -7,6 +7,7 @@ using AMA.DataLayer.Data;
 using AMA.DataLayer;
 using System.Linq.Expressions;
 using AMA.BusinessLayer.Interface;
+using log4net;
 
 namespace AMA.BusinessLayer.Implementation
 {
@@ -21,7 +22,7 @@ namespace AMA.BusinessLayer.Implementation
             _offerBrandRepository = new OfferBrandRepository();
         }
 
-        public async Task<List<Category>> GetCategories()
+        public async Task<List<Category>> GetCategories(ILog log)
         {
             try
             {
@@ -33,7 +34,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<List<Category>> GetCategories(int? page, int? pageSize, Expression<Func<Category, bool>> predicate, Expression<Func<Category, object>> sort)
+        public async Task<List<Category>> GetCategories(int? page, int? pageSize, Expression<Func<Category, bool>> predicate, Expression<Func<Category, object>> sort, ILog log)
         {
             try
             {
@@ -45,7 +46,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<Category> GetCategoryByTitle(string title)
+        public async Task<Category> GetCategoryByTitle(string title, ILog log)
         {
             try
             {
@@ -57,7 +58,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<int> AddCategory(Category category)
+        public async Task<int> AddCategory(Category category, ILog log)
         {
             try
             {
@@ -69,7 +70,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<bool> AddBulkCategory(List<Category> categorys)
+        public async Task<bool> AddBulkCategory(List<Category> categorys, ILog log)
         {
             try
             {
@@ -81,7 +82,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw;
             }
         }
-        public async Task<int> UpdateCategory(Category category)
+        public async Task<int> UpdateCategory(Category category, ILog log)
         {
             try
             {
@@ -93,7 +94,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<bool> RemoveCategory(Category category)
+        public async Task<bool> RemoveCategory(Category category, ILog log)
         {
             try
             {
@@ -105,7 +106,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<bool> BulkRemoveCategory(List<Category> categorys)
+        public async Task<bool> BulkRemoveCategory(List<Category> categorys, ILog log)
         {
             try
             {
@@ -120,7 +121,7 @@ namespace AMA.BusinessLayer.Implementation
 
         #region Offer Brand
 
-        public async Task<List<OfferBrand>> GetOfferBrands()
+        public async Task<List<OfferBrand>> GetOfferBrands(ILog log)
         {
             try
             {
@@ -132,7 +133,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<List<OfferBrand>> GetOfferBrands(int? page, int? pageSize, Expression<Func<OfferBrand, bool>> predicate, Expression<Func<OfferBrand, object>> sort)
+        public async Task<List<OfferBrand>> GetOfferBrands(int? page, int? pageSize, Expression<Func<OfferBrand, bool>> predicate, Expression<Func<OfferBrand, object>> sort, ILog log)
         {
             try
             {
@@ -144,7 +145,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<OfferBrand> GetOfferBrandByTitle(string title)
+        public async Task<OfferBrand> GetOfferBrandByTitle(string title, ILog log)
         {
             try
             {
@@ -156,7 +157,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<int> AddOfferBrand(OfferBrand offerBrand)
+        public async Task<int> AddOfferBrand(OfferBrand offerBrand, ILog log)
         {
             try
             {
@@ -168,7 +169,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<bool> AddBulkOfferBrand(List<OfferBrand> offerBrands)
+        public async Task<bool> AddBulkOfferBrand(List<OfferBrand> offerBrands, ILog log)
         {
             try
             {
@@ -180,7 +181,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw;
             }
         }
-        public async Task<int> UpdateOfferBrand(OfferBrand offerBrand)
+        public async Task<int> UpdateOfferBrand(OfferBrand offerBrand, ILog log)
         {
             try
             {
@@ -192,7 +193,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<bool> RemoveOfferBrand(OfferBrand offerBrand)
+        public async Task<bool> RemoveOfferBrand(OfferBrand offerBrand, ILog log)
         {
             try
             {
@@ -204,7 +205,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<bool> BulkRemoveOfferBrand(List<OfferBrand> offerBrands)
+        public async Task<bool> BulkRemoveOfferBrand(List<OfferBrand> offerBrands, ILog log)
         {
             try
             {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,8 @@ namespace AfiliateAPIConsumeJob.ConsumeAPIs
 {
     public interface IAffiliateAPI
     {
-        void ProcessOffer();
-        void RemoveOldOffers();
+        void OffersProcessing(ILog log);
+        void RemoveOldOffers(ILog log);
 
     }
 }
