@@ -10,14 +10,23 @@ namespace AMA.BusinessLayer.AbstractFactory
 {
     public class AMAClient
     {
-        public IOffer offerBL;
+        public ISiteOffer SiteOffer;
         public IAdminBL Admin;
         public IVisitedUserBL VisitedUser;
-        public AMAClient(IOffer _offerBL)
+        public IOffers Offers;
+        public AMAClient(ISiteOffer _siteOfferBL)
         {
-            offerBL = _offerBL;
+            SiteOffer = _siteOfferBL;
             Admin = new AdminBL();
             VisitedUser = new VisitedUserBL();
+            Offers = new Offers();
+        }
+        public AMAClient()
+        {
+            SiteOffer = new FlipkartBL();
+            Admin = new AdminBL();
+            VisitedUser = new VisitedUserBL();
+            Offers = new Offers();
         }
     }
 }

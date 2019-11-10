@@ -56,9 +56,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractFactory\AMAClient.cs" />
+    <Compile Include="AbstractFactory\AMAFactory.cs" />
+    <Compile Include="AbstractFactory\IAMAFactory.cs" />
     <Compile Include="AbstractFactory\IAllOffer.cs" />
-    <Compile Include="AbstractFactory\IOffer.cs" />
-    <Compile Include="AbstractFactory\Offers.cs" />
+    <Compile Include="AbstractFactory\ISiteOffer.cs" />
+    <Compile Include="Interface\IOffers.cs" />
+    <Compile Include="Implementation\Offers.cs" />
     <Compile Include="ConsumeAPIs\FlipkartAPI.cs" />
     <Compile Include="ConsumeAPIs\FlipkartAPIResult.cs" />
     <Compile Include="Enum\SiteName.cs" />

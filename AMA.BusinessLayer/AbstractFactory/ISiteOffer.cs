@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AMA.BusinessLayer.AbstractFactory
 {
-    public interface IOffer : IAllOffer
+    public interface ISiteOffer : IAllOffer
     {
         Task<List<OfferProduct>> GetOfferProducts(ILog log=null);
         Task<List<OfferProduct>> GetOfferProducts(int? page, int? pageSize, Expression<Func<OfferProduct, bool>> predicate, Expression<Func<OfferProduct, object>> sort, ILog log=null);

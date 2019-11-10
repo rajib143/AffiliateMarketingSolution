@@ -13,6 +13,7 @@ namespace AMA.DataLayer.Data
         Task<List<T>> Find(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IOrderedQueryable<T>> orderExpression = null);
 
         Task<List<T>> GetAllByFilter(int? page, int? pageSize, Expression<Func<T, bool>> predicate, Expression<Func<T, object>> sort);
+        Task<List<T>> GetOffersByFilter(int? page, int? pageSize, Expression<Func<T, bool>> predicate, Expression<Func<T, object>> sort);
 
         Task<int> Add(T item);
 

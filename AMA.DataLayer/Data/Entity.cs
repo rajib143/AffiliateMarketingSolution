@@ -53,7 +53,7 @@ namespace AMA.DataLayer.Data
                 result = result.Where(predicate);
 
             if (sort != null)
-                result = result.OrderBy(sort);
+                result = result.OrderByDescending(sort);
 
             if (page.HasValue && pageSize.HasValue)
                 result = result.Skip((page.Value - 1) * pageSize.Value).Take(pageSize.Value);
@@ -87,7 +87,6 @@ namespace AMA.DataLayer.Data
             }
 
         }
-
         public virtual async Task<int> Add(T item)
         {
             try
@@ -212,6 +211,22 @@ namespace AMA.DataLayer.Data
             {
                 throw ex;
             }
+        }
+
+        public virtual async Task<List<T>> GetOffersByFilter(int? page, int? pageSize, System.Linq.Expressions.Expression<Func<T, bool>> predicate, System.Linq.Expressions.Expression<Func<T, object>> sort)
+        {
+            var result = _lootLoOnlineDatabaseEntities.Set<T>().AsQueryable();
+
+            if (predicate != null)
+                result = result.Where(predicate);
+
+            if (sort != null)
+                result = result.OrderBy(sort);
+
+            if (page.HasValue && pageSize.HasValue)
+                result = result.Skip((page.Value - 1) * pageSize.Value).Take(pageSize.Value);
+
+            return result.ToList();
         }
 
     }

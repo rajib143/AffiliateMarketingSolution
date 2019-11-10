@@ -177,7 +177,6 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-
         public async Task RemoveOldOffers(ILog log)
         {
             try

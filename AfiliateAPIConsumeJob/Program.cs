@@ -23,8 +23,8 @@ namespace AfiliateAPIConsumeJob
         // BasicConfigurator.Configure();
         //XmlConfigurator.Configure();
 
-        public static Dictionary<string, IOffer> affiliateProducts;
-        public static IOffer GetAffiliateAPI(string productName)
+        public static Dictionary<string, ISiteOffer> affiliateProducts;
+        public static ISiteOffer GetAffiliateAPI(string productName)
         {
             return affiliateProducts[productName];
         }
@@ -35,14 +35,14 @@ namespace AfiliateAPIConsumeJob
             try
             {
                 args = new string[] { "Flipkart" };
-                affiliateProducts = new Dictionary<string, IOffer>();
+                affiliateProducts = new Dictionary<string, ISiteOffer>();
                 affiliateProducts.Add("Flipkart", new FlipkartBL());
 
                 if (!string.IsNullOrEmpty(args[0]))
                 {
                     //logWriter.LogWrite(string.Format("Application Started for {0} API.", args[0]));
                     log.Info(string.Format("Application Started for {0} API.", args[0]));
-                    IOffer affiliateAPI = GetAffiliateAPI(args[0]);
+                    ISiteOffer affiliateAPI = GetAffiliateAPI(args[0]);
                     Task.Run(() =>
                     {
                         affiliateAPI.RemoveOldOffers(log);

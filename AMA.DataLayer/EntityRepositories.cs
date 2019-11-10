@@ -25,6 +25,7 @@ namespace AMA.DataLayer
     }
 
     #endregion
+
     #region Visited User
     public interface IVisitedUserRepository : IEntity<VisitedUser>
     {

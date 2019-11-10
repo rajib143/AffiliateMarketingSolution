@@ -1,0 +1,49 @@
+﻿@model List<AMA.WEB.Models.CategoryModel>
+@{
+    int i = 0, j = 0;
+}
+
+
+<header>
+    <div class="header-bottom">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <nav>
+                        <ul class="navigation">
+                            @foreach (var item in Model)
+                            {
+                                <li @(i == 0 ? "class='active'" : "")>
+                                    <a href="javascript:;">@item.Name</a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        @foreach (var child in item.Children)
+                                        {
+                                            <a class="dropdown-item" href="#">@child.Name</a>
+                                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                                @foreach (var child1 in child.Children)
+                                                {
+                                                    <a class="dropdown-item" href="#">@child1.Name</a>
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+
+                                </li>
+                                i++;
+                            }
+                            @*<li class="active"><a href="javascript:;">Mobiles</a></li>
+                                <li><a href="javascript:;">Laptops</a></li>
+                                <li><a href="javascript:;">Accessories</a></li>
+                                <li><a href="javascript:;">Electronics</a></li>
+                                <li><a href="javascript:;">Clothing</a></li>
+                                <li><a href="javascript:;"> Footwear </a></li>
+                                <li><a href="javascript:;">HouseHold Supplies </a></li>
+                                <li><a href="javascript:;">Skin & Beauty Care </a></li>
+                                <li><a href="javascript:;">Foods & Grocery</a></li>*@
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

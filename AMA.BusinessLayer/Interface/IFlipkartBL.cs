@@ -10,7 +10,7 @@ using AMA.BusinessLayer.AbstractFactory;
 
 namespace AMA.BusinessLayer.Interface
 {
-    public interface IFlipkartBL : IOffer
+    public interface IFlipkartBL : ISiteOffer
     {
         #region Offer Product
         //Task<List<OfferProduct>> GetOfferProducts();

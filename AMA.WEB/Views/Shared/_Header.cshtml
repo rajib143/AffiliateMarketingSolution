@@ -1,0 +1,66 @@
+﻿<header>
+    <div class="header-top">
+        <div class="container-fluid">
+            <div class="row justify-content-between">
+                <div class="col-auto">
+                    <nav>
+                        <ul class="header-top-menu">
+                            <li><a href="javascript:;">Special Offers</a></li>
+                            <li><a href="javascript:;">Connect With Us</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-auto">
+                    <nav>
+                        <ul class="header-top-menu">
+                            <li><a href="javascript:;">Help</a></li>
+                            <li><a href="javascript:;">Login / Signup</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<header class="header-middle">
+    <div class="container-fluid">
+        <div class="row align-items-center justify-content-start align-items-center">
+            <div class="col-auto pr-5">
+                <a href="javascript:;"><img src="~/Content/Theme1/images/logo.png" alt="" class="logo"></a>
+            </div>
+            <div class="col-sm-8 pl-5 pr-5">
+                <div class="search-box">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="input-group-text">
+                                <i class="lo-icons">&#xe906;</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto col-md d-flex justify-content-end">
+                <a class="btn btn-transparent-header" href="javascript:;">
+                    <i class="lo-icons">&#xe907;</i>
+                </a>
+                <a class="btn btn-transparent-header" href="javascript:;">
+                    <i class="lo-icons">&#xe903;</i>
+                </a>
+                <a class="btn btn-transparent-header" href="javascript:;">
+                    <i class="lo-icons">&#xe904;</i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div id="BindCatagory">
+    @Html.Action("BindCategories", "Home")
+</div>
+
+<script>
+
+
+
+</script>
