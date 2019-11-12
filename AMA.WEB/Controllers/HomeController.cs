@@ -19,7 +19,10 @@ namespace AMA.WEB.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.Title = "Welcome to Loot Online";
+            ViewBag.Title = "Welcome to Loot Lo Online";
+
+            MainOffersModel model = new MainOffersModel();
+           
 
             return View();
         }
@@ -30,29 +33,16 @@ namespace AMA.WEB.Controllers
             try
             {
                 string CateroryAPI = ConfigurationManager.AppSettings["CateroryAPI"];
-
                 List<CategoryModel> Catagories = new List<CategoryModel>();
 
-                using (HttpClient client = new HttpClient())
+                HttpResponseMessage response = AMAManager.GetClientResponse(CateroryAPI);
+                if (response.IsSuccessStatusCode)
                 {
-                    client.BaseAddress = new Uri(CateroryAPI);
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-                    Task.Run(() =>
-                    {
-                        HttpResponseMessage response =  client.GetAsync(CateroryAPI).Result;
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var data = response.Content.ReadAsStringAsync().Result;
-                            Catagories = JsonConvert.DeserializeObject<List<CategoryModel>>(data);
-
-                        }
-                    }).Wait();
-                  
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    Catagories = JsonConvert.DeserializeObject<List<CategoryModel>>(data);
 
                 }
-
+               
                 return PartialView("~/Views/Shared/_Category.cshtml", Catagories);
             }
             catch (Exception ex)
@@ -61,5 +51,7 @@ namespace AMA.WEB.Controllers
                 throw ex;
             }
         }
+
+       
     }
 }

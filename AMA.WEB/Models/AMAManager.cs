@@ -3,6 +3,8 @@ using AMA.DataLayer.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace AMA.WEB.Models
@@ -27,6 +29,35 @@ namespace AMA.WEB.Models
                 ParentCategory=item,
                 Children = FillRecursive(flatObjects, item.Id)
             }).ToList();
+        }
+
+        public static HttpResponseMessage GetClientResponse( string APIurl)
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                using (HttpClient client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(APIurl);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                    Task.Run(() =>
+                    {
+                         response = client.GetAsync(APIurl).Result;
+                        
+                    }).Wait();
+
+
+                }
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
     }
 }

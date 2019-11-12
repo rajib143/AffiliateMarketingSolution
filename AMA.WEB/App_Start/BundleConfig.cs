@@ -9,9 +9,11 @@ namespace AMA.WEB
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        // "~/Content/Theme1/js/jquery-{version}.js",
-                        "~/Content/Theme1/js/jquery-3.3.1.slim.min.js",
-                        "~/Content/Theme1/js/popper.min.js"
+                       // "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-{version}.slim.min.js",
+                        "~/Scripts/popper.min.js"
+                        //"~/Content/Theme1/js/jquery-3.3.1.slim.min.js",
+                       // "~/Content/Theme1/js/popper.min.js"
                         ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -20,13 +22,18 @@ namespace AMA.WEB
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Content/Theme1/js/bootstrap.min.js"));
+                     // "~/Content/Theme1/js/bootstrap.min.js",
+                      "~/Scripts/bootstrap.min.js",
+                      "~/Scripts/jquery.unobtrusive-ajax.min.js"
+                      ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                        // "~/Content/Theme1/css/bootstrap.min.css",
                        "~/Content/bootstrap.min.css",
                       "~/Content/Theme1/css/style.css"
                       ));
+
+         BundleTable.EnableOptimizations = true;
         }
     }
 }

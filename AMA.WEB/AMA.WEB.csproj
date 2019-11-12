@@ -166,9 +166,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\APIs\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\OfferProductsController.cs" />
+    <Compile Include="Controllers\APIs\OfferProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -233,14 +233,6 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\esm\popper-utils.js" />
-    <Content Include="Scripts\esm\popper-utils.min.js" />
-    <Content Include="Scripts\esm\popper.js" />
-    <Content Include="Scripts\esm\popper.min.js" />
-    <Content Include="Scripts\esm\popper.min.js.map" />
-    <Content Include="Scripts\esm\popper.js.map" />
-    <Content Include="Scripts\esm\popper-utils.min.js.map" />
-    <Content Include="Scripts\esm\popper-utils.js.map" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
@@ -252,11 +244,21 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
@@ -284,6 +286,8 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Banner.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_Category.cshtml" />
+    <Content Include="Views\Home\_Slider.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
@@ -293,8 +297,6 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Shared\_Category.cshtml" />
-    <Content Include="Views\Home\_Slider.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -315,10 +317,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\index.d.ts" />
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,13 +1,13 @@
 @font-face {
-  font-family: 'icomoon';
-  src:  url('../fonts/icomoon.eot?7xygy3');
-  src:  url('../fonts/icomoon.eot?7xygy3#iefix') format('embedded-opentype'),
-    url('../fonts/icomoon.ttf?7xygy3') format('truetype'),
-    url('../fonts/icomoon.woff?7xygy3') format('woff'),
-    url('../fonts/icomoon.svg?7xygy3#icomoon') format('svg');
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
+    font-family: 'icomoon';
+    src: url('../Content/Theme1/fonts/icomoon.eot?7xygy3');
+    src: url('../Content/Theme1/fonts/icomoon.eot?7xygy3#iefix') format('embedded-opentype'),
+        url('../Content/Theme1/fonts/icomoon.ttf?7xygy3') format('truetype'), 
+        url('../Content/Theme1/fonts/icomoon.woff?7xygy3') format('woff'),
+        url('../Content/Theme1/fonts/icomoon.svg?7xygy3#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
 }
 
 .lo-icons {
@@ -51,8 +51,8 @@ body {
 .btn-transparent-header {
 	color: #0066cc;
 	font-size: 18px;
-	padding-left: 20px;
-	padding-right: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 .btn-transparent-header:hover {
 	color: #cc9900;
@@ -69,7 +69,7 @@ header>.header-top {
 }
 
 header.header-middle {
-	padding: 10px 130px;
+	padding: 10px 50px;
 	position: sticky;
 	top: 0;
 	z-index: 11;
@@ -120,7 +120,7 @@ nav>ul.navigation>li {
 }
 nav>ul.navigation>li>a {
 	display: block;
-	font-size: 16px;
+	font-size: 14px;
 	text-decoration: none;
 	text-transform: uppercase;
 	color: #333333;
@@ -212,13 +212,14 @@ nav>ul.navigation>li:hover>a, nav>ul.navigation>li.active>a {
 	flex-wrap: wrap;
 }
 .product-box {
-	width: calc(100% / 7 - 10px);
+	width: calc(100% / 5 - 10px);
 	padding: 15px;
 	transition: all 0.3s ease-in-out;
 	background: #fff;
 	box-shadow: 0px 0px 5px -3px #999;
 	position: relative;
 	margin: 5px;
+	text-align: center;
 }
 .product-box:hover {
 	box-shadow: 0px 0px 10px -3px #999;
@@ -242,6 +243,7 @@ h3.product-name {
 	margin: 0;
 	line-height: 20px;
 	margin-bottom: 15px;
+	text-align: left;
 }
 .product-price-row {
 	display: flex;
@@ -272,7 +274,7 @@ h3.product-name {
 .category-container {
 	display: flex;
 	justify-content: center;
-	padding: 40px 100px;
+	padding: 40px 0px;
 }
 .category-container .category-box {
 	width: calc(50% - 30px);
@@ -340,4 +342,126 @@ p.copyrighttext {
 	font-size: 14px;
 	margin: 0;
 	line-height: 22px;
+}
+.full-page-menu {
+	background: #fff;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 12;
+	padding: 100px 200px;
+	display: none;
+}
+.full-page-menu.active {
+	display: block;
+	animation: zoom .3s 1;
+}
+.input-group-lg>.input-group-prepend>.input-group-text {
+	background: transparent;
+	border-left: none;
+}
+.input-group-lg>input {
+	border-right: none;
+	outline: none;
+	border-radius: 0 !important;
+}
+.input-group-lg>input:focus {
+	outline: none;
+	box-shadow: none;
+	border-color: #0066cc;
+}
+
+.input-group-lg>input:focus + .input-group-prepend>.input-group-text {
+	border-color: #0066cc;
+}
+ul.category-list {
+	margin: 100px 0;
+	display: flex;
+	flex-wrap: wrap;	
+	max-height: calc(100vh - 300px);
+	overflow: auto;
+}
+ul.category-list>li {
+	width: 25%;
+	padding: 10px;
+	list-style: none;
+}
+ul.category-list>li>a {
+	display: block;
+	color: #333;
+	text-decoration: none;
+	font-weight: 600;
+	line-height: 40px;
+	text-transform: capitalize;
+	font-size: 20px;
+}
+.close-popup {
+	font-size: 42px;
+	color: #333;
+	line-height: 60px;
+	text-decoration: none;
+	position: absolute;
+	top: 30px;
+	right: 50px;
+	cursor: pointer;
+}
+
+
+@-webkit-keyframes zoom {
+	0%{
+		transform: scale(0)
+	}
+	100%{
+		transform: scale(1)
+	}
+}
+@keyframes zoom {
+	0%{
+		transform: scale(0)
+	}
+	100%{
+		transform: scale(1)
+	}
+}
+@media (min-width: 1025px){
+	header.header-middle {
+		padding: 10px 70px;
+	}
+	.category-container {
+		padding: 40px 10px;
+	}
+	.btn-transparent-header {
+		padding-left: 10px;
+    	padding-right: 10px;
+	}
+	nav>ul.navigation>li>a {
+		font-size: 12px;
+	}
+}
+@media (min-width: 1367px) {
+	nav>ul.navigation>li>a {
+		font-size: 15px;
+	}
+	.product-box {
+		width: calc(100% / 6 - 10px);
+	}
+	ul.category-list>li>a {
+		font-size: 24px;
+	}
+}
+@media (min-width: 1661px) {
+	nav>ul.navigation>li>a {
+		font-size: 16px;
+	}
+	.product-box {
+		width: calc(100% / 7 - 10px);
+	}
+	.category-container {
+		padding: 40px 200px;
+	}
+	header.header-middle {
+		padding: 10px 200px;
+	}
 }

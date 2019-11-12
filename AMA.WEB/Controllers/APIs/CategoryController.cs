@@ -12,8 +12,9 @@ using System.Web.Http.Description;
 using AMA.DataLayer.Data;
 using AMA.WEB.Models;
 
-namespace AMA.WEB.Controllers
+namespace AMA.WEB.Controllers.API
 {
+   
     public class CategoryController : ApiController
     {
         private AMAManager _AMAManager = new AMAManager();
@@ -21,6 +22,7 @@ namespace AMA.WEB.Controllers
 
         LootLoOnlineDatabaseEntities db = new LootLoOnlineDatabaseEntities();
 
+      
         // GET: api/Category
         public  IQueryable<CategoryModel> GetCategories()
         {
@@ -29,6 +31,23 @@ namespace AMA.WEB.Controllers
 
             return categoryModel.ToList().AsQueryable();
         }
+
+      
+        // GET: api/Category/5
+        [ResponseType(typeof(CategoryModel))]
+        public async Task<IHttpActionResult> GetCategoryByParentID(int ParentId)
+        {
+            List<Category> categories = _AMAManager.Client.Admin.GetCategories(log).Result.ToList();
+            List<CategoryModel> categoryModel = AMAManager.FillRecursive(categories, ParentId);
+
+            if (categoryModel == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(categoryModel);
+        }
+
 
         // GET: api/Category/5
         [ResponseType(typeof(Category))]

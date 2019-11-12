@@ -12,7 +12,7 @@ using System.Web.Http.Description;
 using AMA.DataLayer.Data;
 using AMA.WEB.Models;
 
-namespace AMA.WEB.Controllers
+namespace AMA.WEB.Controllers.API
 {
     public class OfferProductsController : ApiController
     {
