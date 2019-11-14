@@ -1,8 +1,4 @@
 ﻿@model List<AMA.WEB.Models.CategoryModel>
-@{
-   // int i = 0, j = 0;
-}
-
 <header>
     <div class="header-bottom">
         <div class="container-fluid">
@@ -15,7 +11,6 @@
                                 <li >
                                     <a href="javascript:;">@item.Name</a>
                                     <div class="full-page-menu">
-
                                         <a class="close-popup">&times;</a>
                                         <div class="input-group input-group-lg">
                                             <input class="form-control" aria-label="With textarea" type="text">
@@ -33,16 +28,13 @@
                                                 foreach (var children in child.Children)
                                                 {
                                                     <li>
-                                                        <a class="dropdown-item" href="#">@children.Name</a>
+                                                        <a  href="#">@children.Name</a>
                                                     </li>
                                                 }
                                             }
-
                                         </ul>
                                     </div>
-
                                 </li>
-                               
                             }
                         </ul>
                     </nav>

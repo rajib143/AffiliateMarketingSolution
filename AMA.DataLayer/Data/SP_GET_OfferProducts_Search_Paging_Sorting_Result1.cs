@@ -11,7 +11,7 @@ namespace AMA.DataLayer.Data
 {
     using System;
     
-    public partial class SP_GET_OfferProducts_Search_Paging_Sorting_Result
+    public partial class SP_GET_OfferProducts_Search_Paging_Sorting_Result1
     {
         public string productId { get; set; }
         public string categoryPath { get; set; }
@@ -22,6 +22,8 @@ namespace AMA.DataLayer.Data
         public string imageUrls_400 { get; set; }
         public string imageUrls_800 { get; set; }
         public string currency { get; set; }
+        public decimal SellingPrice { get; set; }
+        public decimal SpecialPrice { get; set; }
         public decimal maximumRetailPrice { get; set; }
         public Nullable<decimal> discountPercentage { get; set; }
         public string offers { get; set; }
@@ -29,7 +31,5 @@ namespace AMA.DataLayer.Data
         public string productBrand { get; set; }
         public Nullable<long> ROWNUM { get; set; }
         public Nullable<int> TotalCount { get; set; }
-        public decimal SellingPrice { get; set; }
-        public decimal SpecialPrice { get; set; }
     }
 }

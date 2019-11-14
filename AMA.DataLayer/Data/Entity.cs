@@ -14,7 +14,6 @@ namespace AMA.DataLayer.Data
     public class Entity<T> : IEntity<T> where T : class
     {
         private LootLoOnlineDatabaseEntities _lootLoOnlineDatabaseEntities;
-
         public Entity()
         {
             _lootLoOnlineDatabaseEntities = DatabaseConnection.Entityinstance;
@@ -31,7 +30,6 @@ namespace AMA.DataLayer.Data
                 throw ex;
             }
         }
-
         public virtual async Task<List<T>> Find(Expression<Func<T, bool>> predicate, Func<IQueryable<T>, IOrderedQueryable<T>> orderExpression = null)
         {
             var result = _lootLoOnlineDatabaseEntities.Set<T>().AsQueryable();
@@ -163,7 +161,6 @@ namespace AMA.DataLayer.Data
 
             return true;
         }
-
         public virtual async Task<int> Update(T item)
         {
             try
@@ -212,7 +209,6 @@ namespace AMA.DataLayer.Data
                 throw ex;
             }
         }
-
         public virtual async Task<List<T>> GetOffersByFilter(int? page, int? pageSize, System.Linq.Expressions.Expression<Func<T, bool>> predicate, System.Linq.Expressions.Expression<Func<T, object>> sort)
         {
             var result = _lootLoOnlineDatabaseEntities.Set<T>().AsQueryable();

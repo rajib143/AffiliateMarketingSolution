@@ -9,8 +9,8 @@ namespace AMA.WEB
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                       // "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery-{version}.slim.min.js",
+                         "~/Scripts/jquery-{version}.js",
+                        //"~/Scripts/jquery-3.3.1.slim.min.js",
                         "~/Scripts/popper.min.js"
                         //"~/Content/Theme1/js/jquery-3.3.1.slim.min.js",
                        // "~/Content/Theme1/js/popper.min.js"
@@ -27,13 +27,14 @@ namespace AMA.WEB
                       "~/Scripts/jquery.unobtrusive-ajax.min.js"
                       ));
 
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                       // "~/Content/Theme1/css/bootstrap.min.css",
-                       "~/Content/bootstrap.min.css",
+                        "~/Content/Theme1/css/bootstrap.min.css",
+                       //"~/Content/bootstrap.min.css",
                       "~/Content/Theme1/css/style.css"
                       ));
 
-         BundleTable.EnableOptimizations = true;
+         BundleTable.EnableOptimizations = false;
         }
     }
 }

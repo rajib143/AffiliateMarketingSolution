@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    @*<meta name="viewport" content="width=device-width" />*@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@ViewBag.Title</title>
 
@@ -11,16 +11,20 @@
     <link href="https://fonts.googleapis.com/css?family=Athiti:400,600,700|Montez&display=swap" rel="stylesheet">
 
     @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/modernizr")
 
 
 </head>
 <body>
-    @Html.Partial("_Header");
+    @Html.Partial("_Header")
 
-    <div id="BindCatagory">
-        @Html.Action("BindCategories", "Home")
-    </div>
+    <header>
+        <div class="header-bottom" id="BindCatagory">
+            @*@Html.Action("BindCategories", "Home")*@
+        </div>
+    </header>
+
 
     <div>
         @RenderBody()
@@ -28,19 +32,21 @@
     @Html.Partial("_Footer");
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
     <script>
-        jQuery(document).ready(function(){
+        $(document).ready(function(){
             //Load Category
-             var BindCatagoryDiv = $("#BindCatagory");  
-             jQuery.ajax({
+             var BindCatagoryDiv = $("#BindCatagory");
+             $.ajax({
                  cache: false,
                  type: "GET",
-                 url: "@(Url.Action("BindCategories","Home"))",
+                 url: "@(Url.Action("BindCategories","Common"))",
                 //data: { "id": id },
                 success: function (data)
                 {
+                    
                     BindCatagoryDiv.html('');
                     BindCatagoryDiv.html(data);
                 },
@@ -52,12 +58,12 @@
         });
 
 
-        jQuery(document).ready(function () {
-			jQuery('nav>ul.navigation>li>a').click(function(){
-				jQuery(this).siblings('.full-page-menu').addClass('active');
+        $(document).ready(function () {
+			$('nav>ul.navigation>li>a').click(function(){
+				$(this).siblings('.full-page-menu').addClass('active');
 			});
-			jQuery('.close-popup').click(function(){
-				jQuery(this).parents('.full-page-menu').removeClass('active');
+			$('.close-popup').click(function(){
+				$(this).parents('.full-page-menu').removeClass('active');
 			});
 		})
     </script>

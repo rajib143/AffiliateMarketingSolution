@@ -12,9 +12,19 @@ namespace AMA.BusinessLayer.Implementation
     {
         private readonly IOfferProductRepository _offerProductRepository;
 
-        public void GetOffers()
+        public async Task<List<OfferProduct>> GetOfferProducts(int? page, int? pageSize, Expression<Func<OfferProduct, bool>> predicate, Expression<Func<OfferProduct, object>> sort, ILog log)
         {
+            try
+            {
 
+                return _offerProductRepository.GetAllByFilter(page, pageSize, predicate, sort).Result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
+
     }
 }
