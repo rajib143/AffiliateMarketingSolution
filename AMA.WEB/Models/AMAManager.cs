@@ -1,5 +1,6 @@
 ﻿using AMA.BusinessLayer.AbstractFactory;
 using AMA.DataLayer.Data;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace AMA.WEB.Models
             }).ToList();
         }
 
-        public static HttpResponseMessage GetClientResponse( string APIurl)
+        public static HttpResponseMessage GetClientResponse(string APIurl)
         {
             try
             {
@@ -46,6 +47,38 @@ namespace AMA.WEB.Models
                     {
                          response = client.GetAsync(APIurl).Result;
                         
+                    }).Wait();
+
+
+                }
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public static HttpResponseMessage GetSearchClientResponse(string APIurl, object parameters)
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                using (HttpClient client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(APIurl);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                    Task.Run(() =>
+                    {
+                        var myContent = JsonConvert.SerializeObject(parameters);
+                        var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+                        var byteContent = new ByteArrayContent(buffer);
+                        response = client.PostAsync(APIurl, byteContent).Result;
+
                     }).Wait();
 
 

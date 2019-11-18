@@ -46,7 +46,7 @@
                 //data: { "id": id },
                 success: function (data)
                 {
-                    
+
                     BindCatagoryDiv.html('');
                     BindCatagoryDiv.html(data);
                 },
@@ -65,7 +65,29 @@
 			$('.close-popup').click(function(){
 				$(this).parents('.full-page-menu').removeClass('active');
 			});
-		})
+        })
+
+        $(document).ready(function () {
+       $("#ProductSearchBox").autocomplete({
+           source: function(request,response) {
+               $.ajax({
+                   url: "/api/Search",
+                   type: "GET",
+                   dataType: "json",
+                   data: { searchText: request.term },
+                   success: function (data) {
+                       response($.map(data, function (item) {
+                           return { label: item.title, value: item.title};
+                       }))
+
+                   }
+               })
+           },
+           messages: {
+               noResults: "", results: ""
+           }
+       });
+   })
     </script>
 </body>
 </html>

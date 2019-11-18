@@ -11,9 +11,10 @@ namespace AMA.WEB
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                          "~/Scripts/jquery-{version}.js",
                         //"~/Scripts/jquery-3.3.1.slim.min.js",
-                        "~/Scripts/popper.min.js"
+                        "~/Scripts/popper.min.js",
+                         "~/Scripts/jquery-ui-1.12.1.js"
                         //"~/Content/Theme1/js/jquery-3.3.1.slim.min.js",
-                       // "~/Content/Theme1/js/popper.min.js"
+                        // "~/Content/Theme1/js/popper.min.js"
                         ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -30,7 +31,7 @@ namespace AMA.WEB
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                         "~/Content/Theme1/css/bootstrap.min.css",
-                       //"~/Content/bootstrap.min.css",
+                       "~/Content/themes/base/jquery-ui.min.css",
                       "~/Content/Theme1/css/style.css"
                       ));
 

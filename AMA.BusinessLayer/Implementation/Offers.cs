@@ -1,5 +1,7 @@
 ﻿using AMA.BusinessLayer.Interface;
 using AMA.DataLayer;
+using AMA.DataLayer.Data;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,21 +12,44 @@ namespace AMA.BusinessLayer.Implementation
 {
     public class Offers : IOffers
     {
-        private readonly IOfferProductRepository _offerProductRepository;
+        private LootLoOnlineEntity lootLoOnline = new LootLoOnlineEntity();
+        public Offers()
+        {
 
-        public async Task<List<OfferProduct>> GetOfferProducts(int? page, int? pageSize, Expression<Func<OfferProduct, bool>> predicate, Expression<Func<OfferProduct, object>> sort, ILog log)
+        }
+
+        public async Task<List<SP_GET_AllOffers_Search_Paging_Sorting_Result>> GetAllOffersBySP(string searchText, DateTime? startTime, DateTime? endTime, int? page, int? pageSize, string sort, ILog log = null)
         {
             try
             {
-
-                return _offerProductRepository.GetAllByFilter(page, pageSize, predicate, sort).Result;
+                return await lootLoOnline.GetAllOffersBySP(searchText, startTime, endTime, page, pageSize, sort, log);
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
-
+        public async Task<List<SP_GET_OfferProducts_Search_Paging_Sorting_Result>> GetOfferProductsBySP(string searchText, int? page, int? pageSize, string sort, ILog log = null)
+        {
+            try
+            {
+                return await lootLoOnline.GetOfferProductsBySP(searchText, page, pageSize, sort, log);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<List<SP_GET_OfferProducts_Search_Result>> GetSearchOfferProductsBySP(string searchText, int? page, int? pageSize, string sort, ILog log = null)
+        {
+            try
+            {
+                return await lootLoOnline.GetSearchOfferProductsBySP(searchText, page, pageSize, sort, log);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

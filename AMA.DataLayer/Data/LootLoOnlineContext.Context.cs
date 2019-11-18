@@ -89,13 +89,13 @@ namespace AMA.DataLayer.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllOfferProducts_Result>("GetAllOfferProducts", siteNameParameter);
         }
     
-        public virtual ObjectResult<GetTop100OfferProducts_Result> GetTop100OfferProducts(string siteName)
+        public virtual int GetTop100OfferProducts(string siteName)
         {
             var siteNameParameter = siteName != null ?
                 new ObjectParameter("SiteName", siteName) :
                 new ObjectParameter("SiteName", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTop100OfferProducts_Result>("GetTop100OfferProducts", siteNameParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetTop100OfferProducts", siteNameParameter);
         }
     
         public virtual int InsertOrUpdateIntoVisitedUsers(Nullable<int> iD, string macId, string catagory, string iPAddress, Nullable<int> count)
@@ -417,7 +417,7 @@ namespace AMA.DataLayer.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RemoveOldOfferProducts");
         }
     
-        public virtual ObjectResult<SP_GET_AllOffers_Search_Paging_Sorting_Result2> SP_GET_AllOffers_Search_Paging_Sorting(string searchText, Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime, Nullable<int> pageNbr, Nullable<int> pageSize, string sortCol)
+        public virtual ObjectResult<SP_GET_AllOffers_Search_Paging_Sorting_Result> SP_GET_AllOffers_Search_Paging_Sorting(string searchText, Nullable<System.DateTime> startTime, Nullable<System.DateTime> endTime, Nullable<int> pageNbr, Nullable<int> pageSize, string sortCol)
         {
             var searchTextParameter = searchText != null ?
                 new ObjectParameter("searchText", searchText) :
@@ -443,10 +443,10 @@ namespace AMA.DataLayer.Data
                 new ObjectParameter("SortCol", sortCol) :
                 new ObjectParameter("SortCol", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_AllOffers_Search_Paging_Sorting_Result2>("SP_GET_AllOffers_Search_Paging_Sorting", searchTextParameter, startTimeParameter, endTimeParameter, pageNbrParameter, pageSizeParameter, sortColParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_AllOffers_Search_Paging_Sorting_Result>("SP_GET_AllOffers_Search_Paging_Sorting", searchTextParameter, startTimeParameter, endTimeParameter, pageNbrParameter, pageSizeParameter, sortColParameter);
         }
     
-        public virtual ObjectResult<SP_GET_OfferProducts_Search_Paging_Sorting_Result2> SP_GET_OfferProducts_Search_Paging_Sorting(string searchText, Nullable<int> pageNbr, Nullable<int> pageSize, string sortCol)
+        public virtual ObjectResult<SP_GET_OfferProducts_Search_Paging_Sorting_Result> SP_GET_OfferProducts_Search_Paging_Sorting(string searchText, Nullable<int> pageNbr, Nullable<int> pageSize, string sortCol)
         {
             var searchTextParameter = searchText != null ?
                 new ObjectParameter("searchText", searchText) :
@@ -464,7 +464,28 @@ namespace AMA.DataLayer.Data
                 new ObjectParameter("SortCol", sortCol) :
                 new ObjectParameter("SortCol", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_OfferProducts_Search_Paging_Sorting_Result2>("SP_GET_OfferProducts_Search_Paging_Sorting", searchTextParameter, pageNbrParameter, pageSizeParameter, sortColParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_OfferProducts_Search_Paging_Sorting_Result>("SP_GET_OfferProducts_Search_Paging_Sorting", searchTextParameter, pageNbrParameter, pageSizeParameter, sortColParameter);
+        }
+    
+        public virtual ObjectResult<SP_GET_OfferProducts_Search_Result> SP_GET_OfferProducts_Search(string searchText, Nullable<int> pageNbr, Nullable<int> pageSize, string sortCol)
+        {
+            var searchTextParameter = searchText != null ?
+                new ObjectParameter("searchText", searchText) :
+                new ObjectParameter("searchText", typeof(string));
+    
+            var pageNbrParameter = pageNbr.HasValue ?
+                new ObjectParameter("PageNbr", pageNbr) :
+                new ObjectParameter("PageNbr", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            var sortColParameter = sortCol != null ?
+                new ObjectParameter("SortCol", sortCol) :
+                new ObjectParameter("SortCol", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_OfferProducts_Search_Result>("SP_GET_OfferProducts_Search", searchTextParameter, pageNbrParameter, pageSizeParameter, sortColParameter);
         }
     }
 }

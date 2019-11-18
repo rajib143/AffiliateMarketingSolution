@@ -19,7 +19,6 @@ namespace AMA.WEB.Controllers
         {
             return View();
         }
-
         public ActionResult BindCategories()
         {
             try
@@ -41,5 +40,9 @@ namespace AMA.WEB.Controllers
                 throw ex;
             }
         }
+
+
+
+
     }
 }

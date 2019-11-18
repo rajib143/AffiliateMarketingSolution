@@ -22,9 +22,9 @@ namespace AMA.WEB.Controllers.API
         private LootLoOnlineDatabaseEntities db = new LootLoOnlineDatabaseEntities();
 
         // GET: api/OfferProducts
-        public IQueryable<OfferProduct> GetOfferProducts()
+        public IQueryable<SP_GET_OfferProducts_Search_Paging_Sorting_Result> GetOfferProducts()
         {
-            List<OfferProduct> offerProducts = _AMAManager.Client.SiteOffer.GetOfferProducts(1, 50, x => x.sellerNoOfRatings > 3, (x => new { x.CreatedDate.Value, x.discountPercentage }), log).Result.ToList();
+            List<SP_GET_OfferProducts_Search_Paging_Sorting_Result> offerProducts = _AMAManager.Client.Offers.GetOfferProductsBySP(null,1,50,null, log).Result.ToList();
            
             return offerProducts.AsQueryable();
         }

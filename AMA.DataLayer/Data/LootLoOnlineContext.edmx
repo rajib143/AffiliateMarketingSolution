@@ -199,6 +199,12 @@
           <Parameter Name="PageSize" Type="int" Mode="In" />
           <Parameter Name="SortCol" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="SP_GET_OfferProducts_Search" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="searchText" Type="nvarchar" Mode="In" />
+          <Parameter Name="PageNbr" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="SortCol" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="SP_GET_OfferProducts_Search_Paging_Sorting" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="searchText" Type="nvarchar" Mode="In" />
           <Parameter Name="PageNbr" Type="int" Mode="In" />
@@ -334,7 +340,7 @@
           <FunctionImport Name="GetAllOfferProducts" ReturnType="Collection(LootLoOnlineDatabaseModel.GetAllOfferProducts_Result)">
           <Parameter Name="SiteName" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetTop100OfferProducts" ReturnType="Collection(LootLoOnlineDatabaseModel.GetTop100OfferProducts_Result)">
+          <FunctionImport Name="GetTop100OfferProducts">
           <Parameter Name="SiteName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="InsertOrUpdateIntoVisitedUsers">
@@ -433,7 +439,7 @@
           <EntitySet Name="OfferProducts" EntityType="LootLoOnlineDatabaseModel.OfferProduct" />
           <EntitySet Name="Users" EntityType="LootLoOnlineDatabaseModel.User" />
           <EntitySet Name="VisitedUsers" EntityType="LootLoOnlineDatabaseModel.VisitedUser" />
-          <FunctionImport Name="SP_GET_AllOffers_Search_Paging_Sorting" ReturnType="Collection(LootLoOnlineDatabaseModel.SP_GET_AllOffers_Search_Paging_Sorting_Result2)">
+          <FunctionImport Name="SP_GET_AllOffers_Search_Paging_Sorting" ReturnType="Collection(LootLoOnlineDatabaseModel.SP_GET_AllOffers_Search_Paging_Sorting_Result)">
             <Parameter Name="searchText" Mode="In" Type="String" />
             <Parameter Name="startTime" Mode="In" Type="DateTime" />
             <Parameter Name="endTime" Mode="In" Type="DateTime" />
@@ -441,7 +447,13 @@
             <Parameter Name="PageSize" Mode="In" Type="Int32" />
             <Parameter Name="SortCol" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_GET_OfferProducts_Search_Paging_Sorting" ReturnType="Collection(LootLoOnlineDatabaseModel.SP_GET_OfferProducts_Search_Paging_Sorting_Result2)">
+          <FunctionImport Name="SP_GET_OfferProducts_Search_Paging_Sorting" ReturnType="Collection(LootLoOnlineDatabaseModel.SP_GET_OfferProducts_Search_Paging_Sorting_Result)">
+            <Parameter Name="searchText" Mode="In" Type="String" />
+            <Parameter Name="PageNbr" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="SortCol" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SP_GET_OfferProducts_Search" ReturnType="Collection(LootLoOnlineDatabaseModel.SP_GET_OfferProducts_Search_Result)">
             <Parameter Name="searchText" Mode="In" Type="String" />
             <Parameter Name="PageNbr" Mode="In" Type="Int32" />
             <Parameter Name="PageSize" Mode="In" Type="Int32" />
@@ -465,59 +477,6 @@
           <Property Type="String" Name="offers" Nullable="true" MaxLength="2000" />
           <Property Type="String" Name="attributes" Nullable="true" MaxLength="2000" />
           <Property Type="String" Name="productBrand" Nullable="true" MaxLength="250" />
-        </ComplexType>
-        <ComplexType Name="GetTop100OfferProducts_Result">
-          <Property Type="String" Name="productId" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="categoryPath" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="title" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="productDescription" Nullable="false" MaxLength="4000" />
-          <Property Type="String" Name="productUrl" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="imageUrls_200" Nullable="false" MaxLength="2000" />
-          <Property Type="String" Name="imageUrls_400" Nullable="true" MaxLength="2000" />
-          <Property Type="String" Name="imageUrls_800" Nullable="true" MaxLength="2000" />
-          <Property Type="String" Name="currency" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="flipkartSellingPrice" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="flipkartSpecialPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="maximumRetailPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="discountPercentage" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="String" Name="offers" Nullable="true" MaxLength="2000" />
-          <Property Type="String" Name="attributes" Nullable="true" MaxLength="2000" />
-          <Property Type="String" Name="productBrand" Nullable="true" MaxLength="250" />
-        </ComplexType>
-        <ComplexType Name="SP_GET_AllOffers_Search_Paging_Sorting_Result">
-          <Property Type="Int64" Name="Id" Nullable="false" />
-          <Property Type="DateTime" Name="startTime" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="endTime" Nullable="true" Precision="23" />
-          <Property Type="String" Name="title" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="name" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="description" Nullable="true" MaxLength="4000" />
-          <Property Type="String" Name="url" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="category" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="imageUrls_default" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="imageUrls_low" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="imageUrls_mid" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="availability" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="TotalCount" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SP_GET_OfferProducts_Search_Paging_Sorting_Result">
-          <Property Type="String" Name="productId" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="categoryPath" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="title" Nullable="false" MaxLength="1000" />
-          <Property Type="String" Name="productDescription" Nullable="true" MaxLength="4000" />
-          <Property Type="String" Name="productUrl" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="imageUrls_200" Nullable="true" MaxLength="2000" />
-          <Property Type="String" Name="imageUrls_400" Nullable="true" MaxLength="2000" />
-          <Property Type="String" Name="imageUrls_800" Nullable="true" MaxLength="2000" />
-          <Property Type="String" Name="currency" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="maximumRetailPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="discountPercentage" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="String" Name="offers" Nullable="true" MaxLength="2000" />
-          <Property Type="String" Name="attributes" Nullable="true" MaxLength="2000" />
-          <Property Type="String" Name="productBrand" Nullable="true" MaxLength="250" />
-          <Property Type="Int64" Name="ROWNUM" Nullable="true" />
-          <Property Type="Int32" Name="TotalCount" Nullable="true" />
-          <Property Type="Decimal" Name="SellingPrice" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="SpecialPrice" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -671,7 +630,7 @@
           <Property Name="LastVisitedDate" Type="DateTime" Precision="3" />
           <Property Name="ClickedOnBuyNow" Type="Boolean" />
         </EntityType>
-        <ComplexType Name="SP_GET_AllOffers_Search_Paging_Sorting_Result1">
+        <ComplexType Name="SP_GET_AllOffers_Search_Paging_Sorting_Result">
           <Property Type="Int64" Name="Id" Nullable="false" />
           <Property Type="DateTime" Name="startTime" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="endTime" Nullable="true" Precision="23" />
@@ -686,7 +645,7 @@
           <Property Type="String" Name="availability" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="TotalCount" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="SP_GET_OfferProducts_Search_Paging_Sorting_Result1">
+        <ComplexType Name="SP_GET_OfferProducts_Search_Paging_Sorting_Result">
           <Property Type="String" Name="productId" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="categoryPath" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="title" Nullable="false" MaxLength="1000" />
@@ -706,22 +665,7 @@
           <Property Type="Int64" Name="ROWNUM" Nullable="true" />
           <Property Type="Int32" Name="TotalCount" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="SP_GET_AllOffers_Search_Paging_Sorting_Result2">
-          <Property Type="Int64" Name="Id" Nullable="false" />
-          <Property Type="DateTime" Name="startTime" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="endTime" Nullable="true" Precision="23" />
-          <Property Type="String" Name="title" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="name" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="description" Nullable="true" MaxLength="4000" />
-          <Property Type="String" Name="url" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="category" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="imageUrls_default" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="imageUrls_low" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="imageUrls_mid" Nullable="true" MaxLength="500" />
-          <Property Type="String" Name="availability" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="TotalCount" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="SP_GET_OfferProducts_Search_Paging_Sorting_Result2">
+        <ComplexType Name="SP_GET_OfferProducts_Search_Result">
           <Property Type="String" Name="productId" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="categoryPath" Nullable="true" MaxLength="500" />
           <Property Type="String" Name="title" Nullable="false" MaxLength="1000" />
@@ -793,26 +737,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetTop100OfferProducts" FunctionName="LootLoOnlineDatabaseModel.Store.GetTop100OfferProducts">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="LootLoOnlineDatabaseModel.GetTop100OfferProducts_Result">
-                <ScalarProperty Name="productId" ColumnName="productId" />
-                <ScalarProperty Name="categoryPath" ColumnName="categoryPath" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="productDescription" ColumnName="productDescription" />
-                <ScalarProperty Name="productUrl" ColumnName="productUrl" />
-                <ScalarProperty Name="imageUrls_200" ColumnName="imageUrls_200" />
-                <ScalarProperty Name="imageUrls_400" ColumnName="imageUrls_400" />
-                <ScalarProperty Name="imageUrls_800" ColumnName="imageUrls_800" />
-                <ScalarProperty Name="currency" ColumnName="currency" />
-                <ScalarProperty Name="flipkartSellingPrice" ColumnName="flipkartSellingPrice" />
-                <ScalarProperty Name="flipkartSpecialPrice" ColumnName="flipkartSpecialPrice" />
-                <ScalarProperty Name="maximumRetailPrice" ColumnName="maximumRetailPrice" />
-                <ScalarProperty Name="discountPercentage" ColumnName="discountPercentage" />
-                <ScalarProperty Name="offers" ColumnName="offers" />
-                <ScalarProperty Name="attributes" ColumnName="attributes" />
-                <ScalarProperty Name="productBrand" ColumnName="productBrand" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertOrUpdateIntoVisitedUsers" FunctionName="LootLoOnlineDatabaseModel.Store.InsertOrUpdateIntoVisitedUsers" />
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="LootLoOnlineDatabaseModel.Store.sp_alterdiagram" />
@@ -995,7 +919,7 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_GET_AllOffers_Search_Paging_Sorting" FunctionName="LootLoOnlineDatabaseModel.Store.SP_GET_AllOffers_Search_Paging_Sorting">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="LootLoOnlineDatabaseModel.SP_GET_AllOffers_Search_Paging_Sorting_Result2">
+              <ComplexTypeMapping TypeName="LootLoOnlineDatabaseModel.SP_GET_AllOffers_Search_Paging_Sorting_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="startTime" ColumnName="startTime" />
                 <ScalarProperty Name="endTime" ColumnName="endTime" />
@@ -1014,7 +938,31 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SP_GET_OfferProducts_Search_Paging_Sorting" FunctionName="LootLoOnlineDatabaseModel.Store.SP_GET_OfferProducts_Search_Paging_Sorting">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="LootLoOnlineDatabaseModel.SP_GET_OfferProducts_Search_Paging_Sorting_Result2">
+              <ComplexTypeMapping TypeName="LootLoOnlineDatabaseModel.SP_GET_OfferProducts_Search_Paging_Sorting_Result">
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="categoryPath" ColumnName="categoryPath" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="productDescription" ColumnName="productDescription" />
+                <ScalarProperty Name="productUrl" ColumnName="productUrl" />
+                <ScalarProperty Name="imageUrls_200" ColumnName="imageUrls_200" />
+                <ScalarProperty Name="imageUrls_400" ColumnName="imageUrls_400" />
+                <ScalarProperty Name="imageUrls_800" ColumnName="imageUrls_800" />
+                <ScalarProperty Name="currency" ColumnName="currency" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="SpecialPrice" ColumnName="SpecialPrice" />
+                <ScalarProperty Name="maximumRetailPrice" ColumnName="maximumRetailPrice" />
+                <ScalarProperty Name="discountPercentage" ColumnName="discountPercentage" />
+                <ScalarProperty Name="offers" ColumnName="offers" />
+                <ScalarProperty Name="attributes" ColumnName="attributes" />
+                <ScalarProperty Name="productBrand" ColumnName="productBrand" />
+                <ScalarProperty Name="ROWNUM" ColumnName="ROWNUM" />
+                <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_GET_OfferProducts_Search" FunctionName="LootLoOnlineDatabaseModel.Store.SP_GET_OfferProducts_Search">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LootLoOnlineDatabaseModel.SP_GET_OfferProducts_Search_Result">
                 <ScalarProperty Name="productId" ColumnName="productId" />
                 <ScalarProperty Name="categoryPath" ColumnName="categoryPath" />
                 <ScalarProperty Name="title" ColumnName="title" />

@@ -77,9 +77,6 @@
     <Compile Include="Data\GetAllOfferProducts_Result.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\GetTop100OfferProducts_Result.cs">
-      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data\IEntity.cs" />
     <Compile Include="Data\Log.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
@@ -115,19 +112,10 @@
     <Compile Include="Data\SP_GET_AllOffers_Search_Paging_Sorting_Result.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\SP_GET_AllOffers_Search_Paging_Sorting_Result1.cs">
-      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\SP_GET_AllOffers_Search_Paging_Sorting_Result2.cs">
-      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
-    </Compile>
     <Compile Include="Data\SP_GET_OfferProducts_Search_Paging_Sorting_Result.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\SP_GET_OfferProducts_Search_Paging_Sorting_Result1.cs">
-      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Data\SP_GET_OfferProducts_Search_Paging_Sorting_Result2.cs">
+    <Compile Include="Data\SP_GET_OfferProducts_Search_Result.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\sp_helpdiagramdefinition_Result.cs">
