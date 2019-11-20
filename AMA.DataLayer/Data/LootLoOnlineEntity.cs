@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AMA.DataLayer.Data
 {
-    public class LootLoOnlineEntity
+    public class LootLoOnlineEntity : ILootLoOnlineEntity
     {
         private LootLoOnlineDatabaseEntities _lootLoOnlineDatabaseEntities = new LootLoOnlineDatabaseEntities();
 
@@ -16,7 +16,6 @@ namespace AMA.DataLayer.Data
         {
 
         }
-
         public async Task<List<SP_GET_OfferProducts_Search_Paging_Sorting_Result>> GetOfferProductsBySP(string searchText, int? page, int? pageSize, string sort, ILog log = null)
         {
             try
@@ -45,14 +44,14 @@ namespace AMA.DataLayer.Data
                 throw ex;
             }
         }
-        public async Task<List<SP_GET_AllOffers_Search_Paging_Sorting_Result>> GetAllOffersBySP(string searchText,DateTime? startTime, DateTime? endTime, int? page, int? pageSize, string sort, ILog log = null)
+        public async Task<List<SP_GET_AllOffers_Search_Paging_Sorting_Result>> GetAllOffersBySP(string searchText, DateTime? startTime, DateTime? endTime, int? page, int? pageSize, string sort, ILog log = null)
         {
             try
             {
-                
-                var result = _lootLoOnlineDatabaseEntities.SP_GET_AllOffers_Search_Paging_Sorting(searchText,startTime,endTime, page, pageSize, sort).AsQueryable();
 
-               
+                var result = _lootLoOnlineDatabaseEntities.SP_GET_AllOffers_Search_Paging_Sorting(searchText, startTime, endTime, page, pageSize, sort).AsQueryable();
+
+
                 return result.ToList();
             }
             catch (Exception ex)
@@ -82,6 +81,19 @@ namespace AMA.DataLayer.Data
 
                 return result.ToList();
 
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+                throw ex;
+            }
+        }
+        public async Task<List<GetParentChildCategories_Result>> GetParentChildCategories(int parentId, ILog log = null)
+        {
+            try
+            {
+                var result = _lootLoOnlineDatabaseEntities.GetParentChildCategories(parentId).AsQueryable();
+                return result.ToList();
             }
             catch (Exception ex)
             {

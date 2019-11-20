@@ -25,9 +25,9 @@ namespace AMA.WEB.Models
             {
                 Name = item.Name,
                 Id = item.Id,
-                Description=item.Description,
-                SiteName=item.SiteName,
-                ParentCategory=item,
+                Description = item.Description,
+                SiteName = item.SiteName,
+                ParentCategory = item,
                 Children = FillRecursive(flatObjects, item.Id)
             }).ToList();
         }
@@ -45,8 +45,8 @@ namespace AMA.WEB.Models
 
                     Task.Run(() =>
                     {
-                         response = client.GetAsync(APIurl).Result;
-                        
+                        response = client.GetAsync(APIurl).Result;
+
                     }).Wait();
 
 

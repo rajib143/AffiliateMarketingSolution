@@ -9,31 +9,9 @@
                             @foreach (var item in Model)
                             {
                                 <li >
-                                    <a href="javascript:;">@item.Name</a>
-                                    <div class="full-page-menu">
-                                        <a class="close-popup">&times;</a>
-                                        <div class="input-group input-group-lg">
-                                            <input class="form-control" aria-label="With textarea" type="text">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="lo-icons">&#xe906;</i></span>
-                                            </div>
-                                        </div>
-                                        <ul class="category-list">
-                                            @foreach (var child in item.Children)
-                                            {
-                                                <li>
-                                                    <a href="javascript:;">@child.Name</a>
-                                                </li>
-
-                                                foreach (var children in child.Children)
-                                                {
-                                                    <li>
-                                                        <a  href="#">@children.Name</a>
-                                                    </li>
-                                                }
-                                            }
-                                        </ul>
-                                    </div>
+                                    <a href="javascript:;" onclick="javascript:OpenClildCategory(@item.Id)">@item.Name</a>
+                                    <div id="categoryList_@item.Id"></div>
+                                    
                                 </li>
                             }
                         </ul>

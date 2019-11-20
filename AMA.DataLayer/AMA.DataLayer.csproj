@@ -77,7 +77,11 @@
     <Compile Include="Data\GetAllOfferProducts_Result.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\GetParentChildCategories_Result.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\IEntity.cs" />
+    <Compile Include="Data\ILootLoOnlineEntity.cs" />
     <Compile Include="Data\Log.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
     </Compile>

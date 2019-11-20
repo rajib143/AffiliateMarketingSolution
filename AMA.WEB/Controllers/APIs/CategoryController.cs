@@ -26,7 +26,7 @@ namespace AMA.WEB.Controllers.API
         // GET: api/Category
         public  IQueryable<CategoryModel> GetCategories()
         {
-            List<Category> categories = _AMAManager.Client.Admin.GetCategories(log).Result.ToList();
+            List<Category> categories = _AMAManager.Client.Admin.GetCategories(x=>x.ParentId==0, log).Result.ToList();
             List<CategoryModel> categoryModel = AMAManager.FillRecursive(categories, 0);
 
             return categoryModel.ToList().AsQueryable();
@@ -37,7 +37,17 @@ namespace AMA.WEB.Controllers.API
         [ResponseType(typeof(CategoryModel))]
         public async Task<IHttpActionResult> GetCategoryByParentID(int ParentId)
         {
-            List<Category> categories = _AMAManager.Client.Admin.GetCategories(log).Result.ToList();
+            List<GetParentChildCategories_Result> ParentChildCategories = _AMAManager.Client.Admin.GetParentChildsCategories(ParentId, log).Result.ToList();
+
+            List<Category> categories = ParentChildCategories.Select(x => new Category() { 
+                Id=x.Id.Value,
+                Description=x.Description,
+                Name=x.Name,
+                ParentId=x.ParentId,
+                SiteName=x.SiteName
+            
+            }).ToList();
+
             List<CategoryModel> categoryModel = AMAManager.FillRecursive(categories, ParentId);
 
             if (categoryModel == null)

@@ -15,11 +15,13 @@ namespace AMA.BusinessLayer.Implementation
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IOfferBrandRepository _offerBrandRepository;
+        private readonly ILootLoOnlineEntity _lootLoOnlineEntity;
 
         public AdminBL()
         {
             _categoryRepository = new CategoryRepository();
             _offerBrandRepository = new OfferBrandRepository();
+            _lootLoOnlineEntity = new LootLoOnlineEntity();
         }
 
         public async Task<List<Category>> GetCategories(ILog log)
@@ -27,6 +29,30 @@ namespace AMA.BusinessLayer.Implementation
             try
             {
                 return _categoryRepository.GetAll().Result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public async Task<List<Category>> GetCategories(Expression<Func<Category, bool>> predicate, ILog log)
+        {
+            try
+            {
+                return _categoryRepository.Find(predicate).Result;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public async Task<List<GetParentChildCategories_Result>> GetParentChildsCategories(int parentId, ILog log)
+        {
+            try
+            {
+                return _lootLoOnlineEntity.GetParentChildCategories(parentId).Result;
             }
             catch (Exception ex)
             {

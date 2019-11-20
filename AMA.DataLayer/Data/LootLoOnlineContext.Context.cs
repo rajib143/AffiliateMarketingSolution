@@ -487,5 +487,14 @@ namespace AMA.DataLayer.Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_OfferProducts_Search_Result>("SP_GET_OfferProducts_Search", searchTextParameter, pageNbrParameter, pageSizeParameter, sortColParameter);
         }
+    
+        public virtual ObjectResult<GetParentChildCategories_Result> GetParentChildCategories(Nullable<int> parentId)
+        {
+            var parentIdParameter = parentId.HasValue ?
+                new ObjectParameter("ParentId", parentId) :
+                new ObjectParameter("ParentId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetParentChildCategories_Result>("GetParentChildCategories", parentIdParameter);
+        }
     }
 }

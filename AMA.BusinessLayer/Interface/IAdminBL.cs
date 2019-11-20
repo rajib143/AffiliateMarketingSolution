@@ -12,6 +12,8 @@ namespace AMA.BusinessLayer.Interface
     public interface IAdminBL
     {
         Task<List<Category>> GetCategories(ILog log);
+        Task<List<Category>> GetCategories(Expression<Func<Category, bool>> predicate, ILog log);
+        Task<List<GetParentChildCategories_Result>> GetParentChildsCategories(int parentId, ILog log);
         Task<List<Category>> GetCategories(int? page, int? pageSize, Expression<Func<Category, bool>> predicate, Expression<Func<Category, object>> sort, ILog log);
         Task<Category> GetCategoryByTitle(string title, ILog log);
         Task<int> AddCategory(Category allOffer, ILog log);

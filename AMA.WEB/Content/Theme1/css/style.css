@@ -1,13 +1,13 @@
 @font-face {
-    font-family: 'icomoon';
-    src: url('../fonts/icomoon.eot?7xygy3');
-    src: url('../fonts/icomoon.eot?7xygy3#iefix') format('embedded-opentype'),
-        url('../fonts/icomoon.ttf?7xygy3') format('truetype'), 
-        url('../fonts/icomoon.woff?7xygy3') format('woff'),
-        url('../fonts/icomoon.svg?7xygy3#icomoon') format('svg');
-    font-weight: normal;
-    font-style: normal;
-    font-display: block;
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?7xygy3');
+  src:  url('../fonts/icomoon.eot?7xygy3#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?7xygy3') format('truetype'),
+    url('../fonts/icomoon.woff?7xygy3') format('woff'),
+    url('../fonts/icomoon.svg?7xygy3#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
 }
 
 .lo-icons {

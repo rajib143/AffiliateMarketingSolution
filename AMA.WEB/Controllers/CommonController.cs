@@ -41,7 +41,27 @@ namespace AMA.WEB.Controllers
             }
         }
 
+        public ActionResult BindChildCategories(int ParentId)
+        {
+            try
+            {
+                string CateroryAPI = ConfigurationManager.AppSettings["CateroryAPI"]+ "?ParentId=" + ParentId;
+                List<CategoryModel> Catagories = new List<CategoryModel>();
 
+                HttpResponseMessage response = AMAManager.GetClientResponse(CateroryAPI);
+                if (response.IsSuccessStatusCode)
+                {
+                    var data = response.Content.ReadAsStringAsync().Result;
+                    Catagories = JsonConvert.DeserializeObject<List<CategoryModel>>(data);
+                }
+                return PartialView("~/Views/Common/_ChildCategory.cshtml", Catagories);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
 
 
     }

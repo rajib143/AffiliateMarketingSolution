@@ -165,6 +165,9 @@
         <Function Name="GetAllOfferProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SiteName" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GetParentChildCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ParentId" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetTop100OfferProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SiteName" Type="varchar" Mode="In" />
         </Function>
@@ -459,6 +462,9 @@
             <Parameter Name="PageSize" Mode="In" Type="Int32" />
             <Parameter Name="SortCol" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetParentChildCategories" ReturnType="Collection(LootLoOnlineDatabaseModel.GetParentChildCategories_Result)">
+            <Parameter Name="ParentId" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="GetAllOfferProducts_Result">
           <Property Type="String" Name="productId" Nullable="false" MaxLength="50" />
@@ -684,6 +690,13 @@
           <Property Type="String" Name="productBrand" Nullable="true" MaxLength="250" />
           <Property Type="Int64" Name="ROWNUM" Nullable="true" />
           <Property Type="Int32" Name="TotalCount" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetParentChildCategories_Result">
+          <Property Type="Int32" Name="Id" Nullable="true" />
+          <Property Type="Int32" Name="ParentId" Nullable="true" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="SiteName" Nullable="true" MaxLength="250" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -981,6 +994,17 @@
                 <ScalarProperty Name="productBrand" ColumnName="productBrand" />
                 <ScalarProperty Name="ROWNUM" ColumnName="ROWNUM" />
                 <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetParentChildCategories" FunctionName="LootLoOnlineDatabaseModel.Store.GetParentChildCategories">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LootLoOnlineDatabaseModel.GetParentChildCategories_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="SiteName" ColumnName="SiteName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
