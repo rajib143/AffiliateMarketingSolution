@@ -1,6 +1,16 @@
-﻿<div class="banner">
+﻿@model List<AMA.DataLayer.Data.SP_GET_AllOffers_Search_Paging_Sorting_Result>
+@{ 
+    int i = 0;
+}
+<div class="banner">
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
+            @*@foreach(var item in Model){
+                <div class="carousel-item @(i==0? "active": "")">
+                    <a href="@item.url" target="_blank"> <img src="@item.imageUrls_default" class="d-block w-100" alt="@item.title" title="@item.title">  </a>
+                </div>
+                i++;
+            }*@
             <div class="carousel-item active">
                 <img src="~/Content/Theme1/images/banner.jpg" class="d-block w-100" alt="...">
             </div>

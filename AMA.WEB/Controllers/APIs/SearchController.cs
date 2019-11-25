@@ -26,12 +26,27 @@ namespace AMA.WEB.Controllers.APIs
             return offerProducts.AsQueryable();
         }
 
-        // GET: api/Search/5
+        // GET: api/Search/abc
         [ResponseType(typeof(SP_GET_OfferProducts_Search_Result))]
         public async Task<IHttpActionResult> GetSearchOfferProduct(string searchText)
         {
            // OfferProduct offerProduct = await db.OfferProducts.FindAsync(id);
             List<SP_GET_OfferProducts_Search_Result> offerProducts = _AMAManager.Client.Offers.GetSearchOfferProductsBySP(searchText, 1, 50, null, log).Result.ToList();
+
+            if (offerProducts == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(offerProducts);
+        }
+
+        // GET: api/Search/abc
+        [ResponseType(typeof(OfferProduct))]
+        public async Task<IHttpActionResult> GetSearchOfferProductByTitle(string title)
+        {
+            // OfferProduct offerProduct = await db.OfferProducts.FindAsync(id);
+            OfferProduct offerProducts = _AMAManager.Client.SiteOffer.GetOfferProductByTitle(title, log).Result;
 
             if (offerProducts == null)
             {

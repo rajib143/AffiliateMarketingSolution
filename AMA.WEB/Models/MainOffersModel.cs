@@ -10,14 +10,14 @@ namespace AMA.WEB.Models
     {
         public MainOffersModel()
         {
-            AllBannerOffers = new List<AllOffer>();
+            AllBannerOffers = new List<SP_GET_AllOffers_Search_Paging_Sorting_Result>();
             DOTSOffers = new List<AllOffer>();
-            offerProducts = new List<OfferProduct>();
+            offerProducts = new List<SP_GET_OfferProducts_Search_Paging_Sorting_Result>();
         }
 
-        public List<AllOffer> AllBannerOffers { get; set; }
+        public List<SP_GET_AllOffers_Search_Paging_Sorting_Result> AllBannerOffers { get; set; }
         public List<AllOffer> DOTSOffers { get; set; }
-        public List<OfferProduct> offerProducts { get; set; }
+        public List<SP_GET_OfferProducts_Search_Paging_Sorting_Result> offerProducts { get; set; }
 
     }
 }

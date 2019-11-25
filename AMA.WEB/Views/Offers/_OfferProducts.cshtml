@@ -1,0 +1,13 @@
+﻿@model List<AMA.DataLayer.Data.SP_GET_OfferProducts_Search_Paging_Sorting_Result>
+
+<div class="banner">
+    <img src="~/Content/Theme1/images/banner.jpg" class="d-block w-100" alt="...">
+</div>
+
+<div class="product-group listing">
+    @foreach (var item in Model)
+    {
+        @Html.Partial("_Products", item)
+    }
+
+</div>

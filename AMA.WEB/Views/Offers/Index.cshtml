@@ -1,0 +1,174 @@
+﻿@model AMA.WEB.Models.MainOffersModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutT1.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex">
+        <div class="filter-panel">
+            <h3 class="title">Filters</h3>
+            <div class="filter-block">
+                <h4 class="sub-title">
+                    Categories
+                </h4>
+                <ul>
+                    <!-- <li class="parent"><a href="#">Mobiles</a></li> -->
+                    <li><a href="#">Mobiles</a></li>
+                </ul>
+            </div>
+            <div class="filter-block">
+                <h4 class="sub-title">
+                    Price
+                </h4>
+                <div data-role="rangeslider">
+                    <input type="range" class="custom-range" min="5000" max="100000" value="500">
+                </div>
+            </div>
+            <div class="filter-block">
+                <h4 class="sub-title">
+                    Rating
+                </h4>
+                <ul>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1">4&#9733; & above </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck2">
+                            <label class="custom-control-label" for="customCheck2">3&#9733; & above </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck3">
+                            <label class="custom-control-label" for="customCheck3">2&#9733; & above </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck4">
+                            <label class="custom-control-label" for="customCheck4">1&#9733; & above </label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="filter-block">
+                <h4 class="sub-title">
+                    Brand
+                </h4>
+                <ul>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck11">
+                            <label class="custom-control-label" for="customCheck11">REALME </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck12">
+                            <label class="custom-control-label" for="customCheck12">MI </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck13">
+                            <label class="custom-control-label" for="customCheck13">SAMSUNG </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck14">
+                            <label class="custom-control-label" for="customCheck14">NOKIA </label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="filter-block">
+                <h4 class="sub-title">
+                    RAM
+                </h4>
+                <ul>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck11">
+                            <label class="custom-control-label" for="customCheck11">2GB </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck12">
+                            <label class="custom-control-label" for="customCheck12">3GB </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck13">
+                            <label class="custom-control-label" for="customCheck13">4GB </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck14">
+                            <label class="custom-control-label" for="customCheck14">6GB </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck14">
+                            <label class="custom-control-label" for="customCheck14">8GB </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck14">
+                            <label class="custom-control-label" for="customCheck14">12GB </label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="filter-block">
+                <h4 class="sub-title">
+                    OFFERS
+                </h4>
+                <ul>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck21">
+                            <label class="custom-control-label" for="customCheck21">Bank Offer </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck22">
+                            <label class="custom-control-label" for="customCheck22">Buy More Save More </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck33">
+                            <label class="custom-control-label" for="customCheck33">No cost EMI </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck44">
+                            <label class="custom-control-label" for="customCheck44">Special Price </label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="product-panel" id="OfferList">
+            @Html.Partial("_OfferProducts", Model.offerProducts)
+        </div>
+
+    </div>
+
+</div>
+
+

@@ -1,0 +1,16 @@
+﻿@model AMA.DataLayer.Data.SP_GET_OfferProducts_Search_Paging_Sorting_Result
+
+<div class="product-box">
+    <img src="@Model.imageUrls_200" alt="@Model.title" title="@Model.title" class="product-img">
+    <h3 class="product-name">@Model.title</h3>
+    <div class="product-price-row">
+        <div class="price">
+            <span class="cut-price">
+                <i class="lo-icons">&#xe905;</i> @Model.SellingPrice
+            </span>
+            <i class="lo-icons">&#xe905;</i> @Model.SpecialPrice
+        </div>
+        <div class="get-from"><img src="~/Content/Theme1/images/get-logo.png" alt="@Model.title"></div>
+    </div>
+    <a href="@Model.productUrl" target="_blank" class="product-link"></a>
+</div>

@@ -9,23 +9,21 @@
     <link rel="preload" href="~/Content/Theme1/images/logo.png" as="image">
     <link rel='shortcut icon' href="~/Content/Theme1/images/logo.png" />
     <link href="https://fonts.googleapis.com/css?family=Athiti:400,600,700|Montez&display=swap" rel="stylesheet">
+    @*Admitad validation *@
+    <meta name="verify-admitad" content="dfe61b8b27" />
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/modernizr")
-
-
 </head>
 <body>
+    <!-- verify-admitad: "5b229dbc74" -->
     @Html.Partial("_Header")
-
     <header>
         <div class="header-bottom" id="BindCatagory">
             @*@Html.Action("BindCategories", "Home")*@
         </div>
     </header>
-
-
     <div>
         @RenderBody()
     </div>
@@ -65,7 +63,7 @@
            $.ajax({
                   cache: false,
                   type: "GET",
-                  url: "@(Url.Action("BindChildCategories","Common"))",
+                  url: "@Url.Action("BindChildCategories","Common")",
                   data: { "ParentId": id },
                   success: function (data)
                   {
@@ -83,40 +81,48 @@
             $('.full-page-menu').removeClass('active');
         }
 
-        //$(document).ready(function () {
-
-        //    $('nav>ul.navigation>li>a').click(function () {
-        //        debugger;
-        //        alert('clicked');
-        //        $(this).siblings('.full-page-menu').addClass('active');
-        //    });
-        //    $('.close-popup').click(function () {
-        //        alert('clicked');
-        //        $(this).parents('.full-page-menu').removeClass('active');
-        //    });
-        //});
 
         $(document).ready(function () {
-        $("#ProductSearchBox").autocomplete({
-           source: function(request,response) {
-               $.ajax({
-                   url: "/api/Search",
-                   type: "GET",
-                   dataType: "json",
-                   data: { searchText: request.term },
-                   success: function (data) {
-                       response($.map(data, function (item) {
-                           return { label: item.title, value: item.productId};
-                       }))
 
-                   }
-               })
-           },
-           messages: {
-               noResults: "", results: ""
-           }
-       });
-   })
+            $("#ProductSearchBox").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/api/Search",
+                        type: "GET",
+                        dataType: "json",
+                        data: { searchText: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.title, value: item.title };
+                            }))
+
+                        }
+                    })
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+
+            $('#ProductSearchBox').on('autocompletechange change', function () {
+                $.ajax({
+                        url: "/api/Search",
+                        type: "GET",
+                        dataType: "json",
+                        data: { title: this.value },
+                        success: function (data) {
+                            $('#SelectedProductUrl').val(data.productUrl);
+                        }
+                    })
+
+            }).change();
+
+        });
+
+        function OpenSearchOfferProduct() {
+            var url = $('#SelectedProductUrl').val();
+            window.open(url, "_blank");
+        };
     </script>
 </body>
 </html>

@@ -14,29 +14,29 @@ using AMA.WEB.Models;
 
 namespace AMA.WEB.Controllers.API
 {
-    public class OfferProductsController : ApiController
+    public class AllOffersController : ApiController
     {
         private AMAManager _AMAManager = new AMAManager();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private LootLoOnlineDatabaseEntities db = new LootLoOnlineDatabaseEntities();
 
-        // GET: api/OfferProducts
-        public IQueryable<SP_GET_OfferProducts_Search_Paging_Sorting_Result> GetOfferProducts()
+        // GET: api/AllOffers
+        public IQueryable<SP_GET_AllOffers_Search_Paging_Sorting_Result> GetAllOffers()
         {
-            List<SP_GET_OfferProducts_Search_Paging_Sorting_Result> offerProducts = _AMAManager.Client.Offers.GetOfferProductsBySP(null, 1, 50, null, log).Result.ToList();
-
+            List<SP_GET_AllOffers_Search_Paging_Sorting_Result> offerProducts = _AMAManager.Client.Offers.GetAllOffersBySP(null,null,null, 1, 50, null, log).Result.ToList();
+           
             return offerProducts.AsQueryable();
         }
 
-        // GET: api/OfferProducts
-        [ResponseType(typeof(SP_GET_OfferProducts_Search_Paging_Sorting_Result))]
-        public async Task<IHttpActionResult> GetOfferProducts(string searchText, int page, int pageSize, string sort)
+        // GET: api/AllOffers/5
+        [ResponseType(typeof(SP_GET_AllOffers_Search_Paging_Sorting_Result))]
+        public async Task<IHttpActionResult> GetAllOffers(string searchText, int page , int pageSize, string sort )
         {
-            List<SP_GET_OfferProducts_Search_Paging_Sorting_Result> offerProducts = new List<SP_GET_OfferProducts_Search_Paging_Sorting_Result>();
+            DateTime startTime = DateTime.Now, endTime = DateTime.Now.AddDays(5);
+            List<SP_GET_AllOffers_Search_Paging_Sorting_Result> offerProducts = _AMAManager.Client.Offers.GetAllOffersBySP(!string.IsNullOrEmpty(searchText) ? searchText : null, null,endTime, page, pageSize, !string.IsNullOrEmpty(sort) ? sort : null, log).Result.ToList();
 
-            offerProducts = _AMAManager.Client.Offers.GetOfferProductsBySP(!string.IsNullOrEmpty(searchText) ? searchText : null, page, pageSize, !string.IsNullOrEmpty(sort) ? sort : null, log).Result.ToList();
-          
+            offerProducts = offerProducts.Where(x => x.imageUrls_default != null).OrderByDescending(x => x.endTime).ToList();
             if (offerProducts == null)
             {
                 return NotFound();
@@ -45,16 +45,16 @@ namespace AMA.WEB.Controllers.API
             return Ok(offerProducts);
         }
 
-        // PUT: api/OfferProducts/5
+        // PUT: api/AllOffers/5
         [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutOfferProduct(string id, OfferProduct offerProduct)
+        public async Task<IHttpActionResult> PutAllOffer(long id, AllOffer offerProduct)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != offerProduct.productId)
+            if (id != offerProduct.Id)
             {
                 return BadRequest();
             }
@@ -67,7 +67,7 @@ namespace AMA.WEB.Controllers.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OfferProductExists(id))
+                if (!AllOfferExists(id))
                 {
                     return NotFound();
                 }
@@ -80,16 +80,16 @@ namespace AMA.WEB.Controllers.API
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/OfferProducts
-        [ResponseType(typeof(OfferProduct))]
-        public async Task<IHttpActionResult> PostOfferProduct(OfferProduct offerProduct)
+        // POST: api/AllOffers
+        [ResponseType(typeof(AllOffer))]
+        public async Task<IHttpActionResult> PostAllOffer(AllOffer offerProduct)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.OfferProducts.Add(offerProduct);
+            db.AllOffers.Add(offerProduct);
 
             try
             {
@@ -97,7 +97,7 @@ namespace AMA.WEB.Controllers.API
             }
             catch (DbUpdateException)
             {
-                if (OfferProductExists(offerProduct.productId))
+                if (AllOfferExists(offerProduct.Id))
                 {
                     return Conflict();
                 }
@@ -107,20 +107,20 @@ namespace AMA.WEB.Controllers.API
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = offerProduct.productId }, offerProduct);
+            return CreatedAtRoute("DefaultApi", new { id = offerProduct.Id }, offerProduct);
         }
 
-        // DELETE: api/OfferProducts/5
-        [ResponseType(typeof(OfferProduct))]
-        public async Task<IHttpActionResult> DeleteOfferProduct(string id)
+        // DELETE: api/AllOffers/5
+        [ResponseType(typeof(AllOffer))]
+        public async Task<IHttpActionResult> DeleteAllOffer(string id)
         {
-            OfferProduct offerProduct = await db.OfferProducts.FindAsync(id);
+            AllOffer offerProduct = await db.AllOffers.FindAsync(id);
             if (offerProduct == null)
             {
                 return NotFound();
             }
 
-            db.OfferProducts.Remove(offerProduct);
+            db.AllOffers.Remove(offerProduct);
             await db.SaveChangesAsync();
 
             return Ok(offerProduct);
@@ -135,9 +135,9 @@ namespace AMA.WEB.Controllers.API
             base.Dispose(disposing);
         }
 
-        private bool OfferProductExists(string id)
+        private bool AllOfferExists(long id)
         {
-            return db.OfferProducts.Count(e => e.productId == id) > 0;
+            return db.AllOffers.Count(e => e.Id== id) > 0;
         }
     }
 }

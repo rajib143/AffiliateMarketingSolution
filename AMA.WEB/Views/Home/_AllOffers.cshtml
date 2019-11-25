@@ -1,0 +1,16 @@
+﻿@model List<AMA.DataLayer.Data.SP_GET_AllOffers_Search_Paging_Sorting_Result>
+
+<div class="product-container">
+    <h2 class="product-container-title">
+        Deals of the Day
+    </h2>
+    <div class="product-group">
+        @foreach (var item in Model)
+        {
+            @Html.Partial("_Offer", item)
+        }
+    </div>
+    <div class="btn-view-all-box">
+        <a href="javascript:;" class="btn btn-primary">View All <i class="lo-icons">&#xe902;</i></a>
+    </div>
+</div>
