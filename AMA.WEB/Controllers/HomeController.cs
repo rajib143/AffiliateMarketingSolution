@@ -20,39 +20,32 @@ namespace AMA.WEB.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Welcome to LootLo Online";
-
             MainOffersModel model = new MainOffersModel();
 
             try
             {
                 string offerproductApiUrl = ConfigurationManager.AppSettings["HostAPI"] +
                     string.Format("api/OfferProducts?searchText={0}&page={1}&pageSize={2}&sort={3}", string.Empty, 1, pageSize, string.Empty);
-
-                //string offerproductApiUrl = ConfigurationManager.AppSettings["HostAPI"] +
-                //   string.Format("api/OfferProducts?page={0}&pageSize={1}", 1, pageSize);
-
                 log.Info("OfferproductApiUrl-" + offerproductApiUrl);
                 HttpResponseMessage response = AMAManager.GetClientResponse(offerproductApiUrl);
+
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
                     log.Info(string.Format("OfferproductApiUrl result count {0} , Value {1}", data.Count(), data));
-                    model.offerProducts = JsonConvert.DeserializeObject<List<SP_GET_OfferProducts_Search_Paging_Sorting_Result>>(data);
+                    model.offerProducts = JsonConvert.DeserializeObject<List<AMAOfferProduct>>(data);
                 }
 
                 string AllOfferApiUrl = ConfigurationManager.AppSettings["HostAPI"] +
                    string.Format("api/AllOffers?searchText={0}&page={1}&pageSize={2}&sort={3}", string.Empty, 1, pageSize, string.Empty);
-
-                //string AllOfferApiUrl = ConfigurationManager.AppSettings["HostAPI"] +
-                //   string.Format("api/AllOffers?page={0}&pageSize={1}", 1, pageSize);
                 log.Info("AllOfferApiUrl-" + AllOfferApiUrl);
-
                 HttpResponseMessage AllOfferResponse = AMAManager.GetClientResponse(AllOfferApiUrl);
+
                 if (AllOfferResponse.IsSuccessStatusCode)
                 {
                     var AllOfferData = AllOfferResponse.Content.ReadAsStringAsync().Result;
                     log.Info(string.Format("AllOfferApiUrl result count {0} , Value {1}", AllOfferData.Count(), AllOfferData));
-                    model.AllBannerOffers = JsonConvert.DeserializeObject<List<SP_GET_AllOffers_Search_Paging_Sorting_Result>>(AllOfferData);
+                    model.fipkartAllOffers = JsonConvert.DeserializeObject<List<FipkartAllOffers>>(AllOfferData);
                 }
 
             }

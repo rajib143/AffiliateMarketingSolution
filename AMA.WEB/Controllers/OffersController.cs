@@ -36,7 +36,7 @@ namespace AMA.WEB.Controllers
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
                     log.Info(string.Format("Offers Controller: OfferproductApiUrl result count {0} , Value {1}", data.Count(), data));
-                    model.offerProducts = JsonConvert.DeserializeObject<List<SP_GET_OfferProducts_Search_Paging_Sorting_Result>>(data);
+                    model.offerProducts = JsonConvert.DeserializeObject<List<AMAOfferProduct>>(data);
                 }
 
                 return View(model);

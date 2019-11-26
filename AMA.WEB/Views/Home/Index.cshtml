@@ -2,22 +2,22 @@
 
 @*<div class="container-fluid" id="MainContainer">*@
 
-    @Html.Partial("_Banner", Model.AllBannerOffers)
+@Html.Partial("_Banner", Model.fipkartAllOffers)
 
-    @Html.Partial("_OfferProducts", Model.offerProducts)
+@Html.Partial("_OfferProducts", Model.offerProducts)
 
-    <div class="container-fluid">
-        <div class="category-container">
-            <div class="category-box">
-                <h3 class="category-title">Top Selling Products</h3>
-                <img src="~/Content/Theme1/images/category-1.png" alt="">
-            </div>
-            <div class="category-box">
-                <h3 class="category-title">Featured Products</h3>
-                <img src="~/Content/Theme1/images/category-2.png" alt="">
-            </div>
+<div class="container-fluid">
+    <div class="category-container">
+        <div class="category-box">
+            <h3 class="category-title">Top Selling Products</h3>
+            <img src="~/Content/Theme1/images/category-1.png" alt="">
+        </div>
+        <div class="category-box">
+            <h3 class="category-title">Featured Products</h3>
+            <img src="~/Content/Theme1/images/category-2.png" alt="">
         </div>
     </div>
+</div>
 
-    @Html.Partial("_AllOffers", Model.AllBannerOffers)
+@Html.Partial("_AllOffers", Model.fipkartAllOffers)
 @*</div>*@
