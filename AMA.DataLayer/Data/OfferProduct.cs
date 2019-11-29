@@ -15,6 +15,7 @@ namespace AMA.DataLayer.Data
     public partial class OfferProduct
     {
         public string productId { get; set; }
+        public Nullable<System.DateTime> validTill { get; set; }
         public string title { get; set; }
         public string productDescription { get; set; }
         public string imageUrls_200 { get; set; }

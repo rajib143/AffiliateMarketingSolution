@@ -8,6 +8,11 @@ namespace AMA.BusinessLayer.Models
 {
     public class FlipkartProducts
     {
+        public FlipkartProducts()
+        {
+            products = new List<Product>();
+        }
+        public long validTill { get; set; }
         public List<Product> products { get; set; }
     }
 

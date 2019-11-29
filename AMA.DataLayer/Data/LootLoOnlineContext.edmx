@@ -85,6 +85,7 @@
             <PropertyRef Name="productId" />
           </Key>
           <Property Name="productId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="validTill" Type="datetime" />
           <Property Name="title" Type="nvarchar" MaxLength="1000" Nullable="false" />
           <Property Name="productDescription" Type="nvarchar(max)" />
           <Property Name="imageUrls_200" Type="nvarchar" MaxLength="2000" />
@@ -439,7 +440,6 @@
           <EntitySet Name="sysdiagrams" EntityType="LootLoOnlineDatabaseModel.sysdiagram" />
           <EntitySet Name="AllOffers" EntityType="LootLoOnlineDatabaseModel.AllOffer" />
           <EntitySet Name="DealsOfTheDayOffers" EntityType="LootLoOnlineDatabaseModel.DealsOfTheDayOffer" />
-          <EntitySet Name="OfferProducts" EntityType="LootLoOnlineDatabaseModel.OfferProduct" />
           <EntitySet Name="Users" EntityType="LootLoOnlineDatabaseModel.User" />
           <EntitySet Name="VisitedUsers" EntityType="LootLoOnlineDatabaseModel.VisitedUser" />
           <FunctionImport Name="SP_GET_AllOffers_Search_Paging_Sorting" ReturnType="Collection(LootLoOnlineDatabaseModel.SP_GET_AllOffers_Search_Paging_Sorting_Result)">
@@ -463,8 +463,9 @@
             <Parameter Name="SortCol" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetParentChildCategories" ReturnType="Collection(LootLoOnlineDatabaseModel.GetParentChildCategories_Result)">
-            <Parameter Name="ParentId" Mode="In" Type="Int32" />
+          <Parameter Name="ParentId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="OfferProducts" EntityType="LootLoOnlineDatabaseModel.OfferProduct" />
           </EntityContainer>
         <ComplexType Name="GetAllOfferProducts_Result">
           <Property Type="String" Name="productId" Nullable="false" MaxLength="50" />
@@ -570,45 +571,6 @@
           <Property Name="url" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="availability" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="OfferProduct">
-          <Key>
-            <PropertyRef Name="productId" />
-          </Key>
-          <Property Name="productId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="productDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="imageUrls_200" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="imageUrls_400" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="imageUrls_800" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="productFamily" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="maximumRetailPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="SellingPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="SpecialPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="currency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="productUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="productBrand" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="inStock" Type="Boolean" />
-          <Property Name="codAvailable" Type="Boolean" />
-          <Property Name="discountPercentage" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="offers" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="categoryPath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="attributes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="shippingCharges" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="estimatedDeliveryTime" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="sellerName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="sellerAverageRating" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="sellerNoOfRatings" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="sellerNoOfReviews" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="keySpecs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="detailedSpecs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="specificationList" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="booksInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="lifeStyleInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsUpdated" Type="Boolean" />
-          <Property Name="CategoryId" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="SiteName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="ID" />
@@ -698,6 +660,46 @@
           <Property Type="String" Name="Description" Nullable="true" MaxLength="250" />
           <Property Type="String" Name="SiteName" Nullable="true" MaxLength="250" />
         </ComplexType>
+        <EntityType Name="OfferProduct">
+          <Key>
+            <PropertyRef Name="productId" />
+          </Key>
+          <Property Name="productId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="validTill" Type="DateTime" Precision="3" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="productDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="imageUrls_200" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="imageUrls_400" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="imageUrls_800" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="productFamily" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="maximumRetailPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SellingPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SpecialPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="currency" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="productUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="productBrand" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="inStock" Type="Boolean" />
+          <Property Name="codAvailable" Type="Boolean" />
+          <Property Name="discountPercentage" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="offers" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="categoryPath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="attributes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="shippingCharges" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="estimatedDeliveryTime" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="sellerName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="sellerAverageRating" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="sellerNoOfRatings" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="sellerNoOfReviews" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="keySpecs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="detailedSpecs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="specificationList" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="booksInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="lifeStyleInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsUpdated" Type="Boolean" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="SiteName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -861,46 +863,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OfferProducts">
-            <EntityTypeMapping TypeName="LootLoOnlineDatabaseModel.OfferProduct">
-              <MappingFragment StoreEntitySet="OfferProducts">
-                <ScalarProperty Name="SiteName" ColumnName="SiteName" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="IsUpdated" ColumnName="IsUpdated" />
-                <ScalarProperty Name="lifeStyleInfo" ColumnName="lifeStyleInfo" />
-                <ScalarProperty Name="booksInfo" ColumnName="booksInfo" />
-                <ScalarProperty Name="specificationList" ColumnName="specificationList" />
-                <ScalarProperty Name="detailedSpecs" ColumnName="detailedSpecs" />
-                <ScalarProperty Name="keySpecs" ColumnName="keySpecs" />
-                <ScalarProperty Name="sellerNoOfReviews" ColumnName="sellerNoOfReviews" />
-                <ScalarProperty Name="sellerNoOfRatings" ColumnName="sellerNoOfRatings" />
-                <ScalarProperty Name="sellerAverageRating" ColumnName="sellerAverageRating" />
-                <ScalarProperty Name="sellerName" ColumnName="sellerName" />
-                <ScalarProperty Name="estimatedDeliveryTime" ColumnName="estimatedDeliveryTime" />
-                <ScalarProperty Name="shippingCharges" ColumnName="shippingCharges" />
-                <ScalarProperty Name="attributes" ColumnName="attributes" />
-                <ScalarProperty Name="categoryPath" ColumnName="categoryPath" />
-                <ScalarProperty Name="offers" ColumnName="offers" />
-                <ScalarProperty Name="discountPercentage" ColumnName="discountPercentage" />
-                <ScalarProperty Name="codAvailable" ColumnName="codAvailable" />
-                <ScalarProperty Name="inStock" ColumnName="inStock" />
-                <ScalarProperty Name="productBrand" ColumnName="productBrand" />
-                <ScalarProperty Name="productUrl" ColumnName="productUrl" />
-                <ScalarProperty Name="currency" ColumnName="currency" />
-                <ScalarProperty Name="SpecialPrice" ColumnName="SpecialPrice" />
-                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
-                <ScalarProperty Name="maximumRetailPrice" ColumnName="maximumRetailPrice" />
-                <ScalarProperty Name="productFamily" ColumnName="productFamily" />
-                <ScalarProperty Name="imageUrls_800" ColumnName="imageUrls_800" />
-                <ScalarProperty Name="imageUrls_400" ColumnName="imageUrls_400" />
-                <ScalarProperty Name="imageUrls_200" ColumnName="imageUrls_200" />
-                <ScalarProperty Name="productDescription" ColumnName="productDescription" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="productId" ColumnName="productId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="LootLoOnlineDatabaseModel.User">
               <MappingFragment StoreEntitySet="Users">
@@ -1008,6 +970,47 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="OfferProducts">
+            <EntityTypeMapping TypeName="LootLoOnlineDatabaseModel.OfferProduct">
+              <MappingFragment StoreEntitySet="OfferProducts">
+                <ScalarProperty Name="SiteName" ColumnName="SiteName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="IsUpdated" ColumnName="IsUpdated" />
+                <ScalarProperty Name="lifeStyleInfo" ColumnName="lifeStyleInfo" />
+                <ScalarProperty Name="booksInfo" ColumnName="booksInfo" />
+                <ScalarProperty Name="specificationList" ColumnName="specificationList" />
+                <ScalarProperty Name="detailedSpecs" ColumnName="detailedSpecs" />
+                <ScalarProperty Name="keySpecs" ColumnName="keySpecs" />
+                <ScalarProperty Name="sellerNoOfReviews" ColumnName="sellerNoOfReviews" />
+                <ScalarProperty Name="sellerNoOfRatings" ColumnName="sellerNoOfRatings" />
+                <ScalarProperty Name="sellerAverageRating" ColumnName="sellerAverageRating" />
+                <ScalarProperty Name="sellerName" ColumnName="sellerName" />
+                <ScalarProperty Name="estimatedDeliveryTime" ColumnName="estimatedDeliveryTime" />
+                <ScalarProperty Name="shippingCharges" ColumnName="shippingCharges" />
+                <ScalarProperty Name="attributes" ColumnName="attributes" />
+                <ScalarProperty Name="categoryPath" ColumnName="categoryPath" />
+                <ScalarProperty Name="offers" ColumnName="offers" />
+                <ScalarProperty Name="discountPercentage" ColumnName="discountPercentage" />
+                <ScalarProperty Name="codAvailable" ColumnName="codAvailable" />
+                <ScalarProperty Name="inStock" ColumnName="inStock" />
+                <ScalarProperty Name="productBrand" ColumnName="productBrand" />
+                <ScalarProperty Name="productUrl" ColumnName="productUrl" />
+                <ScalarProperty Name="currency" ColumnName="currency" />
+                <ScalarProperty Name="SpecialPrice" ColumnName="SpecialPrice" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="maximumRetailPrice" ColumnName="maximumRetailPrice" />
+                <ScalarProperty Name="productFamily" ColumnName="productFamily" />
+                <ScalarProperty Name="imageUrls_800" ColumnName="imageUrls_800" />
+                <ScalarProperty Name="imageUrls_400" ColumnName="imageUrls_400" />
+                <ScalarProperty Name="imageUrls_200" ColumnName="imageUrls_200" />
+                <ScalarProperty Name="productDescription" ColumnName="productDescription" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="validTill" ColumnName="validTill" />
+                <ScalarProperty Name="productId" ColumnName="productId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

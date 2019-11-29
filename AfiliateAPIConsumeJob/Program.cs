@@ -46,8 +46,9 @@ namespace AfiliateAPIConsumeJob
                     Task.Run(() =>
                     {
                         affiliateAPI.RemoveOldOffers(log);
-                        affiliateAPI.ProcessOfferProducts(log);
                         affiliateAPI.ProcessAllOffers(log);
+                        affiliateAPI.ProcessOfferProducts(log);
+                        
 
                     }).Wait();
 
