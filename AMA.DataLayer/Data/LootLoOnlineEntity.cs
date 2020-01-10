@@ -16,13 +16,13 @@ namespace AMA.DataLayer.Data
         {
 
         }
-        public async Task<List<SP_GET_OfferProducts_Search_Paging_Sorting_Result>> GetOfferProductsBySP(string searchText, int? page, int? pageSize, string sort, ILog log = null)
+        public async Task<List<SP_GET_OfferProducts_Search_Paging_Sorting_Result>> GetOfferProductsBySP(string searchText, string productBrand, string attributes, Nullable<int> categoryId, string macId, Nullable<int> pageNbr, Nullable<int> pageSize, string sortCol, ILog log = null)
         {
             try
             {
                 //Task.Run(() =>
                 // {
-                var result = _lootLoOnlineDatabaseEntities.SP_GET_OfferProducts_Search_Paging_Sorting(searchText, page, pageSize, sort).AsQueryable();
+                var result = _lootLoOnlineDatabaseEntities.SP_GET_OfferProducts_Search_Paging_Sorting(searchText, productBrand, attributes,categoryId,macId,pageNbr, pageSize, sortCol).AsQueryable();
 
                 //if (predicate != null)
                 //    result = result.Where(predicate);
@@ -66,7 +66,7 @@ namespace AMA.DataLayer.Data
             {
                 //Task.Run(() =>
                 // {
-                var result = _lootLoOnlineDatabaseEntities.SP_GET_OfferProducts_Search(searchText, page, pageSize, sort).AsQueryable();
+                var result = _lootLoOnlineDatabaseEntities.SP_GET_OfferProducts_Search(searchText, page, pageSize).AsQueryable();
 
                 //if (predicate != null)
                 //    result = result.Where(predicate);

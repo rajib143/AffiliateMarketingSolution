@@ -30,6 +30,17 @@ namespace AMA.DataLayer.Data
         public string attributes { get; set; }
         public string productBrand { get; set; }
         public Nullable<long> ROWNUM { get; set; }
-        public Nullable<int> TotalCount { get; set; }
+        public Nullable<decimal> shippingCharges { get; set; }
+        public string estimatedDeliveryTime { get; set; }
+        public string sellerName { get; set; }
+        public Nullable<decimal> sellerAverageRating { get; set; }
+        public Nullable<decimal> sellerNoOfRatings { get; set; }
+        public Nullable<decimal> sellerNoOfReviews { get; set; }
+        public string keySpecs { get; set; }
+        public string booksInfo { get; set; }
+        public Nullable<int> CategoryId { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public string SiteName { get; set; }
+        public Nullable<int> TotalOffers { get; set; }
     }
 }

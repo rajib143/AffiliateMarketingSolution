@@ -1,13 +1,15 @@
 ﻿@model List<AMA.WEB.Models.AMAOfferProduct>
 
-<div class="banner">
-    <img src="~/Content/Theme1/images/banner.jpg" class="d-block w-100" alt="...">
-</div>
-
-<div class="product-group listing">
     @foreach (var item in Model)
     {
         @Html.Partial("_Products", item)
     }
 
-</div>
+@*<div class="btn-view-all-box">
+    <input type="hidden" value="@ViewBag.hdnFlag" id="hdnPageIndex" />
+    <input type="hidden" value="@ViewBag.hdnFlag" id="hdnPageCount" />
+    <a href="#" class="btn btn-primary">Load More <i class="lo-icons">&#xe902;</i></a>
+</div>*@
+
+<div class="clearfix btn-view-all-box"></div>
+

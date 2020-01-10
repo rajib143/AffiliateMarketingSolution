@@ -18,7 +18,7 @@ namespace AMA.DataLayer.Data
         public string MacId { get; set; }
         public string IPAddress { get; set; }
         public Nullable<int> Count { get; set; }
-        public string Catagory { get; set; }
+        public Nullable<int> CatagoryID { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ProductTitle { get; set; }
         public string ProductId { get; set; }

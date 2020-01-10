@@ -462,6 +462,76 @@ ul.category-list>li>a {
 .product-group.listing .product-box {
 	width: calc(100% / 4 - 10px);
 }
+.login-signup-box {
+	position: fixed;
+	top: 0;
+	right: -100%;
+	bottom: 0;
+	background: #fff;
+	box-shadow: 0 0 10px 0 #999;
+	transition: all .3s ease-in-out;
+	width: 450px;
+	z-index: 12;
+	display: flex;
+	align-items: center;
+	padding: 50px;
+	padding-bottom: 10%;
+}
+.login-signup-box.active {
+	right: 0
+}
+.login-signup-box h3.title {
+	font-size: 24px;
+	color: #333;
+	font-weight: 600;
+	margin-top: 0;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+    border-bottom: 1px solid #f1f1f1;
+}
+.login-signup-box .inside-box {
+	display: none;
+	width: 100%;
+}
+.login-signup-box .inside-box.active {
+	display: block;
+}
+.popup-box-mask {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.4);
+	z-index: 11;
+	display: none;
+}
+.go-to-signup_login {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 20px 50px;
+	border-top: 1px solid #f1f1f1;
+	font-size: 14px;
+	text-align: center;
+}
+.go-to-signup_login a {
+	font-size: 14px;
+	text-decoration: none;
+	color: #0066cc;
+}
+.close-form {
+	font-size: 36px;
+    color: #333;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+.close-form:hover {
+	text-decoration: none;
+	color: #0066cc;
+}
 @-webkit-keyframes zoom {
 	0%{
 		transform: scale(0)

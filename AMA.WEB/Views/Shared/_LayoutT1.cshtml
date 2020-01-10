@@ -5,7 +5,7 @@
     @*<meta name="viewport" content="width=device-width" />*@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@ViewBag.Title</title>
-
+    <meta name="keywords" content="@ViewBag.keywords">
     <link rel="preload" href="~/Content/Theme1/images/logo.png" as="image">
     <link rel='shortcut icon' href="~/Content/Theme1/images/logo.png" />
     <link href="https://fonts.googleapis.com/css?family=Athiti:400,600,700|Montez&display=swap" rel="stylesheet">
@@ -15,11 +15,11 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RF6X1Z4SSS"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      gtag('config', 'G-RF6X1Z4SSS');
+        gtag('config', 'G-RF6X1Z4SSS');
     </script>
 
     @Styles.Render("~/Content/css")
@@ -34,9 +34,9 @@
             @*@Html.Action("BindCategories", "Home")*@
         </div>
     </header>
-    <div>
+   
         @RenderBody()
-    </div>
+   
     @Html.Partial("_Footer");
 
     @Scripts.Render("~/bundles/jquery")
@@ -63,38 +63,28 @@
                     alert('Failed to retrieve category.');
                 }
             });
-        });
 
+            //Load FlipKart ALL offers
+             var DivAllOffers = $("#DivAllOffers");
+             $.ajax({
+                 cache: false,
+                 type: "GET",
+                 url: "@(Url.Action("BindAllFipkartAllOffers","Home"))",
+                //data: { "id": id },
+                success: function (data)
+                {
 
-       function OpenClildCategory(id) {
-           var divid = "#categoryList_" + id;
-           var BindSubCatagoryDiv = $(divid);
+                    DivAllOffers.html('');
+                    DivAllOffers.html(data);
+                },
+                error: function (xhr, ajaxOptions, thrownError)
+                {
+                    alert('Failed to retrieve category.');
+                }
+             });
 
-           $.ajax({
-                  cache: false,
-                  type: "GET",
-                  url: "@Url.Action("BindChildCategories","Common")",
-                  data: { "ParentId": id },
-                  success: function (data)
-                  {
-                     BindSubCatagoryDiv.html('');
-                     BindSubCatagoryDiv.html(data);
-                     $('.full-page-menu').addClass('active');
-                  },
-                  error: function (xhr, ajaxOptions, thrownError)
-                  {
-                        alert('Failed to retrieve category.');
-                  }
-                 });
-            }
-        function closePopup() {
-            $('.full-page-menu').removeClass('active');
-        }
-
-
-        $(document).ready(function () {
-
-            $("#ProductSearchBox").autocomplete({
+            //AutoComplete
+              $("#ProductSearchBox").autocomplete({
                 source: function (request, response) {
                     $.ajax({
                         url: "/api/Search",
@@ -129,7 +119,33 @@
 
         });
 
-        function OpenSearchOfferProduct() {
+
+       function OpenClildCategory(id) {
+           var divid = "#categoryList_" + id;
+           var BindSubCatagoryDiv = $(divid);
+
+           $.ajax({
+                  cache: false,
+                  type: "GET",
+                  url: "@Url.Action("BindChildCategories","Common")",
+                  data: { "ParentId": id },
+                  success: function (data)
+                  {
+                     BindSubCatagoryDiv.html('');
+                     BindSubCatagoryDiv.html(data);
+                     $('.full-page-menu').addClass('active');
+                  },
+                  error: function (xhr, ajaxOptions, thrownError)
+                  {
+                        alert('Failed to retrieve category.');
+                  }
+                 });
+            }
+       function closePopup() {
+            $('.full-page-menu').removeClass('active');
+        }
+
+       function OpenSearchOfferProduct() {
             var url = $('#SelectedProductUrl').val();
             window.open(url, "_blank");
         };

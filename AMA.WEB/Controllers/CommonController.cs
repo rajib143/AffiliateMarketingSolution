@@ -40,7 +40,6 @@ namespace AMA.WEB.Controllers
                 throw ex;
             }
         }
-
         public ActionResult BindChildCategories(int ParentId)
         {
             try
@@ -62,7 +61,5 @@ namespace AMA.WEB.Controllers
                 throw ex;
             }
         }
-
-
     }
 }

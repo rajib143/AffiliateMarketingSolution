@@ -163,12 +163,52 @@
             </div>
         </div>
 
-        <div class="product-panel" id="OfferList">
-            @Html.Partial("_OfferProducts", Model.offerProducts)
+        <div class="product-panel">
+            <div class="banner">
+                <img src="~/Content/Theme1/images/banner.jpg" class="d-block w-100" alt="...">
+            </div>
+
+            <div class="product-group listing" id="OfferList">
+
+                @Html.Partial("_OfferProducts", Model.offerProducts)
+
+            </div>
+            <input type="hidden" value="@ViewBag.hdnCategory" id="hdnCategory" />
+
         </div>
-
     </div>
-
 </div>
 
 
+<script>
+    var counter = 1;
+    var category =$('hdnCategory').val();
+
+    $(window).scroll(function () {
+        
+            if ($(window).scrollTop() == $(document).height() - $(window).height() && counter < 2) {
+                appendData();
+                counter++;
+            }
+        });
+        function appendData() {
+            var html = $('#OfferList').html();
+            $.ajax({
+                 cache: false,
+                 type: "GET",
+                 url: "@(Url.Action("OfferProducts","Offers"))",
+                data: { "Category": category ,"page": counter},
+                success: function (data)
+                {
+                    html += data;
+                    $('#OfferList').append(html);
+                },
+                error: function (xhr, ajaxOptions, thrownError)
+                {
+                    alert('Failed to retrieve category.');
+                }
+            });
+
+
+        }
+</script>

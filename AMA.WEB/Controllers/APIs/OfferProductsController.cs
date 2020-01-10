@@ -24,18 +24,20 @@ namespace AMA.WEB.Controllers.API
         // GET: api/OfferProducts
         public IQueryable<SP_GET_OfferProducts_Search_Paging_Sorting_Result> GetOfferProducts()
         {
-            List<SP_GET_OfferProducts_Search_Paging_Sorting_Result> offerProducts = _AMAManager.Client.Offers.GetOfferProductsBySP(null, 1, 50, null, log).Result.ToList();
+            string macAddress = AMA.BusinessLayer.Utility.Utility.GetMACAddress();
+            List<SP_GET_OfferProducts_Search_Paging_Sorting_Result> offerProducts = _AMAManager.Client.Offers.GetOfferProductsBySP(null,null,null,0, macAddress, 1, 50, null, log).Result.ToList();
 
             return offerProducts.AsQueryable();
         }
 
         // GET: api/OfferProducts
         [ResponseType(typeof(SP_GET_OfferProducts_Search_Paging_Sorting_Result))]
-        public async Task<IHttpActionResult> GetOfferProducts(string searchText, int page, int pageSize, string sort)
+        public async Task<IHttpActionResult> GetOfferProducts(string searchText,int catagoryID, int page, int pageSize, string sort)
         {
             List<SP_GET_OfferProducts_Search_Paging_Sorting_Result> offerProducts = new List<SP_GET_OfferProducts_Search_Paging_Sorting_Result>();
+            string macAddress = AMA.BusinessLayer.Utility.Utility.GetMACAddress();
 
-            offerProducts = _AMAManager.Client.Offers.GetOfferProductsBySP(!string.IsNullOrEmpty(searchText) ? searchText : null, page, pageSize, !string.IsNullOrEmpty(sort) ? sort : null, log).Result.ToList();
+            offerProducts = _AMAManager.Client.Offers.GetOfferProductsBySP(!string.IsNullOrEmpty(searchText) ? searchText : null, null, null, catagoryID, macAddress, page, pageSize, !string.IsNullOrEmpty(sort) ? sort : null, log).Result.ToList();
           
             if (offerProducts == null)
             {

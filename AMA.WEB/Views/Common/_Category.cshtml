@@ -9,7 +9,7 @@
                             @foreach (var item in Model)
                             {
                                 <li >
-                                    <a href="@Url.Action("Index", "Offers", new {Category=item.Name })" >@item.Name</a>
+                                    <a href="@Url.Action("Index", "Offers", new {catagoryID=item.Id })" >@item.Name</a>
                                     @* onclick="javascript:OpenClildCategory(@item.Id)" *@
                                     <div id="categoryList_@item.Id"></div>
                                     

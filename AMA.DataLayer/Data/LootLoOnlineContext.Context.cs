@@ -35,8 +35,8 @@ namespace AMA.DataLayer.Data
         public virtual DbSet<AllOffer> AllOffers { get; set; }
         public virtual DbSet<DealsOfTheDayOffer> DealsOfTheDayOffers { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<VisitedUser> VisitedUsers { get; set; }
         public virtual DbSet<OfferProduct> OfferProducts { get; set; }
+        public virtual DbSet<VisitedUser> VisitedUsers { get; set; }
     
         [DbFunction("LootLoOnlineDatabaseEntities", "fn_split_string_to_column")]
         public virtual IQueryable<fn_split_string_to_column_Result> fn_split_string_to_column(string @string, string delimiter)
@@ -446,7 +446,7 @@ namespace AMA.DataLayer.Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_AllOffers_Search_Paging_Sorting_Result>("SP_GET_AllOffers_Search_Paging_Sorting", searchTextParameter, startTimeParameter, endTimeParameter, pageNbrParameter, pageSizeParameter, sortColParameter);
         }
     
-        public virtual ObjectResult<SP_GET_OfferProducts_Search_Paging_Sorting_Result> SP_GET_OfferProducts_Search_Paging_Sorting(string searchText, Nullable<int> pageNbr, Nullable<int> pageSize, string sortCol)
+        public virtual ObjectResult<SP_GET_OfferProducts_Search_Result> SP_GET_OfferProducts_Search(string searchText, Nullable<int> pageNbr, Nullable<int> pageSize)
         {
             var searchTextParameter = searchText != null ?
                 new ObjectParameter("searchText", searchText) :
@@ -460,32 +460,7 @@ namespace AMA.DataLayer.Data
                 new ObjectParameter("PageSize", pageSize) :
                 new ObjectParameter("PageSize", typeof(int));
     
-            var sortColParameter = sortCol != null ?
-                new ObjectParameter("SortCol", sortCol) :
-                new ObjectParameter("SortCol", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_OfferProducts_Search_Paging_Sorting_Result>("SP_GET_OfferProducts_Search_Paging_Sorting", searchTextParameter, pageNbrParameter, pageSizeParameter, sortColParameter);
-        }
-    
-        public virtual ObjectResult<SP_GET_OfferProducts_Search_Result> SP_GET_OfferProducts_Search(string searchText, Nullable<int> pageNbr, Nullable<int> pageSize, string sortCol)
-        {
-            var searchTextParameter = searchText != null ?
-                new ObjectParameter("searchText", searchText) :
-                new ObjectParameter("searchText", typeof(string));
-    
-            var pageNbrParameter = pageNbr.HasValue ?
-                new ObjectParameter("PageNbr", pageNbr) :
-                new ObjectParameter("PageNbr", typeof(int));
-    
-            var pageSizeParameter = pageSize.HasValue ?
-                new ObjectParameter("PageSize", pageSize) :
-                new ObjectParameter("PageSize", typeof(int));
-    
-            var sortColParameter = sortCol != null ?
-                new ObjectParameter("SortCol", sortCol) :
-                new ObjectParameter("SortCol", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_OfferProducts_Search_Result>("SP_GET_OfferProducts_Search", searchTextParameter, pageNbrParameter, pageSizeParameter, sortColParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_OfferProducts_Search_Result>("SP_GET_OfferProducts_Search", searchTextParameter, pageNbrParameter, pageSizeParameter);
         }
     
         public virtual ObjectResult<GetParentChildCategories_Result> GetParentChildCategories(Nullable<int> parentId)
@@ -495,6 +470,43 @@ namespace AMA.DataLayer.Data
                 new ObjectParameter("ParentId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetParentChildCategories_Result>("GetParentChildCategories", parentIdParameter);
+        }
+    
+        public virtual ObjectResult<SP_GET_OfferProducts_Search_Paging_Sorting_Result> SP_GET_OfferProducts_Search_Paging_Sorting(string searchText, string productBrand, string attributes, Nullable<int> categoryId, string macId, Nullable<int> pageNbr, Nullable<int> pageSize, string sortCol)
+        {
+            var searchTextParameter = searchText != null ?
+                new ObjectParameter("searchText", searchText) :
+                new ObjectParameter("searchText", typeof(string));
+    
+            var productBrandParameter = productBrand != null ?
+                new ObjectParameter("ProductBrand", productBrand) :
+                new ObjectParameter("ProductBrand", typeof(string));
+    
+            var attributesParameter = attributes != null ?
+                new ObjectParameter("Attributes", attributes) :
+                new ObjectParameter("Attributes", typeof(string));
+    
+            var categoryIdParameter = categoryId.HasValue ?
+                new ObjectParameter("CategoryId", categoryId) :
+                new ObjectParameter("CategoryId", typeof(int));
+    
+            var macIdParameter = macId != null ?
+                new ObjectParameter("MacId", macId) :
+                new ObjectParameter("MacId", typeof(string));
+    
+            var pageNbrParameter = pageNbr.HasValue ?
+                new ObjectParameter("PageNbr", pageNbr) :
+                new ObjectParameter("PageNbr", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            var sortColParameter = sortCol != null ?
+                new ObjectParameter("SortCol", sortCol) :
+                new ObjectParameter("SortCol", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_GET_OfferProducts_Search_Paging_Sorting_Result>("SP_GET_OfferProducts_Search_Paging_Sorting", searchTextParameter, productBrandParameter, attributesParameter, categoryIdParameter, macIdParameter, pageNbrParameter, pageSizeParameter, sortColParameter);
         }
     }
 }

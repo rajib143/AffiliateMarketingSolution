@@ -29,11 +29,11 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-        public async Task<List<SP_GET_OfferProducts_Search_Paging_Sorting_Result>> GetOfferProductsBySP(string searchText, int? page, int? pageSize, string sort, ILog log = null)
+        public async Task<List<SP_GET_OfferProducts_Search_Paging_Sorting_Result>> GetOfferProductsBySP(string searchText, string productBrand, string attributes,int? categoryId, string macId, int? pageNbr, int? pageSize, string sortCol, ILog log = null)
         {
             try
             {
-                return await lootLoOnline.GetOfferProductsBySP(searchText, page, pageSize, sort, log);
+                return await lootLoOnline.GetOfferProductsBySP(searchText, productBrand, attributes, categoryId, macId, pageNbr, pageSize, sortCol, log);
             }
             catch (Exception ex)
             {

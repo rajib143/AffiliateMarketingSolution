@@ -140,7 +140,7 @@
           <Property Name="MacId" Type="nvarchar" MaxLength="250" />
           <Property Name="IPAddress" Type="nvarchar" MaxLength="200" />
           <Property Name="Count" Type="int" />
-          <Property Name="Catagory" Type="nvarchar" MaxLength="250" />
+          <Property Name="CatagoryID" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ProductTitle" Type="nvarchar" MaxLength="250" />
           <Property Name="ProductId" Type="nvarchar" MaxLength="50" />
@@ -168,9 +168,6 @@
         </Function>
         <Function Name="GetParentChildCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ParentId" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetTop100OfferProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="SiteName" Type="varchar" Mode="In" />
         </Function>
         <Function Name="InsertOrUpdateIntoVisitedUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ID" Type="int" Mode="In" />
@@ -207,10 +204,13 @@
           <Parameter Name="searchText" Type="nvarchar" Mode="In" />
           <Parameter Name="PageNbr" Type="int" Mode="In" />
           <Parameter Name="PageSize" Type="int" Mode="In" />
-          <Parameter Name="SortCol" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="SP_GET_OfferProducts_Search_Paging_Sorting" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="searchText" Type="nvarchar" Mode="In" />
+          <Parameter Name="ProductBrand" Type="varchar" Mode="In" />
+          <Parameter Name="Attributes" Type="varchar" Mode="In" />
+          <Parameter Name="CategoryId" Type="int" Mode="In" />
+          <Parameter Name="MacId" Type="nvarchar" Mode="In" />
           <Parameter Name="PageNbr" Type="int" Mode="In" />
           <Parameter Name="PageSize" Type="int" Mode="In" />
           <Parameter Name="SortCol" Type="nvarchar" Mode="In" />
@@ -441,7 +441,6 @@
           <EntitySet Name="AllOffers" EntityType="LootLoOnlineDatabaseModel.AllOffer" />
           <EntitySet Name="DealsOfTheDayOffers" EntityType="LootLoOnlineDatabaseModel.DealsOfTheDayOffer" />
           <EntitySet Name="Users" EntityType="LootLoOnlineDatabaseModel.User" />
-          <EntitySet Name="VisitedUsers" EntityType="LootLoOnlineDatabaseModel.VisitedUser" />
           <FunctionImport Name="SP_GET_AllOffers_Search_Paging_Sorting" ReturnType="Collection(LootLoOnlineDatabaseModel.SP_GET_AllOffers_Search_Paging_Sorting_Result)">
             <Parameter Name="searchText" Mode="In" Type="String" />
             <Parameter Name="startTime" Mode="In" Type="DateTime" />
@@ -450,22 +449,26 @@
             <Parameter Name="PageSize" Mode="In" Type="Int32" />
             <Parameter Name="SortCol" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SP_GET_OfferProducts_Search_Paging_Sorting" ReturnType="Collection(LootLoOnlineDatabaseModel.SP_GET_OfferProducts_Search_Paging_Sorting_Result)">
-            <Parameter Name="searchText" Mode="In" Type="String" />
-            <Parameter Name="PageNbr" Mode="In" Type="Int32" />
-            <Parameter Name="PageSize" Mode="In" Type="Int32" />
-            <Parameter Name="SortCol" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SP_GET_OfferProducts_Search" ReturnType="Collection(LootLoOnlineDatabaseModel.SP_GET_OfferProducts_Search_Result)">
             <Parameter Name="searchText" Mode="In" Type="String" />
             <Parameter Name="PageNbr" Mode="In" Type="Int32" />
             <Parameter Name="PageSize" Mode="In" Type="Int32" />
-            <Parameter Name="SortCol" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetParentChildCategories" ReturnType="Collection(LootLoOnlineDatabaseModel.GetParentChildCategories_Result)">
           <Parameter Name="ParentId" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="OfferProducts" EntityType="LootLoOnlineDatabaseModel.OfferProduct" />
+          <EntitySet Name="VisitedUsers" EntityType="LootLoOnlineDatabaseModel.VisitedUser" />
+          <FunctionImport Name="SP_GET_OfferProducts_Search_Paging_Sorting" ReturnType="Collection(LootLoOnlineDatabaseModel.SP_GET_OfferProducts_Search_Paging_Sorting_Result)">
+            <Parameter Name="searchText" Mode="In" Type="String" />
+            <Parameter Name="ProductBrand" Mode="In" Type="String" />
+            <Parameter Name="Attributes" Mode="In" Type="String" />
+            <Parameter Name="CategoryId" Mode="In" Type="Int32" />
+            <Parameter Name="MacId" Mode="In" Type="String" />
+            <Parameter Name="PageNbr" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="SortCol" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="GetAllOfferProducts_Result">
           <Property Type="String" Name="productId" Nullable="false" MaxLength="50" />
@@ -583,21 +586,6 @@
           <Property Name="ContractNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="VisitedUser">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MacId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="IPAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Count" Type="Int32" />
-          <Property Name="Catagory" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ProductTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ProductId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LastVisitedDate" Type="DateTime" Precision="3" />
-          <Property Name="ClickedOnBuyNow" Type="Boolean" />
-        </EntityType>
         <ComplexType Name="SP_GET_AllOffers_Search_Paging_Sorting_Result">
           <Property Type="Int64" Name="Id" Nullable="false" />
           <Property Type="DateTime" Name="startTime" Nullable="true" Precision="23" />
@@ -631,7 +619,18 @@
           <Property Type="String" Name="attributes" Nullable="true" />
           <Property Type="String" Name="productBrand" Nullable="true" MaxLength="250" />
           <Property Type="Int64" Name="ROWNUM" Nullable="true" />
-          <Property Type="Int32" Name="TotalCount" Nullable="true" />
+          <Property Type="Decimal" Name="shippingCharges" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="estimatedDeliveryTime" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="sellerName" Nullable="true" MaxLength="500" />
+          <Property Type="Decimal" Name="sellerAverageRating" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="sellerNoOfRatings" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="sellerNoOfReviews" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="keySpecs" Nullable="true" />
+          <Property Type="String" Name="booksInfo" Nullable="true" />
+          <Property Type="Int32" Name="CategoryId" Nullable="true" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="SiteName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="TotalOffers" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SP_GET_OfferProducts_Search_Result">
           <Property Type="String" Name="productId" Nullable="false" MaxLength="50" />
@@ -700,6 +699,21 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="SiteName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="VisitedUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MacId" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="IPAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Count" Type="Int32" />
+          <Property Name="CatagoryID" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ProductTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ProductId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastVisitedDate" Type="DateTime" Precision="3" />
+          <Property Name="ClickedOnBuyNow" Type="Boolean" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -750,8 +764,6 @@
                 <ScalarProperty Name="productBrand" ColumnName="productBrand" />
               </ComplexTypeMapping>
             </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetTop100OfferProducts" FunctionName="LootLoOnlineDatabaseModel.Store.GetTop100OfferProducts">
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="InsertOrUpdateIntoVisitedUsers" FunctionName="LootLoOnlineDatabaseModel.Store.InsertOrUpdateIntoVisitedUsers" />
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="LootLoOnlineDatabaseModel.Store.sp_alterdiagram" />
@@ -876,22 +888,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="VisitedUsers">
-            <EntityTypeMapping TypeName="LootLoOnlineDatabaseModel.VisitedUser">
-              <MappingFragment StoreEntitySet="VisitedUsers">
-                <ScalarProperty Name="ClickedOnBuyNow" ColumnName="ClickedOnBuyNow" />
-                <ScalarProperty Name="LastVisitedDate" ColumnName="LastVisitedDate" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="ProductTitle" ColumnName="ProductTitle" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="Catagory" ColumnName="Catagory" />
-                <ScalarProperty Name="Count" ColumnName="Count" />
-                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
-                <ScalarProperty Name="MacId" ColumnName="MacId" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SP_GET_AllOffers_Search_Paging_Sorting" FunctionName="LootLoOnlineDatabaseModel.Store.SP_GET_AllOffers_Search_Paging_Sorting">
             <ResultMapping>
               <ComplexTypeMapping TypeName="LootLoOnlineDatabaseModel.SP_GET_AllOffers_Search_Paging_Sorting_Result">
@@ -907,30 +903,6 @@
                 <ScalarProperty Name="imageUrls_low" ColumnName="imageUrls_low" />
                 <ScalarProperty Name="imageUrls_mid" ColumnName="imageUrls_mid" />
                 <ScalarProperty Name="availability" ColumnName="availability" />
-                <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SP_GET_OfferProducts_Search_Paging_Sorting" FunctionName="LootLoOnlineDatabaseModel.Store.SP_GET_OfferProducts_Search_Paging_Sorting">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="LootLoOnlineDatabaseModel.SP_GET_OfferProducts_Search_Paging_Sorting_Result">
-                <ScalarProperty Name="productId" ColumnName="productId" />
-                <ScalarProperty Name="categoryPath" ColumnName="categoryPath" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="productDescription" ColumnName="productDescription" />
-                <ScalarProperty Name="productUrl" ColumnName="productUrl" />
-                <ScalarProperty Name="imageUrls_200" ColumnName="imageUrls_200" />
-                <ScalarProperty Name="imageUrls_400" ColumnName="imageUrls_400" />
-                <ScalarProperty Name="imageUrls_800" ColumnName="imageUrls_800" />
-                <ScalarProperty Name="currency" ColumnName="currency" />
-                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
-                <ScalarProperty Name="SpecialPrice" ColumnName="SpecialPrice" />
-                <ScalarProperty Name="maximumRetailPrice" ColumnName="maximumRetailPrice" />
-                <ScalarProperty Name="discountPercentage" ColumnName="discountPercentage" />
-                <ScalarProperty Name="offers" ColumnName="offers" />
-                <ScalarProperty Name="attributes" ColumnName="attributes" />
-                <ScalarProperty Name="productBrand" ColumnName="productBrand" />
-                <ScalarProperty Name="ROWNUM" ColumnName="ROWNUM" />
                 <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
               </ComplexTypeMapping>
             </ResultMapping>
@@ -1011,6 +983,57 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="VisitedUsers">
+            <EntityTypeMapping TypeName="LootLoOnlineDatabaseModel.VisitedUser">
+              <MappingFragment StoreEntitySet="VisitedUsers">
+                <ScalarProperty Name="ClickedOnBuyNow" ColumnName="ClickedOnBuyNow" />
+                <ScalarProperty Name="LastVisitedDate" ColumnName="LastVisitedDate" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductTitle" ColumnName="ProductTitle" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CatagoryID" ColumnName="CatagoryID" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="MacId" ColumnName="MacId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_GET_OfferProducts_Search_Paging_Sorting" FunctionName="LootLoOnlineDatabaseModel.Store.SP_GET_OfferProducts_Search_Paging_Sorting" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LootLoOnlineDatabaseModel.SP_GET_OfferProducts_Search_Paging_Sorting_Result">
+                <ScalarProperty Name="productId" ColumnName="productId" />
+                <ScalarProperty Name="categoryPath" ColumnName="categoryPath" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="productDescription" ColumnName="productDescription" />
+                <ScalarProperty Name="productUrl" ColumnName="productUrl" />
+                <ScalarProperty Name="imageUrls_200" ColumnName="imageUrls_200" />
+                <ScalarProperty Name="imageUrls_400" ColumnName="imageUrls_400" />
+                <ScalarProperty Name="imageUrls_800" ColumnName="imageUrls_800" />
+                <ScalarProperty Name="currency" ColumnName="currency" />
+                <ScalarProperty Name="SellingPrice" ColumnName="SellingPrice" />
+                <ScalarProperty Name="SpecialPrice" ColumnName="SpecialPrice" />
+                <ScalarProperty Name="maximumRetailPrice" ColumnName="maximumRetailPrice" />
+                <ScalarProperty Name="discountPercentage" ColumnName="discountPercentage" />
+                <ScalarProperty Name="offers" ColumnName="offers" />
+                <ScalarProperty Name="attributes" ColumnName="attributes" />
+                <ScalarProperty Name="productBrand" ColumnName="productBrand" />
+                <ScalarProperty Name="ROWNUM" ColumnName="ROWNUM" />
+                <ScalarProperty Name="shippingCharges" ColumnName="shippingCharges" />
+                <ScalarProperty Name="estimatedDeliveryTime" ColumnName="estimatedDeliveryTime" />
+                <ScalarProperty Name="sellerName" ColumnName="sellerName" />
+                <ScalarProperty Name="sellerAverageRating" ColumnName="sellerAverageRating" />
+                <ScalarProperty Name="sellerNoOfRatings" ColumnName="sellerNoOfRatings" />
+                <ScalarProperty Name="sellerNoOfReviews" ColumnName="sellerNoOfReviews" />
+                <ScalarProperty Name="keySpecs" ColumnName="keySpecs" />
+                <ScalarProperty Name="booksInfo" ColumnName="booksInfo" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="SiteName" ColumnName="SiteName" />
+                <ScalarProperty Name="TotalOffers" ColumnName="TotalOffers" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
