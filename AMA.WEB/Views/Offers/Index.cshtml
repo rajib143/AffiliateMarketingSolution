@@ -6,14 +6,13 @@
 
 <div class="container-fluid">
     <div class="d-flex">
-        <div class="filter-panel">
+        @*<div class="filter-panel">
             <h3 class="title">Filters</h3>
             <div class="filter-block">
                 <h4 class="sub-title">
                     Categories
                 </h4>
                 <ul>
-                    <!-- <li class="parent"><a href="#">Mobiles</a></li> -->
                     <li><a href="#">Mobiles</a></li>
                 </ul>
             </div>
@@ -161,34 +160,41 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </div>*@
 
-        <div class="product-panel">
-            <div class="banner">
-                <img src="~/Content/Theme1/images/banner.jpg" class="d-block w-100" alt="...">
-            </div>
+        @*<div class="product-panel">*@
+        @*<div class="banner">
+            <img src="~/Content/Theme1/images/banner.jpg" class="d-block w-100" alt="...">
+        </div>*@
 
-            <div class="product-group listing" id="OfferList">
+        <div class="product-group listing" id="OfferList">
 
-                @Html.Partial("_OfferProducts", Model.offerProducts)
-
-            </div>
-            <input type="hidden" value="@ViewBag.hdnCategory" id="hdnCategory" />
+            @Html.Partial("_OfferProducts", Model.offerProducts)
 
         </div>
+        <input type="hidden" value="@ViewBag.hdnCategory" id="hdnCategory" />
+        <input type="hidden" value="@ViewBag.ROWNUM" id="hdnROWNUM" />
+        <input type="hidden" value="@ViewBag.TotalRowCount" id="hdnTotalRowCount" />
+        @*</div>*@
     </div>
 </div>
 
 
 <script>
     var counter = 1;
-    var category =$('hdnCategory').val();
+    var category = $('hdnCategory').val();
+
 
     $(window).scroll(function () {
-        
-            if ($(window).scrollTop() == $(document).height() - $(window).height() && counter < 2) {
+        //var hdnROWNUM = $('hdnROWNUM').val();
+        //var hdnTotalRowCount = $('hdnTotalRowCount').val();
+        //alert(hdnROWNUM, hdnTotalRowCount);
+        //&& hdnROWNUM < hdnTotalRowCount
+
+            if ($(window).scrollTop() == $(document).height() - $(window).height() ) {
                 appendData();
                 counter++;
+                //alert(counter);
             }
         });
         function appendData() {

@@ -38,6 +38,12 @@ namespace AMA.WEB.Controllers
                     var data = response.Content.ReadAsStringAsync().Result;
                     log.Info(string.Format("Offers Controller: OfferproductApiUrl result count {0} , Value {1}", data.Count(), data));
                     model.offerProducts = JsonConvert.DeserializeObject<List<AMAOfferProduct>>(data);
+
+                    if (model.offerProducts.Count > 0)
+                    {
+                        ViewBag.ROWNUM = model.offerProducts.LastOrDefault().ROWNUM ;
+                        ViewBag.TotalRowCount = model.offerProducts.LastOrDefault().TotalCount;
+                    }
                 }
 
                 return View(model);
