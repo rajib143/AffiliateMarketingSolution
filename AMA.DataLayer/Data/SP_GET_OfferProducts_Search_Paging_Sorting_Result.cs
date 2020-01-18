@@ -42,5 +42,6 @@ namespace AMA.DataLayer.Data
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string SiteName { get; set; }
         public Nullable<int> TotalOffers { get; set; }
+        public string shotTitle { get; set; }
     }
 }

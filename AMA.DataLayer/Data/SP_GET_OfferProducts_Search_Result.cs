@@ -29,7 +29,7 @@ namespace AMA.DataLayer.Data
         public string offers { get; set; }
         public string attributes { get; set; }
         public string productBrand { get; set; }
-        public Nullable<long> ROWNUM { get; set; }
-        public Nullable<int> TotalCount { get; set; }
+        public Nullable<System.DateTime> validTill { get; set; }
+        public string shotTitle { get; set; }
     }
 }

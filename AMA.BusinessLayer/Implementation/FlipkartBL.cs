@@ -80,6 +80,8 @@ namespace AMA.BusinessLayer.Implementation
                 {
                     try
                     {
+                        string[] shotTitle = item.productBaseInfoV1.title.Split(' ');
+
                         var resultDic = JsonConvert.DeserializeObject<Dictionary<string, string>>(item.productBaseInfoV1.imageUrls.ToString());
                         if (!offerProducts.Any(x => x.productId.Equals(item.productBaseInfoV1.productId))
                          && !string.IsNullOrEmpty(item.productBaseInfoV1.title)
@@ -92,7 +94,9 @@ namespace AMA.BusinessLayer.Implementation
                             {
                                 productId = item.productBaseInfoV1.productId,
                                 validTill = validTillDateTime,
-                                title = item.productBaseInfoV1.title + "@" + item.productBaseInfoV1.discountPercentage + "% OFF",
+                                shotTitle= shotTitle.Count()>3? shotTitle[0]+" " + shotTitle[1] + " " + shotTitle[2]+ "@" + item.productBaseInfoV1.discountPercentage + "% OFF"
+                                : item.productBaseInfoV1.title + "@" + item.productBaseInfoV1.discountPercentage + "% OFF",
+                                title = item.productBaseInfoV1.title ,
                                 productDescription = item.productBaseInfoV1.productDescription,
                                 imageUrls_200 = resultDic.Values.ToArray()[0].ToString(),
                                 imageUrls_400 = resultDic.Values.ToArray()[1].ToString(),

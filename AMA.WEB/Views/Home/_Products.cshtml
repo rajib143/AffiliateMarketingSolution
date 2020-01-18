@@ -2,7 +2,7 @@
 
 <div class="product-box">
     <img src="@Model.imageUrls_200" alt="@Model.title" title="@Model.title" class="product-img">
-    <h3 class="product-name">@Model.title</h3>
+    <h3 class="product-name">@Model.shotTitle</h3>
     <div class="product-price-row">
         <div class="price">
             <span class="cut-price">
@@ -12,5 +12,5 @@
         </div>
         <div class="get-from"><img src="~/Content/Theme1/images/get-logo.png" alt="@Model.title"></div>
     </div>
-    <a href="@Model.productUrl" target="_blank" class="product-link"></a>
+    <a href="@Model.productUrl" target="_blank" class="product-link" alt="@Model.title"></a>
 </div>

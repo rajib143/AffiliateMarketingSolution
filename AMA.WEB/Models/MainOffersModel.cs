@@ -42,6 +42,7 @@ namespace AMA.WEB.Models
     {
         public string productId { get; set; }
         public string categoryPath { get; set; }
+        public string shotTitle { get; set; }
         public string title { get; set; }
         public string productDescription { get; set; }
         public string productUrl { get; set; }

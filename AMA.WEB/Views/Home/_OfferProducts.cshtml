@@ -1,16 +1,20 @@
 ﻿@model List<AMA.WEB.Models.AMAOfferProduct>
 
-    <div class="product-container">
-        <h2 class="product-container-title">
-            Deals of the Day
-        </h2>
-        <div class="product-group">
-            @foreach (var item in Model)
-            {
-                @Html.Partial("_Products", item)
-            }
-        </div>
-        <div class="btn-view-all-box">
-            <a href="@Url.Action("Index", "Offers", new {catagoryID=0 })" class="btn btn-primary">View All <i class="lo-icons">&#xe902;</i></a>
-        </div>
+<div class="product-container">
+    <h2 class="product-container-title">
+        Offers of the Day
+    </h2>
+    <div class="product-group">
+        @foreach (var item in Model)
+        {
+            @Html.Partial("_Products", item)
+        }
     </div>
+    <div class="btn-view-all-box">
+        <a href="@Url.Action("Index", "Offers", new {catagoryID=0 })" class="btn btn-primary">View All <i class="lo-icons">&#xe902;</i></a>
+    </div>
+</div>
+
+<style>
+    
+</style>
