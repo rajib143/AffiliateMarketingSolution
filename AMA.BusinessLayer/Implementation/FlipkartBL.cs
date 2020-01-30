@@ -37,7 +37,6 @@ namespace AMA.BusinessLayer.Implementation
             try
             {
                 List<ProductCatagory> productCatagories = FlipkartAPI.GetFlipkartProductCategorys(setting);
-
                 foreach (var item in productCatagories.ToList())
                 {
                     try
@@ -136,10 +135,10 @@ namespace AMA.BusinessLayer.Implementation
                     }
                     catch (Exception ex)
                     {
-
+                        log.Error(ex.Message, ex);
                     }
-                //}
-            });
+                    //}
+                });
 
                 // bulk insertion 
                 await AddBulkOfferProducts(offerProducts, log);
@@ -210,20 +209,22 @@ namespace AMA.BusinessLayer.Implementation
             try
             {
                 log.Info("RemoveOldOffers started");
-                var lstRemoveProducts = this.GetOfferProducts(log).Result.Where(x => x.CreatedDate < DateTime.Now.AddHours(-2));
+                var lstRemoveProducts = this.GetOfferProducts(log).Result.Where(x => x.validTill < DateTime.Now.AddMinutes(-30));
                 this.RemoveBulkOfferProducts(lstRemoveProducts.ToList(), log);
 
 
-                var lstRemoveOffers = this.GetAllOffers(log).Result.Where(x => x.endTime > DateTime.Now);
+                var lstRemoveOffers = this.GetAllOffers(log).Result.Where(x => x.endTime < DateTime.Now.AddMinutes(-30));
                 this.RemoveBulkAllOffers(lstRemoveOffers.ToList(), log);
 
                 log.Info("RemoveOldOffers completed");
             }
             catch (Exception ex)
             {
+                log.Error(ex.Message, ex);
                 throw ex;
             }
         }
+      
         #region OfferProduct
         public async Task<List<OfferProduct>> GetOfferProducts(ILog log)
         {
@@ -233,7 +234,7 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
-
+                log.Error(ex.Message, ex);
                 throw ex;
             }
         }
@@ -245,7 +246,7 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
-
+                log.Error(ex.Message, ex);
                 throw ex;
             }
         }
@@ -257,7 +258,7 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
-
+                log.Error(ex.Message, ex);
                 throw ex;
             }
         }
@@ -276,7 +277,7 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
-
+                log.Error(ex.Message, ex);
                 throw ex;
             }
         }
@@ -300,8 +301,8 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
-
-                //throw;
+                log.Error(ex.Message, ex);
+               // throw;
             }
 
             return true;
@@ -314,7 +315,7 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
-
+                log.Error(ex.Message, ex);
                 throw ex;
             }
         }
@@ -326,7 +327,7 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
-
+                log.Error(ex.Message, ex);
                 throw ex;
             }
         }
@@ -338,6 +339,7 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
+                log.Error(ex.Message, ex);
                 throw ex;
             }
         }
@@ -352,6 +354,7 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
+                log.Error(ex.Message, ex);
 
                 throw ex;
             }
@@ -364,6 +367,7 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
+                log.Error(ex.Message, ex);
 
                 throw ex;
             }
@@ -376,6 +380,7 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
+                log.Error(ex.Message, ex);
 
                 throw ex;
             }
@@ -388,7 +393,7 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
-
+                log.Error(ex.Message, ex);
                 throw ex;
             }
         }
@@ -400,7 +405,8 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
-
+                log.Error(ex.Message, ex);
+                
                 throw;
             }
         }
@@ -412,7 +418,7 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
-
+                log.Error(ex.Message, ex);
                 throw ex;
             }
         }
@@ -424,6 +430,7 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
+                log.Error(ex.Message, ex);
 
                 throw ex;
             }
@@ -436,6 +443,7 @@ namespace AMA.BusinessLayer.Implementation
             }
             catch (Exception ex)
             {
+                log.Error(ex.Message, ex);
                 throw ex;
             }
         }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -30,6 +31,37 @@ namespace AMA.WEB.Models
                 ParentCategory = item,
                 Children = FillRecursive(flatObjects, item.Id)
             }).ToList();
+        }
+
+        public static async Task<HttpResponseMessage> GetClientResponse(string APIurl, object requestModel)
+        {
+            try
+            {
+                HttpResponseMessage response = new HttpResponseMessage();
+                var jsonRequest = JsonConvert.SerializeObject(requestModel);
+                var stringContent = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+                using (HttpClient client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(APIurl);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                    var request = new HttpRequestMessage
+                    {
+                        Method = HttpMethod.Post,
+                        RequestUri = new Uri(APIurl),
+                        Content = stringContent,
+                    };
+                    response = client.SendAsync(request).Result;
+                }
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         public static HttpResponseMessage GetClientResponse(string APIurl)

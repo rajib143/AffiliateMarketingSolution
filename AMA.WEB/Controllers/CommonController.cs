@@ -23,10 +23,12 @@ namespace AMA.WEB.Controllers
         {
             try
             {
-                string CateroryAPI = ConfigurationManager.AppSettings["CateroryAPI"];
+                string CateroryAPI = ConfigurationManager.AppSettings["HostAPI"] + "/api/Category";
                 List<CategoryModel> Catagories = new List<CategoryModel>();
 
                 HttpResponseMessage response = AMAManager.GetClientResponse(CateroryAPI);
+
+
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
@@ -44,10 +46,16 @@ namespace AMA.WEB.Controllers
         {
             try
             {
-                string CateroryAPI = ConfigurationManager.AppSettings["CateroryAPI"]+ "?ParentId=" + ParentId;
+                string CateroryAPI = ConfigurationManager.AppSettings["HostAPI"] + "/api/Category";
                 List<CategoryModel> Catagories = new List<CategoryModel>();
 
-                HttpResponseMessage response = AMAManager.GetClientResponse(CateroryAPI);
+                CategoryRequestModel requestModel = new CategoryRequestModel()
+                {
+                    parentID = ParentId
+
+                };
+                HttpResponseMessage response = AMAManager.GetClientResponse(CateroryAPI, requestModel).Result;
+
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

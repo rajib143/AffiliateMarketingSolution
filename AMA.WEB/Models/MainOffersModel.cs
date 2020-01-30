@@ -10,9 +10,9 @@ namespace AMA.WEB.Models
     {
         public MainOffersModel()
         {
-            fipkartAllOffers = new List<FipkartAllOffers>();
-            DOTSOffers = new List<FipkartAllOffers>();
-            offerProducts = new List<AMAOfferProduct>();
+            //fipkartAllOffers = new List<FipkartAllOffers>();
+            //DOTSOffers = new List<FipkartAllOffers>();
+            //offerProducts = new List<AMAOfferProduct>();
         }
 
         public List<FipkartAllOffers> fipkartAllOffers { get; set; }

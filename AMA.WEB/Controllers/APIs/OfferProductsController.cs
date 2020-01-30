@@ -19,127 +19,34 @@ namespace AMA.WEB.Controllers.API
         private AMAManager _AMAManager = new AMAManager();
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private LootLoOnlineDatabaseEntities db = new LootLoOnlineDatabaseEntities();
-
-        // GET: api/OfferProducts
-        public IQueryable<SP_GET_OfferProducts_Search_Paging_Sorting_Result> GetOfferProducts()
-        {
-            string macAddress = AMA.BusinessLayer.Utility.Utility.GetMACAddress();
-            List<SP_GET_OfferProducts_Search_Paging_Sorting_Result> offerProducts = _AMAManager.Client.Offers.GetOfferProductsBySP(null,null,null,0, macAddress, 1, 50, null, log).Result.ToList();
-
-            return offerProducts.AsQueryable();
-        }
-
-        // GET: api/OfferProducts
+        // Post: api/OfferProducts
+        [HttpPost]
         [ResponseType(typeof(SP_GET_OfferProducts_Search_Paging_Sorting_Result))]
-        public async Task<IHttpActionResult> GetOfferProducts(string searchText,int catagoryID, int page, int pageSize, string sort)
+        public async Task<IHttpActionResult> GetOfferProducts(OfferProductRequestModel requestModel)
         {
             List<SP_GET_OfferProducts_Search_Paging_Sorting_Result> offerProducts = new List<SP_GET_OfferProducts_Search_Paging_Sorting_Result>();
-            string macAddress = AMA.BusinessLayer.Utility.Utility.GetMACAddress();
 
-            offerProducts = _AMAManager.Client.Offers.GetOfferProductsBySP(!string.IsNullOrEmpty(searchText) ? searchText : null, null, null, catagoryID, macAddress, page, pageSize, !string.IsNullOrEmpty(sort) ? sort : null, log).Result.ToList();
-          
-            if (offerProducts == null)
+            try
             {
-                return NotFound();
+                string macAddress = AMA.BusinessLayer.Utility.Utility.GetMACAddress();
+
+                offerProducts = _AMAManager.Client.Offers.GetOfferProductsBySP(requestModel.searchText, null, null, requestModel.catagoryID, macAddress, requestModel.page, requestModel.pageSize, requestModel.sort, log).Result.ToList();
+
+                if (offerProducts == null)
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message, ex);
+
+                throw ex;
             }
 
             return Ok(offerProducts);
         }
 
-        // PUT: api/OfferProducts/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutOfferProduct(string id, OfferProduct offerProduct)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            if (id != offerProduct.productId)
-            {
-                return BadRequest();
-            }
-
-            db.Entry(offerProduct).State = EntityState.Modified;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OfferProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
-        }
-
-        // POST: api/OfferProducts
-        [ResponseType(typeof(OfferProduct))]
-        public async Task<IHttpActionResult> PostOfferProduct(OfferProduct offerProduct)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            db.OfferProducts.Add(offerProduct);
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (OfferProductExists(offerProduct.productId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtRoute("DefaultApi", new { id = offerProduct.productId }, offerProduct);
-        }
-
-        // DELETE: api/OfferProducts/5
-        [ResponseType(typeof(OfferProduct))]
-        public async Task<IHttpActionResult> DeleteOfferProduct(string id)
-        {
-            OfferProduct offerProduct = await db.OfferProducts.FindAsync(id);
-            if (offerProduct == null)
-            {
-                return NotFound();
-            }
-
-            db.OfferProducts.Remove(offerProduct);
-            await db.SaveChangesAsync();
-
-            return Ok(offerProduct);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
-        private bool OfferProductExists(string id)
-        {
-            return db.OfferProducts.Count(e => e.productId == id) > 0;
-        }
     }
 }

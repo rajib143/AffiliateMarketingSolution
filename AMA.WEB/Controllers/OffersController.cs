@@ -21,22 +21,30 @@ namespace AMA.WEB.Controllers
         {
             ViewBag.Title = "LootLo Offers";
             ViewBag.keywords = "LootLoOnline,LootLo,Offers";
-
-            ViewBag.hdnCategory = catagoryID;
             try
             {
+                ViewBag.hdnCategory = catagoryID;
                 MainOffersModel model = new MainOffersModel();
-                string offerproductApiUrl = string.Empty;
-           
-                    offerproductApiUrl = ConfigurationManager.AppSettings["HostAPI"] +
-                         string.Format("api/OfferProducts?searchText={0}&catagoryID={1}&page={2}&pageSize={3}&sort={4}", string.Empty, catagoryID, 1, pageSize, string.Empty);
-
+                string offerproductApiUrl = ConfigurationManager.AppSettings["HostAPI"] + "/api/OfferProducts";
                 log.Info("Offers Controller: OfferproductApiUrl-" + offerproductApiUrl);
-                HttpResponseMessage response = AMAManager.GetClientResponse(offerproductApiUrl);
-                if (response.IsSuccessStatusCode)
+
+                OfferProductRequestModel requestModel = new OfferProductRequestModel()
+                {
+                    searchText = string.Empty,
+                    catagoryID = catagoryID,
+                    page = page,
+                    pageSize = pageSize,
+                    sort = string.Empty
+
+                };
+                HttpResponseMessage response = AMAManager.GetClientResponse(offerproductApiUrl, requestModel).Result;
+             
+               if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
                     log.Info(string.Format("Offers Controller: OfferproductApiUrl result count {0} , Value {1}", data.Count(), data));
+
+                    model.offerProducts = new List<AMAOfferProduct>();
                     model.offerProducts = JsonConvert.DeserializeObject<List<AMAOfferProduct>>(data);
 
                     if (model.offerProducts.Count > 0)
@@ -56,27 +64,28 @@ namespace AMA.WEB.Controllers
         }
 
 
-        public ActionResult OfferProducts(String Category, int page = 1)
+        public ActionResult OfferProducts(string CategoryId, int page = 1)
         {
             ViewBag.Title = "LootLo Offer Products";
            
             try
             {
                 MainOffersModel model = new MainOffersModel();
-                string offerproductApiUrl = string.Empty;
-                if (Category == "ALL")
-                {
-                    offerproductApiUrl = ConfigurationManager.AppSettings["HostAPI"] +
-                    string.Format("api/OfferProducts?searchText={0}&page={1}&pageSize={2}&sort={3}", string.Empty, page, pageSize, string.Empty);
-                }
-                else
-                {
-                    offerproductApiUrl = ConfigurationManager.AppSettings["HostAPI"] +
-                         string.Format("api/OfferProducts?searchText={0}&page={1}&pageSize={2}&sort={3}", Category, page, pageSize, string.Empty);
-                }
 
+                string offerproductApiUrl = ConfigurationManager.AppSettings["HostAPI"] + "/api/OfferProducts";
                 log.Info("Offers Controller: OfferproductApiUrl-" + offerproductApiUrl);
-                HttpResponseMessage response = AMAManager.GetClientResponse(offerproductApiUrl);
+
+                OfferProductRequestModel requestModel = new OfferProductRequestModel()
+                {
+                    searchText = string.Empty,
+                    catagoryID = !string.IsNullOrEmpty(CategoryId)? Int32.Parse(CategoryId): 0,
+                    page = page,
+                    pageSize = pageSize,
+                    sort = string.Empty
+
+                };
+                HttpResponseMessage response = AMAManager.GetClientResponse(offerproductApiUrl, requestModel).Result;
+
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;

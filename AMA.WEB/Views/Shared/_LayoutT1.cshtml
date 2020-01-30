@@ -4,14 +4,15 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     @*<meta name="viewport" content="width=device-width" />*@
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @*<meta name="viewport" content="width=device-width, initial-scale=1.0">*@
+    @*Admitad validation *@
+    <meta name="verify-admitad" content="dfe61b8b27" />
+
     <title>@ViewBag.Title</title>
     <meta name="keywords" content="@ViewBag.keywords">
     <link rel="preload" href="~/Content/Theme1/images/logo.png" as="image">
     <link rel='shortcut icon' href="~/Content/Theme1/images/logo.png" />
     <link href="https://fonts.googleapis.com/css?family=Athiti:400,600,700|Montez&display=swap" rel="stylesheet">
-    @*Admitad validation *@
-    <meta name="verify-admitad" content="dfe61b8b27" />
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RF6X1Z4SSS"></script>
@@ -23,10 +24,10 @@
         gtag('config', 'G-RF6X1Z4SSS');
     </script>
     <style>
-        .product-img {
-            /*width: 70%;*/
-            height: 60%;
-        }
+        /*.product-img {
+            max-width: 30%;
+            max-height: 40%;
+        }*/
 
         #load {
             width: 100%;
@@ -42,7 +43,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <!-- verify-admitad: "5b229dbc74" -->
+
     @Html.Partial("_Header")
     <header>
         <div class="header-bottom" id="BindCatagory">
@@ -59,104 +60,100 @@
     @RenderSection("scripts", required: false)
 
     <script>
-        $(document).ready(function(){
-            //Load Category
-             var BindCatagoryDiv = $("#BindCatagory");
-             $.ajax({
-                 cache: false,
-                 type: "GET",
-                 url: "@(Url.Action("BindCategories","Common"))",
-                //data: { "id": id },
-                success: function (data)
-                {
+        
+$(document).ready(function () {
+    //Load Category
+    var BindCatagoryDiv = $("#BindCatagory");
+    $.ajax({
+        cache: false,
+        type: "GET",
+        url: "@(Url.Action("BindCategories","Common"))",
+        //data: { "id": id },
+        success: function (data) {
 
-                    BindCatagoryDiv.html('');
-                    BindCatagoryDiv.html(data);
-                },
-                error: function (xhr, ajaxOptions, thrownError)
-                {
-                    alert('Failed to retrieve category.');
-                }
-            });
-
-            //Load FlipKart ALL offers
-             var DivAllOffers = $("#DivAllOffers");
-             $.ajax({
-                 cache: false,
-                 type: "GET",
-                 url: "@(Url.Action("BindAllFipkartAllOffers","Home"))",
-                //data: { "id": id },
-                success: function (data)
-                {
-
-                    DivAllOffers.html('');
-                    DivAllOffers.html(data);
-                },
-                error: function (xhr, ajaxOptions, thrownError)
-                {
-                    alert('Failed to retrieve category.');
-                }
-             });
-
-            //AutoComplete
-              $("#ProductSearchBox").autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: "/api/Search",
-                        type: "GET",
-                        dataType: "json",
-                        data: { searchText: request.term },
-                        success: function (data) {
-                            response($.map(data, function (item) {
-                                return { label: item.title, val: item.productUrl };
-                            }))
-
-                        }
-                    })
-                },
-                messages: {
-                    noResults: "", results: ""
-                  },
-                select: function (e, i) {
-                    $("#SelectedProductUrl").val(i.item.val);
-                },
-                minLength: 1
-            });
-
-
-
-        });
-
-
-       function OpenClildCategory(id) {
-           var divid = "#categoryList_" + id;
-           var BindSubCatagoryDiv = $(divid);
-
-           $.ajax({
-                  cache: false,
-                  type: "GET",
-                  url: "@Url.Action("BindChildCategories","Common")",
-                  data: { "ParentId": id },
-                  success: function (data)
-                  {
-                     BindSubCatagoryDiv.html('');
-                     BindSubCatagoryDiv.html(data);
-                     $('.full-page-menu').addClass('active');
-                  },
-                  error: function (xhr, ajaxOptions, thrownError)
-                  {
-                        alert('Failed to retrieve category.');
-                  }
-                 });
-            }
-       function closePopup() {
-            $('.full-page-menu').removeClass('active');
+            BindCatagoryDiv.html('');
+            BindCatagoryDiv.html(data);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert('Failed to retrieve category.');
         }
+    });
 
-       function OpenSearchOfferProduct() {
-            var url = $('#SelectedProductUrl').val();
-            window.open(url, "_blank");
-        };
+    //Load FlipKart ALL offers
+    var DivAllOffers = $("#DivAllOffers");
+    $.ajax({
+        cache: false,
+        type: "GET",
+        url: "@(Url.Action("BindAllFipkartAllOffers","Home"))",
+        //data: { "id": id },
+        success: function (data) {
+
+            DivAllOffers.html('');
+            DivAllOffers.html(data);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert('Failed to retrieve category.');
+        }
+    });
+
+    //AutoComplete
+    $("#ProductSearchBox").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/api/Search",
+                type: "GET",
+                dataType: "json",
+                data: { searchText: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.title, val: item.productUrl };
+                    }))
+
+                }
+            })
+        },
+        messages: {
+            noResults: "", results: ""
+        },
+        select: function (e, i) {
+            $("#SelectedProductUrl").val(i.item.val);
+        },
+        minLength: 1
+    });
+
+
+
+});
+
+
+function OpenClildCategory(id) {
+    var divid = "#categoryList_" + id;
+    var BindSubCatagoryDiv = $(divid);
+
+    $.ajax({
+        cache: false,
+        type: "GET",
+        url: "@Url.Action("BindChildCategories","Common")",
+        data: { "ParentId": id },
+        success: function (data) {
+            BindSubCatagoryDiv.html('');
+            BindSubCatagoryDiv.html(data);
+            $('.full-page-menu').addClass('active');
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert('Failed to retrieve category.');
+        }
+    });
+}
+function closePopup() {
+    $('.full-page-menu').removeClass('active');
+}
+
+function OpenSearchOfferProduct() {
+    var url = $('#SelectedProductUrl').val();
+    window.open(url, "_blank");
+};
     </script>
+
 </body>
 </html>

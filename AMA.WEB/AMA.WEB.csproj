@@ -194,6 +194,12 @@
     <Content Include="Content\Theme1\css\style.css" />
     <Content Include="Content\Theme1\favicon.ico" />
     <Content Include="Content\Theme1\fonts\icomoon.svg" />
+    <Content Include="Content\Theme1\images\Amazon\Amazon001.jpg" />
+    <Content Include="Content\Theme1\images\Amazon\Amazon002.jpg" />
+    <Content Include="Content\Theme1\images\Amazon\Amazon003.jpg" />
+    <Content Include="Content\Theme1\images\Amazon\Amazon004.jpg" />
+    <Content Include="Content\Theme1\images\Amazon\Amazon005.jpg" />
+    <Content Include="Content\Theme1\images\amazon_Logo.png" />
     <Content Include="Content\Theme1\images\banner.jpg" />
     <Content Include="Content\Theme1\images\category-1.png" />
     <Content Include="Content\Theme1\images\category-2.png" />
@@ -205,6 +211,7 @@
     <Content Include="Content\Theme1\js\bootstrap.js" />
     <Content Include="Content\Theme1\js\bootstrap.min.js" />
     <Content Include="Content\Theme1\js\jquery-3.3.1.slim.min.js" />
+    <Content Include="Content\Theme1\js\Layout.js" />
     <Content Include="Content\Theme1\js\popper.min.js" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />

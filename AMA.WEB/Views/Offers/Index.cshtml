@@ -171,7 +171,8 @@
         <div class="product-group" id="OfferList">
 
             @Html.Partial("_OfferProducts", Model.offerProducts)
-
+            <div class="product-group" id="OfferList1">
+            </div>
         </div>
         <input type="hidden" value="@ViewBag.hdnCategory" id="hdnCategory" />
         <input type="hidden" value="@ViewBag.ROWNUM" id="hdnROWNUM" />
@@ -200,17 +201,20 @@
             }
         });
         function appendData() {
-            var html = $('#OfferList').html();
+
             $.ajax({
                  cache: false,
                  type: "GET",
                  url: "@(Url.Action("OfferProducts","Offers"))",
-                data: { "Category": category ,"page": counter},
+                data: { "CategoryId": category ,"page": counter},
                 success: function (data)
                 {
-                    html += data;
-                    $('#OfferList').append(html);
-                   
+                     var newDiv = document.createElement("OfferList"+counter); 
+                    var currentDiv = document.getElementById("OfferList" + (counter-1)); 
+                    currentDiv.appendChild(newDiv);
+                    //document.body.insertBefore(newDiv, currentDiv); 
+
+                    $('#OfferList1').html(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError)
                 {

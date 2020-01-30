@@ -18,5 +18,6 @@ namespace AMA.DataLayer.Data
         public string Name { get; set; }
         public string Description { get; set; }
         public string SiteName { get; set; }
+        public Nullable<int> ProductCount { get; set; }
     }
 }

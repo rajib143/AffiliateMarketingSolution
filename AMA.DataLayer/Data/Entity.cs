@@ -13,11 +13,11 @@ namespace AMA.DataLayer.Data
 {
     public class Entity<T> : IEntity<T> where T : class
     {
-        private LootLoOnlineDatabaseEntities _lootLoOnlineDatabaseEntities;
+        private static LootLoOnlineDatabaseEntities _lootLoOnlineDatabaseEntities;
         public Entity()
         {
-            _lootLoOnlineDatabaseEntities = DatabaseConnection.Entityinstance;
-
+            if (_lootLoOnlineDatabaseEntities == null)
+                _lootLoOnlineDatabaseEntities = new LootLoOnlineDatabaseEntities();
         }
         public virtual async Task<List<T>> GetAll()
         {
@@ -115,6 +115,7 @@ namespace AMA.DataLayer.Data
             }
             catch (Exception ex)
             {
+
                 if (ex.Message.Contains("Value cannot be null"))
                 {
                     using (var context = new LootLoOnlineDatabaseEntities())
@@ -180,11 +181,11 @@ namespace AMA.DataLayer.Data
         {
             try
             {
-                using (var context = new LootLoOnlineDatabaseEntities())
-                {
-                    context.Set<T>().Remove(item);
-                    context.SaveChanges();
-                }
+                //using (var context = new LootLoOnlineDatabaseEntities())
+                //{
+                _lootLoOnlineDatabaseEntities.Set<T>().Remove(item);
+                _lootLoOnlineDatabaseEntities.SaveChanges();
+                //}
                 return true;
             }
             catch (Exception ex)
@@ -196,12 +197,15 @@ namespace AMA.DataLayer.Data
         {
             try
             {
-                using (var context = new LootLoOnlineDatabaseEntities())
-                {
-                    // context.Set<T>().SqlQuery("exec [Flipkart].[RemoveOldOfferProducts]");
-                    context.RemoveOldOfferProducts();
-                    //context.SaveChanges();
-                }
+                //using (var context = new LootLoOnlineDatabaseEntities())
+                //{
+                // context.Set<T>().SqlQuery("exec [Flipkart].[RemoveOldOfferProducts]");
+                 _lootLoOnlineDatabaseEntities.RemoveOldOfferProducts();
+                //context.SaveChanges();
+                //}
+
+                //_lootLoOnlineDatabaseEntities.Set<T>().RemoveRange(items);
+                //_lootLoOnlineDatabaseEntities.SaveChanges();
                 return true;
             }
             catch (Exception ex)

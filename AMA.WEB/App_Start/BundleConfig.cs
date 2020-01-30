@@ -12,9 +12,10 @@ namespace AMA.WEB
                          "~/Scripts/jquery-{version}.js",
                         //"~/Scripts/jquery-3.3.1.slim.min.js",
                         "~/Scripts/popper.min.js",
-                         "~/Scripts/jquery-ui-1.12.1.js"
-                        //"~/Content/Theme1/js/jquery-3.3.1.slim.min.js",
-                        // "~/Content/Theme1/js/popper.min.js"
+                         "~/Scripts/jquery-ui-1.12.1.js",
+                         //"~/Content/Theme1/js/jquery-3.3.1.slim.min.js",
+                         "~/Content/Theme1/js/Layout.js"
+
                         ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're

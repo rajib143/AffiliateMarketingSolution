@@ -21,33 +21,32 @@ namespace AMA.WEB.Controllers
         {
             ViewBag.Title = "Welcome to LootLoOnline";
             ViewBag.keywords = "LootLoOnline,LootLo,Offers";
+
+            string offerproductApiUrl = ConfigurationManager.AppSettings["HostAPI"] + "/api/OfferProducts";
+            log.Info("OfferproductApiUrl-" + offerproductApiUrl);
             MainOffersModel model = new MainOffersModel();
+
             try
             {
-                string offerproductApiUrl = ConfigurationManager.AppSettings["HostAPI"] +
-                    string.Format("api/OfferProducts?searchText={0}&catagoryID={1}&page={2}&pageSize={3}&sort={4}", string.Empty, 0, 1, pageSize, string.Empty);
-                log.Info("OfferproductApiUrl-" + offerproductApiUrl);
-                HttpResponseMessage response = AMAManager.GetClientResponse(offerproductApiUrl);
+                OfferProductRequestModel requestModel = new OfferProductRequestModel()
+                {
+                    searchText = string.Empty,
+                    catagoryID = 0,
+                    page = 1,
+                    pageSize = pageSize,
+                    sort = string.Empty
+
+                };
+                HttpResponseMessage response = AMAManager.GetClientResponse(offerproductApiUrl, requestModel).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
                     var data = response.Content.ReadAsStringAsync().Result;
                     log.Info(string.Format("OfferproductApiUrl result count {0} , Value {1}", data.Count(), data));
+
+                    model.offerProducts = new List<AMAOfferProduct>();
                     model.offerProducts = JsonConvert.DeserializeObject<List<AMAOfferProduct>>(data);
                 }
-
-                //string AllOfferApiUrl = ConfigurationManager.AppSettings["HostAPI"] +
-                //   string.Format("api/AllOffers?searchText={0}&page={1}&pageSize={2}&sort={3}", string.Empty, 1, pageSize, string.Empty);
-                //log.Info("AllOfferApiUrl-" + AllOfferApiUrl);
-                //HttpResponseMessage AllOfferResponse = AMAManager.GetClientResponse(AllOfferApiUrl);
-
-                //if (AllOfferResponse.IsSuccessStatusCode)
-                //{
-                //    var AllOfferData = AllOfferResponse.Content.ReadAsStringAsync().Result;
-                //    log.Info(string.Format("AllOfferApiUrl result count {0} , Value {1}", AllOfferData.Count(), AllOfferData));
-                //    model.fipkartAllOffers = JsonConvert.DeserializeObject<List<FipkartAllOffers>>(AllOfferData);
-                //}
-
             }
             catch (Exception ex)
             {
@@ -62,18 +61,28 @@ namespace AMA.WEB.Controllers
         {
             try
             {
-                string AllOfferApiUrl = ConfigurationManager.AppSettings["HostAPI"] +
-                   string.Format("api/AllOffers?searchText={0}&page={1}&pageSize={2}&sort={3}", string.Empty, 1, pageSize, string.Empty);
-                log.Info("AllOfferApiUrl-" + AllOfferApiUrl);
-                HttpResponseMessage AllOfferResponse = AMAManager.GetClientResponse(AllOfferApiUrl);
+                string offerproductApiUrl = ConfigurationManager.AppSettings["HostAPI"] + "/api/AllOffers";
 
-                if (AllOfferResponse.IsSuccessStatusCode)
+                FlipKartAllOffersRequestModel requestModel = new FlipKartAllOffersRequestModel()
                 {
-                    var AllOfferData = AllOfferResponse.Content.ReadAsStringAsync().Result;
+                    searchText = string.Empty,
+                    endDate = DateTime.Now.AddDays(-1),
+                    page = 1,
+                    pageSize = pageSize,
+                    sort = string.Empty
+
+                };
+                HttpResponseMessage response = AMAManager.GetClientResponse(offerproductApiUrl, requestModel).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var AllOfferData = response.Content.ReadAsStringAsync().Result;
                     log.Info(string.Format("AllOfferApiUrl result count {0} , Value {1}", AllOfferData.Count(), AllOfferData));
+                   
                     List<FipkartAllOffers> lstFipkartAllOffers = JsonConvert.DeserializeObject<List<FipkartAllOffers>>(AllOfferData);
                     return PartialView("~/Views/Home/_AllOffers.cshtml", lstFipkartAllOffers);
-                }else
+                }
+                else
                 {
                     throw new InvalidOperationException("Error in AllOfferApi fetch.");
                 }

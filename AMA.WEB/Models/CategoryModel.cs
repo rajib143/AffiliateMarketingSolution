@@ -13,7 +13,7 @@ namespace AMA.WEB.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string SiteName { get; set; }
-
+        public int ProductCount { get; set; }
         public Category ParentCategory { get; set; }
         public List<CategoryModel> Children { get; set; }
     }
