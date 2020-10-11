@@ -48,6 +48,7 @@ namespace AMA.DataLayer.Data
         public string lifeStyleInfo { get; set; }
         public Nullable<bool> IsUpdated { get; set; }
         public Nullable<int> CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string SiteName { get; set; }
     }

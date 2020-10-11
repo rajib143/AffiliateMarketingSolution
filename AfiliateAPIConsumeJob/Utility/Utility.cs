@@ -10,8 +10,16 @@ using System.Threading.Tasks;
 
 namespace AfiliateAPIConsumeJob.ConsumeAPIs
 {
-    public class Utility
+    public static class Utility
     {
 
+        public static string SetNullIfEmpty(this string value)
+        {
+            if (value == null)
+                value = string.Empty;
+
+            return value;
+
+        }
     }
 }

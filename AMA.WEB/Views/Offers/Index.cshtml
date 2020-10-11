@@ -168,24 +168,31 @@
             </div>*@
 
         @*<div class="product-group listing" id="OfferList">*@
-        <div class="product-group" id="OfferList">
 
+        <div class="product-group" id="OfferList">
             @Html.Partial("_OfferProducts", Model.offerProducts)
-            <div class="product-group" id="OfferList1">
-            </div>
+            <div class="se-pre-con-offerproducts"></div>
         </div>
+
         <input type="hidden" value="@ViewBag.hdnCategory" id="hdnCategory" />
         <input type="hidden" value="@ViewBag.ROWNUM" id="hdnROWNUM" />
         <input type="hidden" value="@ViewBag.TotalRowCount" id="hdnTotalRowCount" />
         @*</div>*@
     </div>
+
 </div>
 
 
-<script>
-    var counter = 1;
-    var category = $('hdnCategory').val();
 
+
+<script>
+   $(document).ready(function () {
+		// Animate loader off screen
+		$(".se-pre-con-offerproducts").fadeOut("slow");
+    });
+
+    var counter = 2;
+    var category = $('hdnCategory').val();
 
     $(window).scroll(function () {
         //var hdnROWNUM = $('hdnROWNUM').val();
@@ -194,14 +201,15 @@
         //&& hdnROWNUM < hdnTotalRowCount
 
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                appendData();
+            
+            appendData();
             counter++;
-
-                //alert(counter);
+         
             }
-        });
-        function appendData() {
+    });
 
+    function appendData() {
+        $(".se-pre-con-offerproducts").fadeIn("slow");
             $.ajax({
                  cache: false,
                  type: "GET",
@@ -209,19 +217,18 @@
                 data: { "CategoryId": category ,"page": counter},
                 success: function (data)
                 {
-                     var newDiv = document.createElement("OfferList"+counter); 
-                    var currentDiv = document.getElementById("OfferList" + (counter-1)); 
-                    currentDiv.appendChild(newDiv);
-                    //document.body.insertBefore(newDiv, currentDiv); 
+                    var element = document.getElementById('OfferList');// document.createElement("div");
 
-                    $('#OfferList1').html(data);
+                   // document.getElementById('OfferList').appendChild(element);
+                      element.innerHTML= element.innerHTML + data;
+                    //document.body.insertBefore(newDiv, currentDiv);
+                    $(".se-pre-con-offerproducts").fadeOut("slow");
+
                 },
                 error: function (xhr, ajaxOptions, thrownError)
                 {
                     alert('Failed to retrieve category.');
                 }
             });
-
-
         }
 </script>

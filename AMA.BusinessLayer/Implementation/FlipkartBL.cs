@@ -37,7 +37,7 @@ namespace AMA.BusinessLayer.Implementation
             try
             {
                 List<ProductCatagory> productCatagories = FlipkartAPI.GetFlipkartProductCategorys(setting);
-                foreach (var item in productCatagories.ToList())
+                foreach (var item in productCatagories.Where(x => x != null).ToList())
                 {
                     try
                     {
@@ -47,8 +47,8 @@ namespace AMA.BusinessLayer.Implementation
                         var responseProducts = FlipkartAPI.GetFlipkartCategoryProducts(setting, item.getApi);
 
                         result.validTill = responseProducts.validTill;
-                        result.products.AddRange(responseProducts.products.Where(x => x.productBaseInfoV1.inStock = true && x.productShippingInfoV1.sellerAverageRating.HasValue
-                                                        && x.productShippingInfoV1.sellerAverageRating > 0));
+                        result.products.AddRange(responseProducts.products.Where(x => x.productBaseInfoV1.inStock = true));
+                       // && x.productShippingInfoV1.sellerAverageRating.HasValue && x.productShippingInfoV1.sellerAverageRating > 0));
 
                         log.Info("Get " + result.products.Count() + " offer products from " + SiteName.Flipkart.ToString() + " for catagory " + item.resourceName);
 
@@ -75,57 +75,55 @@ namespace AMA.BusinessLayer.Implementation
                 List<OfferProduct> offerProducts = new List<OfferProduct>();
                 DateTime validTillDateTime = result.validTill.FromUnixTime();
 
-                Parallel.ForEach(result.products.OrderByDescending(x => x.productShippingInfoV1.sellerNoOfReviews).ToList(), (item) =>
+                Parallel.ForEach(result.products.Where(x=>x!=null).OrderByDescending(x => x.productShippingInfoV1.sellerNoOfReviews).ToList(), (item) =>
                 {
                     try
                     {
-                        string[] shotTitle = item.productBaseInfoV1.title.Split(' ');
+                        string[] shotTitle = item.productBaseInfoV1.title.SetNullIfEmpty().Split(' ');
 
-                        var resultDic = JsonConvert.DeserializeObject<Dictionary<string, string>>(item.productBaseInfoV1.imageUrls.ToString());
-                        if (!offerProducts.Any(x => x.productId.Equals(item.productBaseInfoV1.productId))
-                         && !string.IsNullOrEmpty(item.productBaseInfoV1.title)
-                         && item.productBaseInfoV1.maximumRetailPrice.amount > 0
-                         && item.productBaseInfoV1.flipkartSellingPrice.amount > 0
-                         && item.productBaseInfoV1.flipkartSpecialPrice.amount > 0
+                        //var resultDic = JsonConvert.DeserializeObject<Dictionary<string, string>>(item.productBaseInfoV1.imageUrls.ToString());
+                        //!offerProducts.Any(x => !string.IsNullOrEmpty(x.productId) && x.productId.Equals(item.productBaseInfoV1.productId))&&
+                        if (item!=null && !string.IsNullOrEmpty(item.productBaseInfoV1.title)
+                         //&& item.productBaseInfoV1.maximumRetailPrice.amount > 0
+                         //&& item.productBaseInfoV1.flipkartSellingPrice.amount > 0
+                         //&& item.productBaseInfoV1.flipkartSpecialPrice.amount > 0
                          && item.productBaseInfoV1.discountPercentage > 0)
                         {
                             offerProducts.Add(new OfferProduct()
                             {
                                 productId = item.productBaseInfoV1.productId,
                                 validTill = validTillDateTime,
-                                shotTitle= shotTitle.Count()>3? shotTitle[0]+" " + shotTitle[1] + " " + shotTitle[2]+ "@" + item.productBaseInfoV1.discountPercentage + "% OFF"
+                                shotTitle = shotTitle.Count() > 3 ? shotTitle[0] + " " + shotTitle[1] + " " + shotTitle[2] + "@" + item.productBaseInfoV1.discountPercentage + "% OFF"
                                 : item.productBaseInfoV1.title + "@" + item.productBaseInfoV1.discountPercentage + "% OFF",
-                                title = item.productBaseInfoV1.title ,
+                                title = item.productBaseInfoV1.title,
                                 productDescription = item.productBaseInfoV1.productDescription,
-                                imageUrls_200 = resultDic.Values.ToArray()[0].ToString(),
-                                imageUrls_400 = resultDic.Values.ToArray()[1].ToString(),
-                                imageUrls_800 = resultDic.Values.ToArray()[2].ToString(),
-
-                                productFamily = item.productBaseInfoV1.productFamily.ToString(), //
-
-                            maximumRetailPrice = item.productBaseInfoV1.maximumRetailPrice.amount,
+                                imageUrls_200 = item.productBaseInfoV1.imageUrls["200x200"].SetNullIfEmpty(),
+                                imageUrls_400 = item.productBaseInfoV1.imageUrls["400x400"].SetNullIfEmpty(),
+                                imageUrls_800 = item.productBaseInfoV1.imageUrls["800x800"].SetNullIfEmpty(),
+                                productFamily = item.productBaseInfoV1.productFamily.SetNullIfEmpty(), //
+                                maximumRetailPrice = item.productBaseInfoV1.maximumRetailPrice.amount,
                                 SellingPrice = item.productBaseInfoV1.flipkartSellingPrice.amount,
                                 SpecialPrice = item.productBaseInfoV1.flipkartSpecialPrice.amount,
                                 currency = item.productBaseInfoV1.maximumRetailPrice.currency,
-                                productUrl = item.productBaseInfoV1.productUrl,
-                                productBrand = item.productBaseInfoV1.productBrand,
+                                productUrl = item.productBaseInfoV1.productUrl.SetNullIfEmpty(),
+                                productBrand = item.productBaseInfoV1.productBrand.SetNullIfEmpty(),
                                 inStock = item.productBaseInfoV1.inStock,
                                 codAvailable = item.productBaseInfoV1.codAvailable,
                                 discountPercentage = item.productBaseInfoV1.discountPercentage,
-                                offers = item.productBaseInfoV1.offers.ToString(),
-                                categoryPath = item.productBaseInfoV1.categoryPath,
-                                attributes = item.productBaseInfoV1.attributes.ToString(),
+                                offers = item.productBaseInfoV1.offers.SetNullIfEmpty(),
+                                categoryPath = item.productBaseInfoV1.categoryPath.SetNullIfEmpty(),
+                                attributes = item.productBaseInfoV1.attributes.SetNullIfEmpty(),
                                 shippingCharges = item.productShippingInfoV1.shippingCharges.amount,
                                 estimatedDeliveryTime = item.productShippingInfoV1.estimatedDeliveryTime,
-                                sellerName = item.productShippingInfoV1.sellerName,
+                                sellerName = item.productShippingInfoV1.sellerName.SetNullIfEmpty(),
                                 sellerAverageRating = item.productShippingInfoV1.sellerAverageRating,
                                 sellerNoOfRatings = item.productShippingInfoV1.sellerNoOfRatings,
                                 sellerNoOfReviews = item.productShippingInfoV1.sellerNoOfReviews,
-                                keySpecs = item.categorySpecificInfoV1.keySpecs.ToString(),
-                                detailedSpecs = item.categorySpecificInfoV1.detailedSpecs.ToString(),
-                                specificationList = item.categorySpecificInfoV1.specificationList.ToString(),
-                                booksInfo = item.categorySpecificInfoV1.booksInfo.ToString(),
-                                lifeStyleInfo = item.categorySpecificInfoV1.lifeStyleInfo.ToString(),
+                                keySpecs = item.categorySpecificInfoV1.keySpecs.SetNullIfEmpty(),
+                                detailedSpecs = item.categorySpecificInfoV1.detailedSpecs.SetNullIfEmpty(),
+                                specificationList = item.categorySpecificInfoV1.specificationList.SetNullIfEmpty(),
+                                booksInfo = item.categorySpecificInfoV1.booksInfo.SetNullIfEmpty(),
+                                lifeStyleInfo = item.categorySpecificInfoV1.lifeStyleInfo.SetNullIfEmpty(),
                                 IsUpdated = false,
                                 CreatedDate = DateTime.Now,
                                 SiteName = SiteName.Flipkart.ToString()
@@ -154,13 +152,13 @@ namespace AMA.BusinessLayer.Implementation
             try
             {
                 string strAllOffers = FlipkartAPIResult.GetAllFlipkartOffers(setting).Result;
-                
+
                 FlipkartAllOffers flipkartAllOffers = JsonConvert.DeserializeObject<FlipkartAllOffers>(strAllOffers);
-                List<DealsOfTheDay> Offers = new List<DealsOfTheDay>();
+                List<Models.DealsOfTheDay> Offers = new List<Models.DealsOfTheDay>();
                 List<AllOffer> allOffers = new List<AllOffer>();
                 Offers.AddRange(flipkartAllOffers.allOffersList);
 
-                log.Info("Get " + Offers.Count() + " AllOffers from " + SiteName.Flipkart.ToString() );
+                log.Info("Get " + Offers.Count() + " AllOffers from " + SiteName.Flipkart.ToString());
 
                 Parallel.ForEach(Offers.ToList(), (item) =>
                 {
@@ -209,11 +207,11 @@ namespace AMA.BusinessLayer.Implementation
             try
             {
                 log.Info("RemoveOldOffers started");
-                var lstRemoveProducts = this.GetOfferProducts(log).Result.Where(x => x.validTill < DateTime.Now.AddMinutes(-30));
+                var lstRemoveProducts = this.GetOfferProducts(log).Result.Where(x => x.validTill < DateTime.Now.AddMinutes(-1));
                 this.RemoveBulkOfferProducts(lstRemoveProducts.ToList(), log);
 
 
-                var lstRemoveOffers = this.GetAllOffers(log).Result.Where(x => x.endTime < DateTime.Now.AddMinutes(-30));
+                var lstRemoveOffers = this.GetAllOffers(log).Result.Where(x => x.endTime < DateTime.Now.AddMinutes(-1));
                 this.RemoveBulkAllOffers(lstRemoveOffers.ToList(), log);
 
                 log.Info("RemoveOldOffers completed");
@@ -224,7 +222,7 @@ namespace AMA.BusinessLayer.Implementation
                 throw ex;
             }
         }
-      
+
         #region OfferProduct
         public async Task<List<OfferProduct>> GetOfferProducts(ILog log)
         {
@@ -286,7 +284,7 @@ namespace AMA.BusinessLayer.Implementation
             try
             {
                 // var noDupsOfferProducts = new HashSet<OfferProduct>(offerProducts).ToList();
-
+                offerProducts = offerProducts.Where(x => x != null).ToList();
                 string catName = offerProducts.First().categoryPath;
                 var dbOfferProductList = await _offerProductRepository.Find(x => x.categoryPath == catName);
 
@@ -302,7 +300,7 @@ namespace AMA.BusinessLayer.Implementation
             catch (Exception ex)
             {
                 log.Error(ex.Message, ex);
-               // throw;
+                // throw;
             }
 
             return true;
@@ -406,7 +404,7 @@ namespace AMA.BusinessLayer.Implementation
             catch (Exception ex)
             {
                 log.Error(ex.Message, ex);
-                
+
                 throw;
             }
         }

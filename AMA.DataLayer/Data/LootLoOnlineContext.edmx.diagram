@@ -5,16 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="498738d81ef0406a8d60454a60a6e3a7" Name="Diagram1">
+        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.Category" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.OfferBrand" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.C__EFMigrationsHistory" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.DealsOfTheDay" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.Log" Width="1.5" PointX="2.75" PointY="3.75" />
-        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.sysdiagram" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.AllOffer" Width="1.5" PointX="4.75" PointY="3.75" />
-        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.DealsOfTheDayOffer" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.User" Width="1.5" PointX="0.75" PointY="7.75" />
-        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.VisitedUser" Width="1.5" PointX="3.375" PointY="8.75" />
-        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.OfferProduct" Width="1.5" PointX="7.375" PointY="3.75" />
-        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.Category" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.NLog" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.sysdiagram" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.AllOffer" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.DealsOfTheDayOffer" Width="1.5" PointX="6.75" PointY="5.75" />
+        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.OfferProduct" Width="1.5" PointX="2.75" PointY="7.75" />
+        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.User" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="LootLoOnlineDatabaseModel.VisitedUser" Width="1.5" PointX="8.75" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

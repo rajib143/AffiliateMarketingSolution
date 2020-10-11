@@ -12,9 +12,15 @@ namespace AMA.DataLayer.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class C__EFMigrationsHistory
+    public partial class NLog
     {
-        public string MigrationId { get; set; }
-        public string ProductVersion { get; set; }
+        public long Id { get; set; }
+        public string Message { get; set; }
+        public string Level { get; set; }
+        public string Logger { get; set; }
+        public string Application { get; set; }
+        public string Callsite { get; set; }
+        public string Exception { get; set; }
+        public Nullable<System.DateTime> Logged { get; set; }
     }
 }

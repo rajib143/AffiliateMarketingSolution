@@ -30,6 +30,25 @@ namespace AMA.BusinessLayer.Utility
             }
             return sMacAddress;
         }
-        
+
+        public static string SetNullIfEmpty(this string value)
+        {
+            if (value == null)
+                value = string.Empty;
+
+            return value;
+
+        }
+        public static string SetNullIfEmpty(this object value)
+        {
+            string result ;
+            if (value == null)
+                result = string.Empty;
+            else
+                result= value.ToString();
+
+            return result;
+
+        }
     }
 }

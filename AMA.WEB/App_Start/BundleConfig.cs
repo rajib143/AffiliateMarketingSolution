@@ -33,7 +33,8 @@ namespace AMA.WEB
             bundles.Add(new StyleBundle("~/Content/css").Include(
                         "~/Content/Theme1/css/bootstrap.min.css",
                        "~/Content/themes/base/jquery-ui.min.css",
-                      "~/Content/Theme1/css/style.css"
+                      "~/Content/Theme1/css/style.css",
+                      "~/Content/Theme1/css/loader.css"
                       ));
 
          BundleTable.EnableOptimizations = false;

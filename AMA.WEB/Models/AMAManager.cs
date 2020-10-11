@@ -52,7 +52,10 @@ namespace AMA.WEB.Models
                         RequestUri = new Uri(APIurl),
                         Content = stringContent,
                     };
+
                     response = client.SendAsync(request).Result;
+                    response.Headers.TransferEncodingChunked = false;
+
                 }
 
                 return response;

@@ -52,7 +52,7 @@ namespace AMA.BusinessLayer.Models
         public string productId { get; set; }
         public string title { get; set; }
         public string productDescription { get; set; }
-        public object imageUrls { get; set; }
+        public Dictionary<string, string> imageUrls { get; set; }
         public object productFamily { get; set; }
         public Price maximumRetailPrice { get; set; }
         public Price flipkartSellingPrice { get; set; }

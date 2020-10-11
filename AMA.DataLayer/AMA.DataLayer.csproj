@@ -63,10 +63,10 @@
     <Compile Include="Data\Category.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\Entity.cs" />
-    <Compile Include="Data\C__EFMigrationsHistory.cs">
+    <Compile Include="Data\DealsOfTheDay.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\Entity.cs" />
     <Compile Include="Data\DatabaseConnection.cs" />
     <Compile Include="Data\DealsOfTheDayOffer.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
@@ -101,6 +101,9 @@
       <DependentUpon>LootLoOnlineContext.edmx</DependentUpon>
     </Compile>
     <Compile Include="Data\LootLoOnlineEntity.cs" />
+    <Compile Include="Data\NLog.cs">
+      <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\OfferBrand.cs">
       <DependentUpon>LootLoOnlineContext.tt</DependentUpon>
     </Compile>
