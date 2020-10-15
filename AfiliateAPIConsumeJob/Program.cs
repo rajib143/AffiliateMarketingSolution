@@ -47,6 +47,7 @@ namespace AfiliateAPIConsumeJob
                     {
                         affiliateAPI.RemoveOldOffers(log);
                         affiliateAPI.ProcessAllOffers(log);
+                        affiliateAPI.ProcessDealsOfTheDayOffers(log);
                         affiliateAPI.ProcessOfferProducts(log);
                         
 

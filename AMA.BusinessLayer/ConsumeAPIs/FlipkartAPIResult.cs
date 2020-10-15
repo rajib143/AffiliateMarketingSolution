@@ -119,5 +119,33 @@ namespace AMA.BusinessLayer.ConsumeAPIs
                 throw ex;
             }
         }
+
+        public static async Task<string> GetDealsOfTheDayOffer(Setting setting)
+        {
+            try
+            {
+                string fileJsonString = string.Empty;
+                //string url = "https://affiliate-api.flipkart.net/affiliate/offers/v1/all/json";
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Add("Fk-Affiliate-Id", setting.FkAffiliateId);
+                    client.DefaultRequestHeaders.Add("Fk-Affiliate-Token", setting.FkAffiliateToken);
+
+                    var response = await client.GetAsync(setting.FlipkartDealsOfTheDayOfferApiUrl);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        fileJsonString = await response.Content.ReadAsStringAsync();
+                    }
+                }
+                return fileJsonString;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

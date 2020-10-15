@@ -22,5 +22,6 @@ namespace AMA.BusinessLayer.AbstractFactory
         Task<bool> RemoveBulkAllOffers(List<AllOffer> allOffer,ILog log );
 
         Task ProcessAllOffers(ILog log);
+        Task ProcessDealsOfTheDayOffers(ILog log);
     }
 }

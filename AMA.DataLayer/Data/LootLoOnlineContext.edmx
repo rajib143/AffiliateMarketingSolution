@@ -24,23 +24,6 @@
           <Property Name="BrandName" Type="nvarchar" MaxLength="250" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
         </EntityType>
-        <EntityType Name="DealsOfTheDays">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="startTime" Type="datetime2" Precision="7" />
-          <Property Name="endTime" Type="datetime2" Precision="7" />
-          <Property Name="title" Type="nvarchar(max)" />
-          <Property Name="name" Type="nvarchar(max)" />
-          <Property Name="description" Type="nvarchar(max)" />
-          <Property Name="url" Type="nvarchar(max)" />
-          <Property Name="category" Type="nvarchar(max)" />
-          <Property Name="imageUrls_default" Type="nvarchar(max)" />
-          <Property Name="imageUrls_mid" Type="nvarchar(max)" />
-          <Property Name="imageUrls_low" Type="nvarchar(max)" />
-          <Property Name="availability" Type="nvarchar(max)" />
-        </EntityType>
         <EntityType Name="Logs">
           <Key>
             <PropertyRef Name="Id" />
@@ -52,19 +35,6 @@
           <Property Name="Logger" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Message" Type="varchar" MaxLength="4000" Nullable="false" />
           <Property Name="Exception" Type="varchar" MaxLength="2000" />
-        </EntityType>
-        <EntityType Name="NLogs">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
-          <Property Name="Message" Type="nvarchar(max)" />
-          <Property Name="Level" Type="nvarchar" MaxLength="500" />
-          <Property Name="Logger" Type="nvarchar" MaxLength="500" />
-          <Property Name="Application" Type="nvarchar" MaxLength="500" />
-          <Property Name="Callsite" Type="nvarchar" MaxLength="500" />
-          <Property Name="Exception" Type="nvarchar(max)" />
-          <Property Name="Logged" Type="datetime" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -86,7 +56,7 @@
           <Property Name="title" Type="nvarchar" MaxLength="500" />
           <Property Name="name" Type="nvarchar" MaxLength="500" />
           <Property Name="description" Type="nvarchar" MaxLength="4000" />
-          <Property Name="url" Type="nvarchar" MaxLength="2000" />
+          <Property Name="url" Type="nvarchar(max)" />
           <Property Name="category" Type="nvarchar" MaxLength="500" />
           <Property Name="imageUrls_default" Type="nvarchar" MaxLength="1000" />
           <Property Name="imageUrls_mid" Type="nvarchar" MaxLength="1000" />
@@ -98,11 +68,17 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="title" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="description" Type="nvarchar" MaxLength="2000" Nullable="false" />
-          <Property Name="url" Type="nvarchar" MaxLength="500" Nullable="false" />
-          <Property Name="availability" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="startTime" Type="datetime" />
+          <Property Name="endTime" Type="datetime" />
+          <Property Name="title" Type="nvarchar" MaxLength="500" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="description" Type="nvarchar" MaxLength="4000" />
+          <Property Name="url" Type="nvarchar(max)" />
+          <Property Name="category" Type="nvarchar" MaxLength="500" />
+          <Property Name="imageUrls_default" Type="nvarchar" MaxLength="1000" />
+          <Property Name="imageUrls_mid" Type="nvarchar" MaxLength="1000" />
+          <Property Name="imageUrls_low" Type="nvarchar" MaxLength="1000" />
+          <Property Name="availability" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="OfferProducts">
           <Key>
@@ -167,8 +143,11 @@
           <Property Name="IPAddress" Type="nvarchar" MaxLength="200" />
           <Property Name="Count" Type="int" />
           <Property Name="CatagoryID" Type="int" />
+          <Property Name="CatagoryPath" Type="nvarchar" MaxLength="500" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ProductTitle" Type="nvarchar" MaxLength="250" />
+          <Property Name="ProductUrl" Type="nvarchar" MaxLength="250" />
+          <Property Name="ImageUrl" Type="nvarchar" MaxLength="500" />
           <Property Name="ProductId" Type="nvarchar" MaxLength="50" />
           <Property Name="LastVisitedDate" Type="datetime" />
           <Property Name="ClickedOnBuyNow" Type="bit" />
@@ -330,9 +309,7 @@
         <EntityContainer Name="LootLoOnlineDatabaseModelStoreContainer">
           <EntitySet Name="Category" EntityType="Self.Category" Schema="Admin" store:Type="Tables" />
           <EntitySet Name="OfferBrands" EntityType="Self.OfferBrands" Schema="Admin" store:Type="Tables" />
-          <EntitySet Name="DealsOfTheDays" EntityType="Self.DealsOfTheDays" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="NLogs" EntityType="Self.NLogs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AllOffers" EntityType="Self.AllOffers" Schema="Flipkart" store:Type="Tables" />
           <EntitySet Name="DealsOfTheDayOffers" EntityType="Self.DealsOfTheDayOffers" Schema="Flipkart" store:Type="Tables" />
@@ -488,15 +465,13 @@
           </FunctionImport>
           <EntitySet Name="Categories" EntityType="LootLoOnlineDatabaseModel.Category" />
           <EntitySet Name="OfferBrands" EntityType="LootLoOnlineDatabaseModel.OfferBrand" />
-          <EntitySet Name="DealsOfTheDays" EntityType="LootLoOnlineDatabaseModel.DealsOfTheDay" />
           <EntitySet Name="Logs" EntityType="LootLoOnlineDatabaseModel.Log" />
-          <EntitySet Name="NLogs" EntityType="LootLoOnlineDatabaseModel.NLog" />
           <EntitySet Name="sysdiagrams" EntityType="LootLoOnlineDatabaseModel.sysdiagram" />
           <EntitySet Name="AllOffers" EntityType="LootLoOnlineDatabaseModel.AllOffer" />
-          <EntitySet Name="DealsOfTheDayOffers" EntityType="LootLoOnlineDatabaseModel.DealsOfTheDayOffer" />
           <EntitySet Name="OfferProducts" EntityType="LootLoOnlineDatabaseModel.OfferProduct" />
           <EntitySet Name="Users" EntityType="LootLoOnlineDatabaseModel.User" />
           <EntitySet Name="VisitedUsers" EntityType="LootLoOnlineDatabaseModel.VisitedUser" />
+          <EntitySet Name="DealsOfTheDayOffers" EntityType="LootLoOnlineDatabaseModel.DealsOfTheDayOffer" />
           </EntityContainer>
         <ComplexType Name="GetAllOfferProducts_Result">
           <Property Type="String" Name="productId" Nullable="false" MaxLength="50" />
@@ -621,23 +596,6 @@
           <Property Name="BrandName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="DealsOfTheDay">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="startTime" Type="DateTime" Precision="7" />
-          <Property Name="endTime" Type="DateTime" Precision="7" />
-          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="imageUrls_default" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="imageUrls_mid" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="imageUrls_low" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="availability" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="Log">
           <Key>
             <PropertyRef Name="Id" />
@@ -649,19 +607,6 @@
           <Property Name="Logger" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Message" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
           <Property Name="Exception" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="NLog">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" />
-          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Level" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Logger" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Application" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Callsite" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Logged" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -683,23 +628,12 @@
           <Property Name="title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="url" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="category" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="imageUrls_default" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="imageUrls_mid" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="imageUrls_low" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="availability" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="DealsOfTheDayOffer">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="url" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="availability" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="OfferProduct">
           <Key>
@@ -764,11 +698,31 @@
           <Property Name="IPAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Count" Type="Int32" />
           <Property Name="CatagoryID" Type="Int32" />
+          <Property Name="CatagoryPath" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ProductTitle" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ProductUrl" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ImageUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ProductId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastVisitedDate" Type="DateTime" Precision="3" />
           <Property Name="ClickedOnBuyNow" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="DealsOfTheDayOffer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="startTime" Type="DateTime" Precision="3" />
+          <Property Name="endTime" Type="DateTime" Precision="3" />
+          <Property Name="title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="category" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="imageUrls_default" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="imageUrls_mid" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="imageUrls_low" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="availability" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -961,24 +915,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DealsOfTheDays">
-            <EntityTypeMapping TypeName="LootLoOnlineDatabaseModel.DealsOfTheDay">
-              <MappingFragment StoreEntitySet="DealsOfTheDays">
-                <ScalarProperty Name="availability" ColumnName="availability" />
-                <ScalarProperty Name="imageUrls_low" ColumnName="imageUrls_low" />
-                <ScalarProperty Name="imageUrls_mid" ColumnName="imageUrls_mid" />
-                <ScalarProperty Name="imageUrls_default" ColumnName="imageUrls_default" />
-                <ScalarProperty Name="category" ColumnName="category" />
-                <ScalarProperty Name="url" ColumnName="url" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="endTime" ColumnName="endTime" />
-                <ScalarProperty Name="startTime" ColumnName="startTime" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Logs">
             <EntityTypeMapping TypeName="LootLoOnlineDatabaseModel.Log">
               <MappingFragment StoreEntitySet="Logs">
@@ -988,20 +924,6 @@
                 <ScalarProperty Name="Level" ColumnName="Level" />
                 <ScalarProperty Name="Thread" ColumnName="Thread" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NLogs">
-            <EntityTypeMapping TypeName="LootLoOnlineDatabaseModel.NLog">
-              <MappingFragment StoreEntitySet="NLogs">
-                <ScalarProperty Name="Logged" ColumnName="Logged" />
-                <ScalarProperty Name="Exception" ColumnName="Exception" />
-                <ScalarProperty Name="Callsite" ColumnName="Callsite" />
-                <ScalarProperty Name="Application" ColumnName="Application" />
-                <ScalarProperty Name="Logger" ColumnName="Logger" />
-                <ScalarProperty Name="Level" ColumnName="Level" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1032,18 +954,6 @@
                 <ScalarProperty Name="endTime" ColumnName="endTime" />
                 <ScalarProperty Name="startTime" ColumnName="startTime" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DealsOfTheDayOffers">
-            <EntityTypeMapping TypeName="LootLoOnlineDatabaseModel.DealsOfTheDayOffer">
-              <MappingFragment StoreEntitySet="DealsOfTheDayOffers">
-                <ScalarProperty Name="availability" ColumnName="availability" />
-                <ScalarProperty Name="url" ColumnName="url" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1109,12 +1019,33 @@
                 <ScalarProperty Name="ClickedOnBuyNow" ColumnName="ClickedOnBuyNow" />
                 <ScalarProperty Name="LastVisitedDate" ColumnName="LastVisitedDate" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="ProductUrl" ColumnName="ProductUrl" />
                 <ScalarProperty Name="ProductTitle" ColumnName="ProductTitle" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CatagoryPath" ColumnName="CatagoryPath" />
                 <ScalarProperty Name="CatagoryID" ColumnName="CatagoryID" />
                 <ScalarProperty Name="Count" ColumnName="Count" />
                 <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
                 <ScalarProperty Name="MacId" ColumnName="MacId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DealsOfTheDayOffers">
+            <EntityTypeMapping TypeName="LootLoOnlineDatabaseModel.DealsOfTheDayOffer">
+              <MappingFragment StoreEntitySet="DealsOfTheDayOffers">
+                <ScalarProperty Name="availability" ColumnName="availability" />
+                <ScalarProperty Name="imageUrls_low" ColumnName="imageUrls_low" />
+                <ScalarProperty Name="imageUrls_mid" ColumnName="imageUrls_mid" />
+                <ScalarProperty Name="imageUrls_default" ColumnName="imageUrls_default" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="endTime" ColumnName="endTime" />
+                <ScalarProperty Name="startTime" ColumnName="startTime" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

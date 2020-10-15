@@ -25,6 +25,15 @@ namespace AMA.DataLayer
     }
 
     #endregion
+    #region DealsOfTheDayOffer
+    public interface IDealsOfTheDayOfferRepository : IEntity<DealsOfTheDayOffer>
+    {
+    }
+    public class DealsOfTheDayOfferRepository : Entity<DealsOfTheDayOffer>, IDealsOfTheDayOfferRepository
+    {
+    }
+
+    #endregion
 
     #region Visited User
     public interface IVisitedUserRepository : IEntity<VisitedUser>

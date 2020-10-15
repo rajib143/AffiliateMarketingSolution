@@ -19,8 +19,11 @@ namespace AMA.DataLayer.Data
         public string IPAddress { get; set; }
         public Nullable<int> Count { get; set; }
         public Nullable<int> CatagoryID { get; set; }
+        public string CatagoryPath { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public string ProductTitle { get; set; }
+        public string ProductUrl { get; set; }
+        public string ImageUrl { get; set; }
         public string ProductId { get; set; }
         public Nullable<System.DateTime> LastVisitedDate { get; set; }
         public Nullable<bool> ClickedOnBuyNow { get; set; }

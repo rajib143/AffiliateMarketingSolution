@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Connected Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AffiliateMarketingAutomation.CoreDataLayer\AffiliateMarketingAutomation.CoreDataLayer.csproj" />
+  </ItemGroup>
+
+</Project>

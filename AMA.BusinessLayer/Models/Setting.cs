@@ -11,6 +11,7 @@ namespace AMA.BusinessLayer.Models
     {
 
         public string FlipkartAllOffersApiUrl { get; set; }
+        public string FlipkartDealsOfTheDayOfferApiUrl { get; set; }
         public string FlipkartProductCatagoryApiUrl { get; set; }
         //public string FlipkartCategoryProductApiUrl { get; set; }
         public string FkAffiliateId { get; set; }
@@ -18,9 +19,12 @@ namespace AMA.BusinessLayer.Models
         public Setting()
         {
             FlipkartAllOffersApiUrl = ConfigurationManager.AppSettings["FlipkartAllOffersApiUrl"];
+            FlipkartDealsOfTheDayOfferApiUrl = ConfigurationManager.AppSettings["FlipkartDealsOfTheDayOfferApiUrl"];
             FlipkartProductCatagoryApiUrl = ConfigurationManager.AppSettings["FlipkartProductCatagoryApiUrl"];
             FkAffiliateId = ConfigurationManager.AppSettings["FkAffiliateId"];
             FkAffiliateToken = ConfigurationManager.AppSettings["FkAffiliateToken"];
+
+
         }
 
         public static DateTime UnixTimeToDateTime(long unixtime)

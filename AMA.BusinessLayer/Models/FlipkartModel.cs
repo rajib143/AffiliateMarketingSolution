@@ -66,8 +66,10 @@ namespace AMA.BusinessLayer.Models
         public FlipkartAllOffers()
         {
             allOffersList = new List<DealsOfTheDay>();
+            dotdList = new List<DealsOfTheDay>();
         }
         public List<DealsOfTheDay> allOffersList { get; set; }
+        public List<DealsOfTheDay> dotdList { get; set; }
     }
 
     public class DealsOfTheDay
